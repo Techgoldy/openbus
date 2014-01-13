@@ -1,5 +1,3 @@
-package com.produban.openbus.serialization;
-
 /*
 * Copyright 2013 Produban
 *
@@ -16,6 +14,7 @@ package com.produban.openbus.serialization;
 * limitations under the License.
 */
 
+package com.produban.openbus.serialization;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -30,86 +29,76 @@ import org.apache.avro.io.DatumWriter;
 import org.apache.log4j.Logger;
 
 
-
 /**
- * A simple Avro Serializer with schema embedded
- * Takes String with delimited avro field list
+ * A Kafka Serializer class that encode a Kafka Message into Avro binary format with the schema embedded
  */
 public class AvroSchemaSerializer implements kafka.serializer.Encoder  {
 
 	static final Logger logger = Logger.getLogger(AvroSchemaSerializer.class);
 
+    private static final String DELIMITER = "_#_";
+
     private Schema schema;
     private String[] fields;    
     
 	/**
-	 * 
-	 * @param schemaIs InputStream with schema bytes
-	 * @param fields list for encoding
+	 * Create a new Serializer from an byte stream representing an Avro schema and a list of Avro field names.
+	 * @param schemaIs Input stream containing an Avro schema that will be embedded.
+	 * @param fields list of field names that will be included in the Avro format. Those have to be present in the schema
 	 */
-    public AvroSchemaSerializer(InputStream schemaIs, String[] fields) {
-    	setSchema(schemaIs);
-    	this.fields=fields;
-	}
-    
-   
-    private void setSchema(InputStream schemaIs) {
-        Schema.Parser parser = new Schema.Parser();
-        try {
-			//schema = parser.parse(getClass().getClassLoader().getResourceAsStream("apacheLog.avsc"));
-        	schema = parser.parse(schemaIs);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
+    public AvroSchemaSerializer(InputStream schemaIs, String[] fields){
+    	try {
+            this.schema = new Schema.Parser().parse(schemaIs);
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Could not parse Avro schema from provided InputStream", e);
+        }
 
-    /**
-     * 
-     * @param sch
-     * @param fields
-     */
-    public AvroSchemaSerializer(Schema sch, String[] fields) {
-			this.schema = sch;
-	    	this.fields=fields;
+    	this.fields = fields;
 	}
 
     /**
-     * Encodes a delimited string 
-     * @param str
-     * @param delimeter
-     * @return
+     * Create a new Serializer from an Avro schema and a list of Avro field names.
+     * @param schema Avro schema that will be embedded
+     * @param fields list of field names that will be included in the Avro message. Those have to be present in the schema
      */
-	public byte[] toBytes(String str, String delimeter) {
-		
+    public AvroSchemaSerializer(Schema schema, String[] fields) {
+			this.schema = schema;
+	    	this.fields = fields;
+	}
+
+    /**
+     * Takes an array of Avro field values and encodes it in Avro binary format, according to the defined
+     * field list and schema.
+     * @param values an array of field values that are to be persisted
+     * @return an array of bytes that represents the encoded field values and has the Avro schema embedded.
+     */
+	public byte[] serialize(Object[] values) {
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        DatumWriter<GenericRecord> writer = new GenericDatumWriter<GenericRecord>(
-                schema);
-        DataFileWriter<GenericRecord> dataFileWriter = new DataFileWriter<GenericRecord>(
-                writer);
+        DatumWriter<GenericRecord> writer = new GenericDatumWriter<GenericRecord>(schema);
+        DataFileWriter<GenericRecord> dataFileWriter = new DataFileWriter<GenericRecord>(writer);
+
         try {
-			dataFileWriter.create(schema, os);
+            dataFileWriter.create(schema, os);
 
-	        GenericRecord datum = new GenericData.Record(schema);
-	        String[] st = str.split(delimeter);
-	        int i=0;
-	        for(String s : st){
-	        	datum.put(fields[i++], s);
-	        }
-	        
-	        dataFileWriter.append(datum);
-	        dataFileWriter.close();
-	        
-	        logger.debug("encoded string: " + os.toString());
-	        os.close();
+            GenericRecord datum = new GenericData.Record(schema);
+            //String[] values = str.split(delimiter);
+            int i=0;
+            for(Object value : values){
+                datum.put(this.fields[i++], value);
+            }
 
+            dataFileWriter.append(datum);
+            dataFileWriter.close();
+
+            logger.debug("encoded string: " + os.toString());
+            os.close();
         } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            throw new RuntimeException("Error trying to encode provided data into Avro format with provided schema", e);
+        }
               
-        logger.debug("size: " + os.size());
+        logger.debug("serialized byte array size: " + os.size());
         return os.toByteArray();	
         
     }
@@ -118,7 +107,8 @@ public class AvroSchemaSerializer implements kafka.serializer.Encoder  {
      * Encodes an space-delimited object tostring 
      */
 	public byte[] toBytes(Object arg0) {
-		return this.toBytes(arg0.toString(),"_#_");
+        String[] values = arg0.toString().split(this.DELIMITER);
+		return this.serialize(values);
 	}
 
 }
