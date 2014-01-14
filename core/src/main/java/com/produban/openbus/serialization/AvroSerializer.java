@@ -32,9 +32,9 @@ import org.apache.log4j.Logger;
 /**
  * A Kafka Serializer class that encode a Kafka Message into Avro binary format with the schema embedded
  */
-public class AvroSchemaSerializer implements kafka.serializer.Encoder  {
+public class AvroSerializer implements kafka.serializer.Encoder  {
 
-	static final Logger logger = Logger.getLogger(AvroSchemaSerializer.class);
+	static final Logger logger = Logger.getLogger(AvroSerializer.class);
 
     private static final String DELIMITER = "_#_";
 
@@ -46,7 +46,7 @@ public class AvroSchemaSerializer implements kafka.serializer.Encoder  {
 	 * @param schemaIs Input stream containing an Avro schema that will be embedded.
 	 * @param fields list of field names that will be included in the Avro format. Those have to be present in the schema
 	 */
-    public AvroSchemaSerializer(InputStream schemaIs, String[] fields){
+    public AvroSerializer(InputStream schemaIs, String[] fields){
     	try {
             this.schema = new Schema.Parser().parse(schemaIs);
         }
@@ -62,7 +62,7 @@ public class AvroSchemaSerializer implements kafka.serializer.Encoder  {
      * @param schema Avro schema that will be embedded
      * @param fields list of field names that will be included in the Avro message. Those have to be present in the schema
      */
-    public AvroSchemaSerializer(Schema schema, String[] fields) {
+    public AvroSerializer(Schema schema, String[] fields) {
 			this.schema = schema;
 	    	this.fields = fields;
 	}
