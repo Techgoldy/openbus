@@ -32,11 +32,9 @@ import org.apache.log4j.Logger;
 /**
  * A Kafka Serializer class that encode a Kafka Message into Avro binary format with the schema embedded
  */
-public class AvroSerializer implements kafka.serializer.Encoder  {
+public class AvroSerializer  {
 
 	static final Logger logger = Logger.getLogger(AvroSerializer.class);
-
-    private static final String DELIMITER = "_#_";
 
     private Schema schema;
     private String[] fields;    
@@ -102,13 +100,5 @@ public class AvroSerializer implements kafka.serializer.Encoder  {
         return os.toByteArray();	
         
     }
-
-    /**
-     * Encodes an space-delimited object tostring 
-     */
-	public byte[] toBytes(Object arg0) {
-        String[] values = arg0.toString().split(this.DELIMITER);
-		return this.serialize(values);
-	}
 
 }
