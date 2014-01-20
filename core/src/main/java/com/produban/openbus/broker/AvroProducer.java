@@ -1,5 +1,3 @@
-package com.produban.openbus.broker;
-
 /*
 * Copyright 2013 Produban
 *
@@ -16,60 +14,58 @@ package com.produban.openbus.broker;
 * limitations under the License.
 */
 
+package com.produban.openbus.broker;
+
 import java.util.Properties;
 
+import com.produban.openbus.serialization.AvroSerializer;
 import kafka.javaapi.producer.Producer;
 import kafka.message.Message;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
-
 import org.apache.log4j.Logger;
 
-import com.produban.openbus.serialization.AvroSchemaSerializer;
- 
 
 /**
  * 
- * A simple Avro Kafka Producer.
- * Writes specified fields from avro schema to selected topic
- * Uses AvroSchemaSerializer for embedding schema with message
+ * A Kafka producer that send Avro encoded messages.
+ * Writes specified fields from Avro schema to a specific topic
+ * Uses AvroSerializer for embedding schema with message (Each sent message will have the  Avro schema embedded)
  */
 
 public class AvroProducer {
 	static final Logger logger = Logger.getLogger(AvroProducer.class);
 	
-	private Producer<String, byte[]> producer;
-	private AvroSchemaSerializer as;	
+	private Producer<byte[], byte[]> producer;
+	private AvroSerializer serializer;
 	private String topic;
 	
 	/**
 	 * Constructor
-	 * @param brokerList kafka broker list 
-	 * @param topic target topic
-	 * @param avroResource file with the schema
-	 * @param fields list of avro fields 
+	 * @param brokerList kafka broker list. It has not to be complete, it's used to retrieve cluster info.
+	 * @param topic target topic where the producer will send the messages.
+	 * @param avroSchemaPath path of the file with the Avro schema
+	 * @param fields list of Avro field names
 	 */
-    public AvroProducer(String brokerList, String topic, String avroResource, String[] fields) {
+    public AvroProducer(String brokerList, String topic, String avroSchemaPath, String[] fields) {
 
-    	
+        this.topic=topic;
+    	this.serializer = new AvroSerializer(ClassLoader.class.getResourceAsStream(avroSchemaPath), fields );
+
         Properties props = new Properties();
         props.put("metadata.broker.list", brokerList);
-        
-        this.topic=topic;
-
-        as=new AvroSchemaSerializer(ClassLoader.class.getResourceAsStream(avroResource), fields );
-
-        producer = new kafka.javaapi.producer.Producer<String, byte[]>(new ProducerConfig(props));
+        this.producer = new kafka.javaapi.producer.Producer<>(new ProducerConfig(props));
         	   
     }
     
     /**
      * Send a message 
-     * @param payload by default an space-separated avro field list 	
+     * @param values Array of Avro field values to be sent to kafka
      */
-    public void send(String payload) {
-    	Message message = new Message(as.toBytes(payload));
-		producer.send(new KeyedMessage<String, byte[]>(topic, message.buffer().array()));	
+    public void send(Object[] values) {
+    	Message message = new Message(serializer.serialize(values));
+		//producer.send(new KeyedMessage<byte[], byte[]>(topic, message.buffer().array()));
+        producer.send(new KeyedMessage<byte[], byte[]>(topic, serializer.serialize(values)));
     }
 
 	/**
