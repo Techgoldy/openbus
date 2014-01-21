@@ -4,16 +4,16 @@
 
     <groupId>com.produban.openbus.core</groupId>
     <artifactId>core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>openbus-core</name>
-    <url>https://github.com/Produban/openbus</url>
 
     <parent>
         <groupId>com.produban.openbus</groupId>
         <artifactId>openbus</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
+
 
 </project>
