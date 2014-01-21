@@ -1,5 +1,6 @@
 package com.produban.openbus.broker;
 
+import com.produban.openbus.util.KafkaLocal;
 import com.produban.openbus.util.ZooKeeperHelper;
 import kafka.message.MessageAndMetadata;
 import org.junit.After;

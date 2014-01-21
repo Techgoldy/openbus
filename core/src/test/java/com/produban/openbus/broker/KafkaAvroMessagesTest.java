@@ -19,6 +19,7 @@
 package com.produban.openbus.broker;
 
 import com.produban.openbus.serialization.AvroDeserializer;
+import com.produban.openbus.util.KafkaLocal;
 import kafka.message.MessageAndMetadata;
 import org.apache.avro.generic.GenericRecord;
 import org.junit.After;
