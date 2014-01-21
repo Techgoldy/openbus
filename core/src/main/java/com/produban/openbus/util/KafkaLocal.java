@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.produban.openbus.broker;
+package com.produban.openbus.util;
 
 import java.io.IOException;
 import java.util.Properties;
