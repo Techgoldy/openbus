@@ -144,7 +144,7 @@ public class ApacheLogProducerSample {
 			String REFERER="-";
 			String USERAGENT="Chrome/21.0.1180.89";
 			String IDSESION="0000z2ur1hruUUG-MhpsITK9JY_:16vnisqka";
-			//String TIEMPORESPUESTA="1020";
+			String TIEMPORESPUESTA="";
 			
 			
 			Date datetime= new Date();
@@ -172,20 +172,14 @@ public class ApacheLogProducerSample {
 							
 							IDSESION="0000z2ur1hruUUG-MhpsITK9JY_:" + k;
 							LINEAPETICION="page" + j%(2*(m+1));
-							TIEMPOEJECPETICION=cal.getTime().toString();//.replace(" ", "_"); 
+							TIEMPOEJECPETICION=cal.getTime().toString();
 							USUARIOREMOTO="user"+m;
-							String payload=
-									 HOSTREMOTO[k%5] + "_#_" +
-									 NOMBRELOGREMOTO + "_#_" +
-									 USUARIOREMOTO + "_#_" +
-									 TIEMPOEJECPETICION + "_#_" +
-									 LINEAPETICION + "_#_" +
-									 ESTADOPETICION + "_#_" +
-									 TAMANORESPUESTA + "_#_" +
-									 REFERER + "_#_" +
-									 USERAGENT + "_#_" +
-									 IDSESION + "_#_" +
-									 String.valueOf(m*100%10000);		//TIEMPORESPUESTA				
+                            TIEMPORESPUESTA = String.valueOf(m*100%10000);
+							Object[] payload = new Object[] {HOSTREMOTO[k%5], NOMBRELOGREMOTO, USUARIOREMOTO,
+                                                            TIEMPOEJECPETICION, LINEAPETICION, ESTADOPETICION,
+                                                            TAMANORESPUESTA, REFERER, USERAGENT, IDSESION,
+                                                            TIEMPORESPUESTA};
+
 					
 							ap.send(payload);
 							count++;
