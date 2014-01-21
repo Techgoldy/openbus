@@ -65,5 +65,29 @@ public class KafkaLocal {
 	}
 
 
+    public static void main (String[] args) {
+        Properties props = new Properties();
+        String hostname = args.length > 0 ? args[0] : "localhost";
+        String port = args.length > 1 ? args[1] : "9092";
+        String brokerId = args.length > 2 ? args[2] : "0";
+        String logDir = args.length > 3 ? args[3] : "/tmp/kafkalocal";
+        String zookeeperConnect = args.length > 4 ? args[4] : "localhost:2181";
+
+        props.setProperty("host.name", hostname);
+        props.setProperty("port", port);
+        props.setProperty("broker.id", brokerId);
+        props.setProperty("log.dir", logDir);
+        props.setProperty("zookeeper.connect", zookeeperConnect);
+
+        try {
+            KafkaLocal kafkaServer = new KafkaLocal(props);
+        }
+        catch (Exception e) {
+            System.out.println("Error running Kafka server process");
+            e.printStackTrace();
+        }
+
+    }
+
 
 }
