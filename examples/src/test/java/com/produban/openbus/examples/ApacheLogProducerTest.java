@@ -17,14 +17,24 @@ package com.produban.openbus.examples;
 */
 
 
+import com.produban.openbus.util.KafkaLocal;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
+
+import java.io.IOException;
+import java.util.Properties;
+
 
 /**
  * Unit test for schema encoded avro message to kafka.
  */
 public class ApacheLogProducerTest  extends TestCase  {
+
+    private static KafkaLocal kafka;
+
     /**
      * Create the test case
      *
@@ -41,6 +51,22 @@ public class ApacheLogProducerTest  extends TestCase  {
         return new TestSuite( ApacheLogProducerTest.class );
     }
 
+    @Before
+    public void setUp(){
+        Properties kafkaProperties = new Properties();
+
+        try {
+            //start kafka
+            kafkaProperties.load(Class.class.getResourceAsStream("/kafkalocal.properties"));
+            kafka = new KafkaLocal(kafkaProperties);
+            Thread.sleep(5000);
+        } catch (Exception e){
+            e.printStackTrace(System.out);
+            fail("Error running local Kafka broker");
+            e.printStackTrace(System.out);
+        }
+
+    }
 	
 	/**
 	 *  send 1000 messages, with 5 users, 10 sessions and 10 requests
@@ -70,6 +96,18 @@ public class ApacheLogProducerTest  extends TestCase  {
 		ApacheLogProducerSample aps = new ApacheLogProducerSample("/kafka-test.properties","webserverlog",0);
 		aps.apacheLogProducerHelper(100,2,4,4);		
         assertTrue( true );
-	}	
+    }
+
+    @After
+    public void tearDown() {
+        try {
+            kafka.stop();
+        }
+        catch (IOException e) {
+            System.out.println("Error stopping local kafka server");
+            e.printStackTrace(System.out);
+        }
+
+    }
    
 }
