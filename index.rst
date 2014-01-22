@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Openbus's documentation!
-===================================
+Openbus
+=======
 
-Openbus is an opensource project that tries to define a suitable architecture for working with Big Data systems in a Banking IT environment.
+An open source architecture able to process the massive amount of events that occur in a banking IT Infraestructure.
 
 Contents:
 
@@ -14,5 +14,7 @@ Contents:
    :maxdepth: 2
 
    introduction
+   architecture
+   installation
 
 
