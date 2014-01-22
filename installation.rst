@@ -7,6 +7,8 @@ Deploying the Openbus architecture in your environment involves the following st
   - Build Openbus code
   - Run examples
 
+We have tested Openbus in a Red Hat Enterprise Linux 6.4 environment
+
 Installing dependencies
 .......................
 
