@@ -87,6 +87,78 @@ This is an example of a very simple Kafka producer with Java:
 Avro
 ....
 
+As previously said, we are using the Avro data format to serialize all the data events we produce in our Kafka data stream.
+
+This means that prior to send a message into Kafka, we are serializing it in Avro format, using a concrete Avro schema. This schema is embedded in the data we send to Kafka, so every future consumer of the message will be able to deserialize it.
+
+In the Openbus code you can find `AvroSerializer` and `AvroDeserialzer` Java lasses, that can be of great help when using producing or consuming Avro messages from Kafka.
+
+This is the current Avro schema we are using for Log messages:
+
+.. code-block:: json
+
+	{
+	  "type": "record",
+	  "name": "ApacheLog",
+	  "namespace": "openbus.schema",  
+	  "doc": "Apache Log Event",
+	  "fields": [
+	    {"name": "host", "type": "string"},
+	    {"name": "log", "type": "string"},
+	    {"name": "user", "type": "string"},
+	    {"name": "datetime", "type": "string"},
+	    {"name": "request", "type": "string"},    
+	    {"name": "status", "type": "string"},
+	    {"name": "size", "type": "string"},
+	    {"name": "referer", "type": "string"},
+	    {"name": "userAgent", "type": "string"},
+	    {"name": "session", "type": "string"},
+	    {"name": "responseTime", "type": "string"}
+	  ]
+	}
+
+
+An example of producing Avro messages into Kafka is our AvroProducer class:
+
+.. code-block:: java
+
+	public class AvroProducer {
+	        
+	        private Producer<byte[], byte[]> producer;
+	        private AvroSerializer serializer;
+	        private String topic;
+	        
+	    public AvroProducer(String brokerList, String topic, String avroSchemaPath, String[] fields) {
+
+	        this.topic=topic;
+	            this.serializer = new AvroSerializer(ClassLoader.class.getResourceAsStream(avroSchemaPath), fields );
+
+	        Properties props = new Properties();
+	        props.put("metadata.broker.list", brokerList);
+	        this.producer = new kafka.javaapi.producer.Producer<>(new ProducerConfig(props));
+	                   
+	    }
+	    
+	    /**
+	     * Send a message 
+	     * @param values Array of Avro field values to be sent to kafka
+	     */
+	    public void send(Object[] values) {
+	            Message message = new Message(serializer.serialize(values));
+	                //producer.send(new KeyedMessage<byte[], byte[]>(topic, message.buffer().array()));
+	        producer.send(new KeyedMessage<byte[], byte[]>(topic, serializer.serialize(values)));
+	    }
+
+	    /**
+	     * closes producer
+	     */
+	    public void close() {
+	        producer.close();
+	    }
+	 
+	}
+
+
 
 Consuming
 .........
