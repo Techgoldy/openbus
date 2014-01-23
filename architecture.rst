@@ -18,6 +18,14 @@ At the moment we are using Avro format for all the published events.
 Introduction
 ............
 
+Kafka is designed as a unified platform for handling all the real-time data feeds a large company might have.
+
+Kafka is run as a cluster of *broker* servers. *Messages* are stored in categories called *topics*. Those messages are published by *producers* and consumed and further processed by *consumers*.
+
+It uses a custom TCP Protocol for communication between clients and servers.
+
+A Kafka topic is splitted into one or more partitions. Partitions are distributed over the servers in the Kafka cluster. Each partition is replicated across a configurable number of servers.
+
 Producing
 .........
 
