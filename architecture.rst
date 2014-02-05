@@ -181,8 +181,87 @@ All Data: HDFS
 Generating Batch views: Mapreduce
 .................................
 
+
 Speed Layer: Storm
 ------------------
+
+Introduction
+............
+
+Storm is a distributed, reliable, fault-tolerant system for processing streams of data.
+
+The work is delegated to different types of components that are each responsible for a
+simple specific processing task. 
+
+The input stream of a Storm cluster is handled by a components called Spout and Bolts.
+
+In Storm execution units are Spouts and Bolts that unfold in typologies. Spouts are the data sources, the Bolts are the processors. 
+
+Spouts and connections between and among Bolts Bolts have settings to indicate how the stream is divided between the "threads" of execution. In terminology Storm each "thread" is a separate instance of a parallel Bolt.
+
+Use Cases Storm
+............
+
+Processing of Strems 
+
+RPC (Remote Procedure Call) distributed 
+
+continuous computing
+
+.. image:: /images/UseCases.png
+
+Concepts
+............
+
+Tuples: An ordered list of elements
+.. image:: /images/Tuples.png
+
+Stream: Stream of tuples
+.. image:: /images/Stream.jpg
+
+Spout: Producer Stream
+.. image:: /images/Spout.png
+
+Bolt: Processor and creator of new Streams
+.. image:: /images/Bolt.jpg
+
+Topologies: Map Spouts and Bolts
+.. image:: /images/Topology.png
+
+Diagram
+............
+.. image:: /images/DiargramStorm.png
+.. image:: /images/Supervisor.png
+
+
+Components of a Storm topology
+............
+
+Shuffle Grouping
+Sending the bolts tuples is random and uniform. Valid for atomic operations
+
+Local o Shuffle
+If the destination Bolt has one or more tasks in the same work process tuples are preferably sent to these workers
+
+Fiels Grouping
+The stream is divided by the specified fields in the cluster. 
+An example would be if the tuples have the user field all tuples with the same usuaio always go to the same task
+
+All Grouping
+Tuples are sent to all tasks of bolts
+
+Direct Grouping
+The producer decides which task tuple consumer receive this tuple
+
+Global Grouping
+Send all tuples intancias to a single destination
+
+Custom Grouping
+Lets implement a custom grouping
+
+Example Topology
+............
+.. image:: /images/ExampleToplogyStorm.png
 
 Generating Realtime views: Storm Topologies
 ...........................................
