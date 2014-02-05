@@ -206,7 +206,7 @@ Processing of Strems
 
 RPC (Remote Procedure Call) distributed 
 
-continuous computing
+Continuous Computation
 
 .. image:: /images/UseCases.png
 
@@ -228,35 +228,42 @@ Bolt: Processor and creator of new Streams
 Topologies: Map Spouts and Bolts
 .. image:: /images/Topology.png
 
-Diagram
+Fisic diagram 
 ............
-.. image:: /images/DiargramStorm.png
+.. image:: /images/DiagramStorm.png
 .. image:: /images/Supervisor.png
 
 
 Components of a Storm topology
 ............
 
-Shuffle Grouping
+Shuffle Grouping:
+
 Sending the bolts tuples is random and uniform. Valid for atomic operations
 
-Local o Shuffle
+Local o Shuffle:
+
 If the destination Bolt has one or more tasks in the same work process tuples are preferably sent to these workers
 
-Fiels Grouping
+Fiels Grouping:
+
 The stream is divided by the specified fields in the cluster. 
 An example would be if the tuples have the user field all tuples with the same usuaio always go to the same task
 
-All Grouping
+All Grouping:
+
 Tuples are sent to all tasks of bolts
 
-Direct Grouping
+Direct Grouping:
+
 The producer decides which task tuple consumer receive this tuple
 
-Global Grouping
+Global Grouping:
+
 Send all tuples intancias to a single destination
 
-Custom Grouping
+Custom Grouping:
+
 Lets implement a custom grouping
 
 Example Topology
