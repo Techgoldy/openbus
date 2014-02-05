@@ -214,18 +214,23 @@ Concepts
 ............
 
 Tuples: An ordered list of elements
+
 .. image:: /images/Tuples.png
 
 Stream: Stream of tuples
+
 .. image:: /images/Stream.jpg
 
 Spout: Producer Stream
+
 .. image:: /images/Spout.png
 
 Bolt: Processor and creator of new Streams
+
 .. image:: /images/Bolt.jpg
 
 Topologies: Map Spouts and Bolts
+
 .. image:: /images/Topology.png
 
 Fisic diagram 
