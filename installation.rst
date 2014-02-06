@@ -40,7 +40,7 @@ Launch javaAvroKafka sample::
     #> cd $javaAvroKafkaHome
     #> java -jar avroKafka-1.0-SNAPSHOT-shaded.jar wslog 50 2 3 3 -90
 
-Arguments are topic, number of request, number of users, number of user sessions, number of session requests, date simulation offset (0 for today)
+Arguments are kafka topic, number of requests, number of users, number of user sessions, number of session requests, date simulation offset (0 for today).
 
 
 Running batch ETL processes from Kafka to Hadoop
@@ -51,11 +51,19 @@ Launch Camus ETL::
     #> cd $camusHome
     #> hadoop jar camus-example-0.1.0-SNAPSHOT-shaded.jar com.linkedin.camus.etl.kafka.CamusJob -P <camus.properties>
 
-where <camus.properties> is a file path pointing to camus configuration as described in <https://github.com/Produban/camus> under configuration section
+where <camus.properties> is a file path pointing to camus configuration as described in https://github.com/Produban/camus under configuration section.
 
 
 Running real time analysis with Storm topologies
 ................................................
+
+Launch Openbus Topology::
+
+    #> cd $openBusHome
+    #> storm jar target/openbus-realtime-0.0.1-shaded.jar com.produban.openbus.processor.topology.OpenbusProcessorTopology openbus -zookepperHost vmlbcnimbusl01:2181 -topic wslog -staticHost vmlbcbrokerl01,vmlbcbrokerl02
+
+Arguments are topology, kafka topic, zookeeper host and kafka broker list.
+
 
 Visualizing data
 ................
