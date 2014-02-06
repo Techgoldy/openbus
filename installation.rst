@@ -59,7 +59,7 @@ Running real time analysis with Storm topologies
 
 Launch Openbus Topology::
 
-    #> cd $openBusHome
+    #> cd $openBusRealTimeHome
     #> storm jar target/openbus-realtime-0.0.1-shaded.jar com.produban.openbus.processor.topology.OpenbusProcessorTopology openbus -zookepperHost vmlbcnimbusl01:2181 -topic wslog -staticHost vmlbcbrokerl01,vmlbcbrokerl02
 
 Arguments are topology, kafka topic, zookeeper host and kafka broker list.
@@ -67,3 +67,33 @@ Arguments are topology, kafka topic, zookeeper host and kafka broker list.
 
 Visualizing data
 ................
+
+View Hits per Day/Month/Week::
+
+    #> cd $openBusRealTimeHome/hbase/queryscripts
+    #> ./hitsPer<Period>.sh <date> [requestId]
+
+where <Period> can be Day, Month or Week.
+First arguments is the date in format "yyyyMMdd" for a day of a year, "yyyyMM" for a month of a year and "yyyyWW" for a week of a year.
+Second argument is optional for filtering with an specific request.
+
+
+View Users per Day/Month/Week::
+
+    #> cd $openBusRealTimeHome/hbase/queryscripts
+    #> ./usersPer<Period>.sh <date> [userId]
+
+where <Period> can be Day, Month or Week.
+First arguments is the date in format "yyyyMMdd" for a day of a year, "yyyyMM" for a month of a year and "yyyyWW" for a week of a year.
+Second argument is optional for filtering with an specific user.
+
+
+View Sessions per Day/Month/Week::
+
+    #> cd $openBusRealTimeHome/hbase/queryscripts
+    #> ./sessionsPer<Period>.sh <date> [userId]
+
+where <Period> can be Day, Month or Week.
+First arguments is the date in format "yyyyMMdd" for a day of a year, "yyyyMM" for a month of a year and "yyyyWW" for a week of a year.
+Second argument is optional for filtering with an specific session.
+
