@@ -46,6 +46,14 @@ Arguments are topic, number of request, number of users, number of user sessions
 Running batch ETL processes from Kafka to Hadoop
 ................................................
 
+Launch Camus ETL::
+
+    #> cd $camusHome
+    #> hadoop jar camus-example-0.1.0-SNAPSHOT-shaded.jar com.linkedin.camus.etl.kafka.CamusJob -P <camus.properties>
+
+where <camus.properties> is a file path pointing to camus configuration as described in <https://github.com/Produban/camus> under configuration section
+
+
 Running real time analysis with Storm topologies
 ................................................
 
