@@ -35,6 +35,14 @@ Running examples
 Submitting events to the Kafka broker
 .....................................
 
+Launch javaAvroKafka sample::
+
+    #> cd $javaAvroKafkaHome
+    #> java -jar avroKafka-1.0-SNAPSHOT-shaded.jar wslog 50 2 3 3 -90
+
+Arguments are topic, number of request, number of users, number of user sessions, number of session requests, date simulation offset (0 for today)
+
+
 Running batch ETL processes from Kafka to Hadoop
 ................................................
 
