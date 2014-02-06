@@ -284,3 +284,30 @@ Serving Layer
 HBase
 .....
 
+Hbase is the default NoSql database supplied with Hadoop. These are its main features
+
+	- Distributed
+	- Column-oriented
+	- High availability
+	- High performance
+	- Data volumen in order of TeraBytes and PetaBytes
+	- Horizontal scalability with the addition of nodes in a cluster
+	- Random read/write
+	
+	
+Usage::
+
+we use
+
+
+Insert::
+
+we
+
+
+Query::
+
+we
+
+
+
