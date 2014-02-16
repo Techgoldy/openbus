@@ -278,6 +278,34 @@ Example Topology
 Generating Realtime views: Storm Topologies
 ...........................................
 
+Based `topology: <https://github.com/Produban/openbus/blob/master/openbus-realtime/src/main/java/com/produban/openbus/processor/topology/OpenbusProcessorTopology.java>`_ Kafka -> Storm -> HBase
+
+.. code-block:: java
+
+		stream = topology.newStream("spout", openbusBrokerSpout.getPartitionedTridentSpout());					
+		stream = stream.each(new Fields("bytes"), new AvroLogDecoder(), new Fields(fieldsWebLog));		
+		stream = stream.each(new Fields(fieldsWebLog), new WebServerLogFilter());
+		
+		stream.each(new Fields("request", "datetime"), new DatePartition(), new Fields("cq", "cf"))
+				.groupBy(new Fields("request", "cq", "cf"))
+				.persistentAggregate(stateRequest, new Count(), new Fields("count"))
+				.newValuesStream()
+				.each(new Fields("request", "cq", "cf", "count"), new LogFilter());
+		
+		stream.each(new Fields("user", "datetime"), new DatePartition(), new Fields("cq", "cf"))
+				.groupBy(new Fields("user", "cq", "cf"))
+				.persistentAggregate(stateUser, new Count(), new Fields("count"))
+				.newValuesStream()
+				.each(new Fields("user", "cq", "cf", "count"), new LogFilter());
+		
+		stream.each(new Fields("session", "datetime"), new DatePartition(), new Fields("cq", "cf"))
+				.groupBy(new Fields("session", "cq", "cf"))
+				.persistentAggregate(stateSession, new Count(), new Fields("count"))
+				.newValuesStream()
+				.each(new Fields("session", "cq", "cf", "count"), new LogFilter());		
+		
+		return topology.build();	
+
 Serving Layer
 -------------
 
