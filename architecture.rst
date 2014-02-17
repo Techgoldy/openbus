@@ -271,6 +271,11 @@ Custom Grouping:
 
 Lets implement a custom grouping
 
+Trident
+............
+
+Trident is a high-level abstraction for doing realtime computing on top of Storm. Trident has joins, aggregations, grouping, functions, and filters. In addition to these, Trident adds primitives for doing stateful, incremental processing on top of any database or persistence store. Trident has consistent, exactly-once semantics, so it is easy to reason about Trident topologies.
+
 Example Topology
 ............
 .. image:: /images/ExampleToplogyStorm.png
@@ -306,6 +311,21 @@ Based `topology: <https://github.com/Produban/openbus/blob/master/openbus-realti
 		
 		return topology.build();	
 
+Optional HDFS and OpenTSDB
+    
+.. code-block:: java
+    
+		if (Constant.YES.equals(conf.get(Conf.PROP_OPENTSDB_USE))) {
+			LOG.info("OpenTSDB: " + conf.get(Conf.PROP_OPENTSDB_USE));
+			stream.groupBy(new Fields(fieldsWebLog)).aggregate(new Fields(fieldsWebLog), new WebServerLog2TSDB(), new Fields("count"));
+		}
+		
+		if (Constant.YES.equals(conf.get(Conf.PROP_HDFS_USE))) {
+			LOG.info("HDFS: " + conf.get(Conf.PROP_HDFS_USE));
+			stream.each(new Fields(fieldsWebLog), new HDFSPersistence(), new Fields("result"));
+		}
+
+
 Serving Layer
 -------------
 
@@ -322,3 +342,45 @@ Hbase is the default NoSql database supplied with Hadoop. These are its main fea
 	- Horizontal scalability with the addition of nodes in a cluster
 	- Random read/write
 	
+Persistent states in HBase with Trident
+
+.. code-block:: java
+
+	    @SuppressWarnings("rawtypes")
+		TridentConfig configRequest = new TridentConfig(
+	    		(String)conf.get(Conf.PROP_HBASE_TABLE_REQUEST), 
+	    		(String)conf.get(Conf.PROP_HBASE_ROWID_REQUEST));
+	    	  
+		@SuppressWarnings("unchecked")
+		StateFactory stateRequest = HBaseAggregateState.transactional(configRequest);
+	    
+	    @SuppressWarnings("rawtypes")
+	    TridentConfig configUser = new TridentConfig(
+	    		(String)conf.get(Conf.PROP_HBASE_TABLE_USER), 
+	    		(String)conf.get(Conf.PROP_HBASE_ROWID_REQUEST));
+	    
+	    @SuppressWarnings("unchecked")
+	    StateFactory stateUser = HBaseAggregateState.transactional(configUser);
+
+	    @SuppressWarnings("rawtypes")
+	    TridentConfig configSession = new TridentConfig(
+	    		(String)conf.get(Conf.PROP_HBASE_TABLE_SESSION), 
+	    		(String)conf.get(Conf.PROP_HBASE_ROWID_SESSION));
+	    
+	    @SuppressWarnings("unchecked")
+	    StateFactory stateSession = HBaseAggregateState.transactional(configSession);
+
+`Queries: <https://github.com/Produban/openbus/tree/master/openbus-realtime/hbase/queryscripts>`_ in HBase in Openbus
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    # ./hbaseReqRows.sh wslog_request daily:20131105
+
+    TABLE=$1
+    DATE=$2
+
+    exec hbase shell << EOF
+    scan '${TABLE}'	, {COLUMNS => ['${DATE}']}
+    EOF
