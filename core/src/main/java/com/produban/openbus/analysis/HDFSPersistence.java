@@ -15,12 +15,13 @@
 */
 
 
-package com.produban.openbus.persistence;
+package com.produban.openbus.analysis;
 
 
 import java.io.File;
 import java.util.Map;
 
+import com.produban.openbus.persistence.HDFSStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
