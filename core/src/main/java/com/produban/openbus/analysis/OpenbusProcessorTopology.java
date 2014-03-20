@@ -15,27 +15,26 @@
 */
 package com.produban.openbus.analysis;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import com.lexicalscope.jewel.cli.ArgumentValidationException;
+import com.lexicalscope.jewel.cli.CliFactory;
+import com.lexicalscope.jewel.cli.Option;
+import org.apache.avro.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.produban.openbus.filter.WebServerLogFilter;
-import com.produban.openbus.persistence.HDFSPersistence;
-import com.produban.openbus.util.Conf;
-import com.produban.openbus.util.Constant;
 import com.produban.openbus.util.DatePartition;
 import com.produban.openbus.util.LogFilter;
-import com.produban.openbus.util.OptionsTip;
 
 import storm.trident.Stream;
 import storm.trident.TridentTopology;
 import storm.trident.operation.builtin.Count;
 import storm.trident.state.StateFactory;
 import backtype.storm.Config;
-import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.contrib.hbase.trident.HBaseAggregateState;
 import backtype.storm.contrib.hbase.utils.TridentConfig;
@@ -43,74 +42,45 @@ import backtype.storm.generated.StormTopology;
 import backtype.storm.tuple.Fields;
 
 /**
- * Topology openbus-realtime
+ * Trident topology for basic counts on a stream of apache web logs consumed from Kafka.
  * 
  */
 public class OpenbusProcessorTopology {	
 	private static final Logger LOG = LoggerFactory.getLogger(OpenbusProcessorTopology.class);
 	    	
-	public static StormTopology buildTopology(Config conf) {			
-		TridentTopology topology = new TridentTopology();
-		Stream stream = null;
-		
-		List<String> fieldsWebLog = new ArrayList<String>();
-		fieldsWebLog.add("host");
-		fieldsWebLog.add("log");
-		fieldsWebLog.add("user");
-		fieldsWebLog.add("datetime");
-		fieldsWebLog.add("request");
-		fieldsWebLog.add("status");
-		fieldsWebLog.add("size");
-		fieldsWebLog.add("referer");
-		fieldsWebLog.add("userAgent");
-		fieldsWebLog.add("session");
-		fieldsWebLog.add("responseTime");
-		fieldsWebLog.add("timestamp");
-		fieldsWebLog.add("json");
-				
-	    @SuppressWarnings("rawtypes")
-		TridentConfig configRequest = new TridentConfig(
-	    		(String)conf.get(Conf.PROP_HBASE_TABLE_REQUEST), 
-	    		(String)conf.get(Conf.PROP_HBASE_ROWID_REQUEST));
-	    	  
-		@SuppressWarnings("unchecked")
+	public static StormTopology buildTopology(AvroWebLogTopologyOptions options) throws IOException {
+
+		TridentConfig configRequest = new TridentConfig(options.getHbaseRequestTable(),
+                                                        options.getHbaseRequestTableRowId());
 		StateFactory stateRequest = HBaseAggregateState.transactional(configRequest);
-	    
-	    @SuppressWarnings("rawtypes")
-	    TridentConfig configUser = new TridentConfig(
-	    		(String)conf.get(Conf.PROP_HBASE_TABLE_USER), 
-	    		(String)conf.get(Conf.PROP_HBASE_ROWID_REQUEST));
-	    
-	    @SuppressWarnings("unchecked")
+
+	    TridentConfig configUser = new TridentConfig(options.getHbaseUserTable(),
+                                                     options.getHbaseUserTableRowId());
 	    StateFactory stateUser = HBaseAggregateState.transactional(configUser);
 
-	    @SuppressWarnings("rawtypes")
-	    TridentConfig configSession = new TridentConfig(
-	    		(String)conf.get(Conf.PROP_HBASE_TABLE_SESSION), 
-	    		(String)conf.get(Conf.PROP_HBASE_ROWID_SESSION));
-	    
-	    @SuppressWarnings("unchecked")
+	    TridentConfig configSession = new TridentConfig(options.getHbaseSessionTable(),
+                                                        options.getHbaseSessionTableRowId());
 	    StateFactory stateSession = HBaseAggregateState.transactional(configSession);
 	    	    
-	    BrokerSpout openbusBrokerSpout = null;
-	    
-	    if(conf.get(Conf.STATIC_HOST) == null || "".equals(conf.get(Conf.STATIC_HOST))) {
-			openbusBrokerSpout = new BrokerSpout(
-					(String)conf.get(Conf.PROP_BROKER_TOPIC), 
-					(String)conf.get(Conf.PROP_ZOOKEEPER_HOST), 
-					(String)conf.get(Conf.PROP_ZOOKEEPER_BROKER),
-					(String)conf.get(Conf.PROP_KAFKA_IDCLIENT));	    
-	    } else {
-	    	openbusBrokerSpout = new BrokerSpout(
-	    			(String)conf.get(Conf.PROP_BROKER_TOPIC), 
-	    			(String)conf.get(Conf.STATIC_HOST), 
-	    			new Integer(Conf.KAFKA_BROKER_PORT).intValue(),
-	    			(String)conf.get(Conf.PROP_KAFKA_IDCLIENT));	    
-	    }
-	    
-		stream = topology.newStream("spout", openbusBrokerSpout.getPartitionedTridentSpout());			
-		stream = stream.each(new Fields("bytes"), new AvroLogDecoder(), new Fields(fieldsWebLog));
-		stream = stream.each(new Fields(fieldsWebLog), new WebServerLogFilter());
+	    BrokerSpout openbusBrokerSpout = new BrokerSpout( options.getKafkaTopic(),
+                                                          options.getZookeeper(),
+                                                          options.getKafkaClientID());
+
+        //We need to know what fields will be produced after Avro messages decoding.
+        //We use the avro schema for that (even when we dont need the schema to decode
+        //the messages, because is embedded into the messages)
+        Schema avroSchema = new Schema.Parser().parse(new File(options.getAvroSchema()));
+        List<String> avroFieldNames = new ArrayList<>();
+        for (Schema.Field avroField : avroSchema.getFields()) {
+            avroFieldNames.add(avroField.name());
+        }
+
+        TridentTopology topology = new TridentTopology();
+		Stream stream = topology.newStream("spout", openbusBrokerSpout.getPartitionedTridentSpout())
+		         .each(new Fields("bytes"), new AvroLogDecoder(), new Fields(avroFieldNames))
+                 .each(new Fields("datetime"), new DateTimeTransformation(), new Fields("timestamp"))
+                 //this step adds a "timestamp" field:
+		         .each(new Fields(avroFieldNames), new WebServerLogFilter());
 		
 		stream.each(new Fields("request", "datetime"), new DatePartition(), new Fields("cq", "cf"))
 				.groupBy(new Fields("request", "cq", "cf"))
@@ -131,49 +101,72 @@ public class OpenbusProcessorTopology {
 				.persistentAggregate(stateSession, new Count(), new Fields("count"))
 				//.persistentAggregate(new MemoryMapState.Factory(), new Count(), new Fields("count"))	// Test				
 				.newValuesStream()
-				.each(new Fields("session", "cq", "cf", "count"), new LogFilter());		
-  
-		if (Constant.YES.equals(conf.get(Conf.PROP_OPENTSDB_USE))) {
-			LOG.info("OpenTSDB: " + conf.get(Conf.PROP_OPENTSDB_USE));
-			stream.groupBy(new Fields(fieldsWebLog)).aggregate(new Fields(fieldsWebLog), new WebServerLog2TSDB(), new Fields("count"));
-		}
-		
-		if (Constant.YES.equals(conf.get(Conf.PROP_HDFS_USE))) {
-			LOG.info("HDFS: " + conf.get(Conf.PROP_HDFS_USE));
-			stream.each(new Fields(fieldsWebLog), new HDFSPersistence(), new Fields("result"));
-		}
+				.each(new Fields("session", "cq", "cf", "count"), new LogFilter());
 		
 		return topology.build();				
 	}
 
 	public static void main(String[] args) throws Exception {	
-		Map<String, String> options = OptionsTip.getOptions(args);
-		
-		Config conf = new Config();		
-		conf.put(Conf.PROP_BROKER_TOPIC, (String)options.get("topic"));
-		conf.put(Conf.PROP_KAFKA_IDCLIENT, Conf.KAFKA_IDCLIENT);
-		conf.put(Conf.PROP_ZOOKEEPER_HOST, (String)options.get("zookepperHost"));
-		conf.put(Conf.PROP_ZOOKEEPER_BROKER, (String)options.get("broker"));
-		conf.put(Conf.PROP_HBASE_TABLE_REQUEST, Conf.HBASE_TABLE_REQUEST);
-		conf.put(Conf.PROP_HBASE_ROWID_USER, Conf.HBASE_ROWID_USER);
-		conf.put(Conf.PROP_HBASE_TABLE_USER, Conf.HBASE_TABLE_USER);
-		conf.put(Conf.PROP_HBASE_ROWID_SESSION, Conf.HBASE_ROWID_SESSION);
-		conf.put(Conf.PROP_HBASE_TABLE_SESSION, Conf.HBASE_TABLE_SESSION);		
-		conf.put(Conf.PROP_HBASE_ROWID_REQUEST, Conf.HBASE_ROWID_REQUEST);
-		conf.put(Conf.PROP_OPENTSDB_USE, (String)options.get(Conf.PROP_OPENTSDB_USE));						
-		conf.put(Conf.PROP_HDFS_USE, (String)options.get(Conf.PROP_HDFS_USE));
-		conf.put(Conf.STATIC_HOST, (String)options.get(Conf.STATIC_HOST));		
-		
-		if (args.length == 0 || "local".equals((String)options.get("local"))) {		
-			LOG.info("Storm mode local");
-			LocalCluster cluster = new LocalCluster();
-		    cluster.submitTopology("openbus", conf, buildTopology(conf));			
-			Thread.sleep(2000);		    		    		   
-		     //cluster.shutdown();
-		} else {
-			LOG.info("Storm mode cluster");			
-			StormSubmitter.submitTopology("openbus", conf, buildTopology(conf));
-			Thread.sleep(2000);			
-		}
-	}			
+
+        //parse topology arguments:
+        AvroWebLogTopologyOptions appOptions = null;
+        try {
+            appOptions = CliFactory.parseArguments(AvroWebLogTopologyOptions.class, args);
+        }
+        catch(ArgumentValidationException e)
+        {
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+        System.out.println("appOptions.toString() = " + appOptions.toString());
+        Config stormConfig = new Config();
+        stormConfig.setNumWorkers(appOptions.getStormNumWorkers());
+
+		StormSubmitter.submitTopology(appOptions.getTopologyName(), stormConfig, buildTopology(appOptions));
+	}
+
+    /*
+        Definition of topology arguments (this uses JewelCLI library)
+     */
+    public interface AvroWebLogTopologyOptions
+    {
+        @Option(defaultValue = "avroWebLogTopology")
+        String getTopologyName();
+
+        @Option
+        String getZookeeper();
+
+        @Option
+        String getKafkaTopic();
+
+        @Option
+        String getAvroSchema();
+
+        @Option(defaultValue = "3")
+        int getStormNumWorkers();
+
+        @Option(defaultValue = "AvroWebLogTopology")
+        String getKafkaClientID();
+
+        @Option(defaultValue =  "wslog_user")
+        String getHbaseUserTable();
+
+        @Option(defaultValue =  "user")
+        String getHbaseUserTableRowId();
+
+        @Option(defaultValue =  "wslog_request")
+        String getHbaseRequestTable();
+
+        @Option(defaultValue =  "request")
+        String getHbaseRequestTableRowId();
+
+        @Option(defaultValue =  "wslog_session")
+        String getHbaseSessionTable();
+
+        @Option(defaultValue =  "session")
+        String getHbaseSessionTableRowId();
+
+        @Option(shortName = "h", helpRequest = true)
+        boolean getHelp();
+    }
 }
