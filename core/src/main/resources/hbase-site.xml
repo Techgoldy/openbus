@@ -24,7 +24,7 @@
 <configuration>
   <property>
     <name>hbase.rootdir</name>
-    <value>hdfs://vmlbcnimbusl01/hbase</value>
+    <value>hdfs://localhost:8020/hbase</value>
   </property>
   <property>
     <name>dfs.replication</name>
@@ -36,7 +36,7 @@
   </property>
   <property>
     <name>hbase.zookeeper.quorum</name>
-    <value>vmlbcnimbusl01</value>
+    <value>localhost</value>
   </property>
   <property>
     <name>hbase.cluster.distributed</name>
