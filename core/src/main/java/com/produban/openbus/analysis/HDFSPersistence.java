@@ -35,7 +35,7 @@ import backtype.storm.tuple.Values;
 
 
 /**
- * Function Storm/Trident persistence in HDFS   
+ * Trident BaseFunction to persist data in HDFS
  */
 public class HDFSPersistence extends BaseFunction {
 	private static final long serialVersionUID = -3967587213225365514L;
@@ -44,7 +44,6 @@ public class HDFSPersistence extends BaseFunction {
 	private HDFSStore hDFSStore;
 
 	@Override
-	@SuppressWarnings("rawtypes") 
 	public void prepare(Map conf, TridentOperationContext context) {
 		hDFSStore = new HDFSStore();
 	}
@@ -53,7 +52,7 @@ public class HDFSPersistence extends BaseFunction {
     public final void execute(final TridentTuple tuple, final TridentCollector collector) {   
     	String json = null;
         try {            	
-            json = (String)tuple.getStringByField("json");
+            json = tuple.getStringByField("json");
         	String datetimeInHour = FormatUtil.getDateFormat(tuple.getStringByField("datetime"), 
         			FormatUtil.DATE_FORMAT_WEBSERVER, FormatUtil.DATE_FORMAT_HOUR);   
                       			

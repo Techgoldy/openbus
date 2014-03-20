@@ -40,7 +40,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>openbus.kafka.avro.ApacheLogProducerSample</mainClass>
+									<mainClass>com.produban.openbus.examples.ApacheLogProducerSample</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
