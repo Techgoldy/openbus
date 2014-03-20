@@ -18,16 +18,16 @@ package com.produban.openbus.util;
 public interface Conf {
 	public final static String PROP_ZOOKEEPER_HOST = "zookeper.host";
 	public final static String PROP_ZOOKEEPER_BROKER = "zookeper.broker";	
-	public final static String ZOOKEEPER_HOST = "pivhdsne"; 
+	public final static String ZOOKEEPER_HOST = "localhost";
 	public final static String ZOOKEEPER_PORT = "2181";
-	public final static String ZOOKEEPER_BROKER = "/brokers";	
-	public final static String STATIC_HOST = "staticHost";
+	public final static String ZOOKEEPER_BROKER = "/brokers";
+	public final static String STATIC_HOST = "";
 	
 	public final static String PROP_BROKER_TOPIC = "broker.topic";
 	public final static String PROP_KAFKA_IDCLIENT = "kafka.idClient";
-	public final static String KAFKA_TOPIC = "webserverlog";
+	public final static String KAFKA_TOPIC = "openbuslogs";
 	public final static String KAFKA_BROKER_PORT = "9092"; 	
-	public final static String KAFKA_IDCLIENT = "idOpenbus";
+	public final static String KAFKA_IDCLIENT = "StormOpenbus";
 	
 	public final static String PROP_HBASE_TABLE_REQUEST = "hbase.table.request";
 	public final static String PROP_HBASE_ROWID_REQUEST = "hbase.rowid.request";
@@ -35,7 +35,7 @@ public interface Conf {
 	public final static String PROP_HBASE_ROWID_USER = "hbase.rowid.user";	
 	public final static String PROP_HBASE_TABLE_USER = "hbase.table.user";
 	public final static String PROP_HBASE_TABLE_SESSION = "hbase.table.session";
-	public final static String HBASE_TABLE_SESSION = "wslog_session";	
+	public final static String HBASE_TABLE_SESSION = "wslog_session";
 	public final static String HBASE_TABLE_REQUEST = "wslog_request";
 	public final static String HBASE_TABLE_USER = "wslog_user";
 	public final static String HBASE_ROWID_REQUEST = "request";
@@ -49,8 +49,8 @@ public interface Conf {
 			 						
 	public final static String PROP_HDFS_USE = "hdfs";
 	public final static String HDFS_USE = "no";
-	public final static String HDFS_DIR = "hdfs://pivhdsne:8020/user/gpadmin/openbus";
-	public final static String HDFS_USER = "gpadmin";
+	public final static String HDFS_DIR = "hdfs://localhost:8020/user/fjavieralba/openbus";
+	public final static String HDFS_USER = "fjavieralba";
 		
 	/* Filter */
 	public final static String FILTER_HOST_WEBSERVER = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
