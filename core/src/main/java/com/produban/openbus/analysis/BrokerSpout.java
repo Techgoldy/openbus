@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import com.produban.openbus.util.Conf;
 
 import storm.kafka.BrokerHosts;
-import storm.kafka.HostPort;
 import storm.kafka.Partition;
 import storm.kafka.StaticHosts;
 import storm.kafka.ZkHosts;
@@ -38,7 +37,7 @@ import storm.trident.spout.IPartitionedTridentSpout;
  */
 public class BrokerSpout {		
 	private static final Logger LOG = LoggerFactory.getLogger(BrokerSpout.class);
-	private final static String KAFKA_TOPIC = "webserverlog";		
+	private final static String KAFKA_TOPIC = "openbuslogs";
 	private final static String KAFKA_IDCLIENT = "idOpenbus";	
 	private TridentKafkaConfig config = null;
 	private ZkHosts zhost = null;
@@ -47,37 +46,31 @@ public class BrokerSpout {
 	private IPartitionedTridentSpout<GlobalPartitionInformation, Partition, Map> partitionedTridentSpout = null;
 
 	public BrokerSpout() {
-    	zhost = new ZkHosts(Conf.ZOOKEEPER_HOST + ":" + Conf.ZOOKEEPER_PORT, Conf.ZOOKEEPER_BROKER);        
+    	zhost = new ZkHosts(Conf.ZOOKEEPER_HOST + ":" + Conf.ZOOKEEPER_PORT, Conf.ZOOKEEPER_BROKER);
         config = new TridentKafkaConfig(zhost, KAFKA_TOPIC, KAFKA_IDCLIENT);      
 	}
 	
 	public BrokerSpout(String kafkaTopic) {    	
-    	zhost = new ZkHosts(Conf.ZOOKEEPER_HOST, Conf.ZOOKEEPER_BROKER);    	
+    	zhost = new ZkHosts(Conf.ZOOKEEPER_HOST, Conf.ZOOKEEPER_BROKER);
         config = new TridentKafkaConfig(zhost, kafkaTopic, KAFKA_IDCLIENT);                        
 	}
-	
-	public BrokerSpout(String kafkaTopic, String zookeperHost, String zookeperBroker) {    	
-    	zhost = new ZkHosts(zookeperHost, zookeperBroker);    	    	    	
-        config = new TridentKafkaConfig(zhost, kafkaTopic, KAFKA_IDCLIENT);                        
+
+	public BrokerSpout(String kafkaTopic, String zookeeperHosts, String idClient) {
+        zhost = new ZkHosts(zookeeperHosts);
+        config = new TridentKafkaConfig(zhost, kafkaTopic, idClient);
+        LOG.info("BrokerSpout. zookeperHosts: " + zookeeperHosts + " topic: " + kafkaTopic + " idClient: " + idClient);
 	}
-		
-	public BrokerSpout(String kafkaTopic, String staticHosts, int port, String idClient) {
-		int i = 0;
-		GlobalPartitionInformation hostsAndPartitions = new GlobalPartitionInformation();		
-		String[] hosts = staticHosts.split(",");
-        for (String host : hosts) {   
-        	LOG.info("BrokerSpout. Host: " + host + " port: " + port + " topic: " + kafkaTopic + " idClient: " + idClient);
-        	hostsAndPartitions.addPartition(i, new HostPort(host, port));        	
-        	i++;
-        }
-        BrokerHosts brokerHosts = new StaticHosts(hostsAndPartitions);    	
-        config = new TridentKafkaConfig(brokerHosts, kafkaTopic, idClient);                        
-	}
+
+    public BrokerSpout(String kafkaTopic, String zookeeperHosts) {
+        zhost = new ZkHosts(zookeeperHosts);
+        config = new TridentKafkaConfig(zhost, kafkaTopic);
+        LOG.info("BrokerSpout. zookeperHosts: " + zookeeperHosts + " topic: " + kafkaTopic);
+    }
 	
-	public BrokerSpout(String kafkaTopic, String zookeperHost, String zookeperBroker, String idClient) {    	
-    	zhost = new ZkHosts(zookeperHost, zookeperBroker);    	
+	public BrokerSpout(String kafkaTopic, String zookeeperHosts, String zookeperBroker, String idClient) {
+    	zhost = new ZkHosts(zookeeperHosts, zookeperBroker);
         config = new TridentKafkaConfig(zhost, kafkaTopic, idClient);                        
-        LOG.info("BrokerSpout. zookeperHost: " + zookeperHost + " zookeperBroker: " + zookeperBroker + " topic: " + kafkaTopic + " idClient: " + idClient);
+        LOG.info("BrokerSpout. zookeperHosts: " + zookeeperHosts + " zookeperBroker: " + zookeperBroker + " topic: " + kafkaTopic + " idClient: " + idClient);
 	}
 	
 	@SuppressWarnings("rawtypes")
