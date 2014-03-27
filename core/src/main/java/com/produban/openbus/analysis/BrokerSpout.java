@@ -22,9 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import com.produban.openbus.util.Conf;
 
-import storm.kafka.BrokerHosts;
 import storm.kafka.Partition;
-import storm.kafka.StaticHosts;
 import storm.kafka.ZkHosts;
 import storm.kafka.trident.GlobalPartitionInformation;
 import storm.kafka.trident.TransactionalTridentKafkaSpout;
