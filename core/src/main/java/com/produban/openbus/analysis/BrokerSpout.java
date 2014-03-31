@@ -25,8 +25,10 @@ import com.produban.openbus.util.Conf;
 import storm.kafka.Partition;
 import storm.kafka.ZkHosts;
 import storm.kafka.trident.GlobalPartitionInformation;
+import storm.kafka.trident.OpaqueTridentKafkaSpout;
 import storm.kafka.trident.TransactionalTridentKafkaSpout;
 import storm.kafka.trident.TridentKafkaConfig;
+import storm.trident.spout.IOpaquePartitionedTridentSpout;
 import storm.trident.spout.IPartitionedTridentSpout;
 
 
@@ -77,4 +79,8 @@ public class BrokerSpout {
 		
 		return partitionedTridentSpout;
 	}
+
+    public IOpaquePartitionedTridentSpout<GlobalPartitionInformation, Partition, Map> getOpaquePartitionedTridentSpout() {
+        return new OpaqueTridentKafkaSpout(config);
+    }
 }
