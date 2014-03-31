@@ -25,27 +25,32 @@ public class TweetsTopology {
 
         BrokerSpout kafkaTweetSpout = new BrokerSpout( options.getKafkaTopic(),
                                                        options.getZookeeper(),
-                                                       options.getKafkaClientID());
+                                                       options.getKafkaClientID(),
+                                                       options.isForceFromStart());
         List<String> tweetFields = new ArrayList<>();
         tweetFields.add("tweetId");
         tweetFields.add("rawDate");
+        tweetFields.add("date");
         tweetFields.add("text");
+        tweetFields.add("lang");
         tweetFields.add("retweetCount");
         tweetFields.add("longitude");
         tweetFields.add("latitude");
         tweetFields.add("userFollowerCount");
         tweetFields.add("userLocation");
         tweetFields.add("userName");
+        tweetFields.add("userId");
         tweetFields.add("userImgUrl");
         tweetFields.add("urls");
         tweetFields.add("mentionedUsers");
         tweetFields.add("hashtags");
 
-        Stream stream = topology.newStream("spout", kafkaTweetSpout.getPartitionedTridentSpout())
+        Stream stream = topology.newStream("spout", kafkaTweetSpout.getOpaquePartitionedTridentSpout())
+                //topology.newStream("spout", kafkaTweetSpout.getPartitionedTridentSpout())
                 .each(new Fields("bytes"), new TweetJsonDecoder(), new Fields(tweetFields))
                 .each(new Fields("text"), new TweetFilter(options.getFilterKeyWords()))
                 //do something interesting here
-                .each(new ElasticSearchIndexer(), new Fields("indexed"));
+                .each(new Fields(tweetFields), new ElasticSearchIndexer(), new Fields("indexed"));
 
         return topology.build();
     }
@@ -92,7 +97,10 @@ public class TweetsTopology {
         String getKafkaClientID();
 
         @Option
-        String[] getFilterKeyWords();
+        List<String> getFilterKeyWords();
+
+        @Option
+        boolean isForceFromStart();
 
         @Option(shortName = "h", helpRequest = true)
         boolean getHelp();
