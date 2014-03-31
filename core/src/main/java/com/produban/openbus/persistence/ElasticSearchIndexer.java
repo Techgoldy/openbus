@@ -64,25 +64,47 @@ public class ElasticSearchIndexer extends BaseFunction{
     }
 
     private XContentBuilder buildJson(TridentTuple tridentTuple) throws IOException {
+
+        String tweetId = tridentTuple.getString(0);
+        String rawDate = tridentTuple.getString(1);
+        Object date = tridentTuple.get(2);
+        String text = tridentTuple.getString(3);
+        String lang = tridentTuple.getString(4);
+        int retweetCount = tridentTuple.getInteger(5);
+        double longitude = tridentTuple.getDouble(6);
+        double latitude = tridentTuple.getDouble(7);
+        int userFollowerCount = tridentTuple.getInteger(8);
+        String userLocation = tridentTuple.getString(9);
+        String userName = tridentTuple.getString(10);
+        String userId = tridentTuple.getString(11);
+        String userImgUrl = tridentTuple.getString(12);
+        String[] urls = tridentTuple.getString(13).split("\\|");
+        String[] mentionedUsers = tridentTuple.getString(14).split("\\|");
+        String[] hashtags = tridentTuple.getString(15).split("\\|");
+
         XContentBuilder builder = jsonBuilder()
                 .startObject()
-                .field("tweetId", tridentTuple.getString(0))
-                .field("rawDate", tridentTuple.getString(1))
-                .field("date", tridentTuple.get(2))
-                .field("text", tridentTuple.getString(3))
-                .field("lang", tridentTuple.getString(4))
-                .field("retweetCount", tridentTuple.getInteger(5))
-                .array("location", new String[] {tridentTuple.getDouble(6).toString(), tridentTuple.getDouble(7).toString()})
-                .field("longitude", tridentTuple.getDouble(6))
-                .field("latitude", tridentTuple.getDouble(7))
-                .field("userFollowerCount", tridentTuple.getInteger(8))
-                .field("userLocation", tridentTuple.getString(9))
-                .field("userName", tridentTuple.getString(10))
-                .field("userID", tridentTuple.getString(11))
-                .field("userImgUrl", tridentTuple.getString(12))
-                .array("urls", tridentTuple.getString(13).split("\\|"))
-                .array("mentionedUsers", tridentTuple.getString(14).split("\\|"))
-                .array("hashtags", tridentTuple.getString(15).split("\\|"))
+                .field("tweetId", tweetId)
+                .field("rawDate", rawDate)
+                .field("date", date)
+                .field("text", text)
+                .field("lang", lang)
+                .field("retweetCount", retweetCount);
+
+        if (longitude != 0 || latitude != 0) {
+            builder.field("longitude", longitude)
+                   .field("latitude", latitude)
+                   .array("location", new String[] {Double.toString(longitude), Double.toString(latitude)});
+        }
+
+        builder.field("userFollowerCount", userFollowerCount)
+                .field("userLocation", userLocation)
+                .field("userName", userName)
+                .field("userId", userId)
+                .field("userImgUrl", userImgUrl)
+                .array("urls", urls)
+                .array("mentionedUsers", mentionedUsers)
+                .array("hashtags", hashtags)
                 .endObject();
 
         return builder;
