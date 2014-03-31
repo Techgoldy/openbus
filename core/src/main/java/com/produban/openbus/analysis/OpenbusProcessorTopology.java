@@ -64,7 +64,8 @@ public class OpenbusProcessorTopology {
 	    	    
 	    BrokerSpout openbusBrokerSpout = new BrokerSpout( options.getKafkaTopic(),
                                                           options.getZookeeper(),
-                                                          options.getKafkaClientID());
+                                                          options.getKafkaClientID(),
+                                                          options.isForceFromStart());
 
         //We need to know what fields will be produced after Avro messages decoding.
         //We use the avro schema for that (even when we dont need the schema to decode
@@ -165,6 +166,9 @@ public class OpenbusProcessorTopology {
 
         @Option(defaultValue =  "session")
         String getHbaseSessionTableRowId();
+
+        @Option
+        boolean isForceFromStart();
 
         @Option(shortName = "h", helpRequest = true)
         boolean getHelp();

@@ -25,7 +25,8 @@ public class TweetsTopology {
 
         BrokerSpout kafkaTweetSpout = new BrokerSpout( options.getKafkaTopic(),
                                                        options.getZookeeper(),
-                                                       options.getKafkaClientID());
+                                                       options.getKafkaClientID(),
+                                                       options.isForceFromStart());
         List<String> tweetFields = new ArrayList<>();
         tweetFields.add("tweetId");
         tweetFields.add("rawDate");
@@ -71,7 +72,6 @@ public class TweetsTopology {
         Config stormConfig = new Config();
         stormConfig.setNumWorkers(appOptions.getStormNumWorkers());
 
-
         StormSubmitter.submitTopology(appOptions.getTopologyName(), stormConfig, buildTopology(appOptions));
     }
 
@@ -98,6 +98,9 @@ public class TweetsTopology {
 
         @Option
         List<String> getFilterKeyWords();
+
+        @Option
+        boolean isForceFromStart();
 
         @Option(shortName = "h", helpRequest = true)
         boolean getHelp();
