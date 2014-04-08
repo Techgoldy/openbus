@@ -48,7 +48,7 @@ public class TweetsTopology {
         Stream stream = topology.newStream("spout", kafkaTweetSpout.getOpaquePartitionedTridentSpout())
                 //topology.newStream("spout", kafkaTweetSpout.getPartitionedTridentSpout())
                 .each(new Fields("bytes"), new TweetJsonDecoder(), new Fields(tweetFields))
-                .each(new Fields("text"), new TweetFilter(options.getFilterKeyWords()))
+                .each(new Fields("text"), new KeywordsFilter(options.getFilterKeyWords()))
                 //do something interesting here
                 .each(new Fields(tweetFields), new ElasticSearchIndexer(), new Fields("indexed"));
 

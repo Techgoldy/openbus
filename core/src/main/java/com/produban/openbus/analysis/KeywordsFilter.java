@@ -10,16 +10,20 @@ import java.util.List;
 import static com.produban.openbus.util.Common.join;
 
 /**
- * Trident filter for tweets
+ * Trident filter that allows only messages that contain at least one keyword.
+ *
+ * This filter expects the text to be present in the first field of the input tuple.
+ *
+ * If the text contains one or more keywords, it will pass.
  */
-public class TweetFilter extends BaseFilter {
+public class KeywordsFilter extends BaseFilter {
 
     String regex;
-    private static final Logger logger = LoggerFactory.getLogger(TweetFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(KeywordsFilter.class);
 
-    public TweetFilter(List<String> keywords) {
-        //lowercase text and words
-        logger.info("tweet filter keywords:");
+    public KeywordsFilter(List<String> keywords) {
+        //lowercase keywords
+        logger.info("filter keywords:");
         for (int i = 0; i < keywords.size(); i++) {
             keywords.set(i, keywords.get(i).toLowerCase());
             System.out.println(keywords.get(i));
@@ -29,7 +33,7 @@ public class TweetFilter extends BaseFilter {
     }
 
     @Override
-    //filter every tweet not containing at least one keyword
+    //filter every text message not containing at least one keyword
     public boolean isKeep(TridentTuple objects) {
         String text = objects.getString(0).toLowerCase();
         if (text == null){
