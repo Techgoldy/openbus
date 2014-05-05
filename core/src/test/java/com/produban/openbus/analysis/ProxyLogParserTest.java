@@ -19,7 +19,6 @@ package com.produban.openbus.analysis;
 import static org.junit.Assert.*;
 import java.util.HashMap;
 import org.junit.Test;
-import com.produban.openbus.analysis.ProxyLogParser;
 
 public class ProxyLogParserTest {
 	
@@ -46,7 +45,7 @@ public class ProxyLogParserTest {
 	
 	@Test
 	public void parseLogLine1() {
-		HashMap<String, String> record = parser.parseLogLine(LOGLINE1);
+		HashMap<String, String> record = parser.parse(LOGLINE1);
 		
 		assertEquals("Jun 01 00:14:45", record.get("BATCHDATE"));
 		assertEquals("Bank.Bank.CommunicationSystems.Proxy.production.SAN.blah", record.get("PROXYCLASS"));
@@ -66,7 +65,7 @@ public class ProxyLogParserTest {
 	
 	@Test
 	public void parseLogLine2() {
-		HashMap<String, String> record = parser.parseLogLine(LOGLINE2);
+		HashMap<String, String> record = parser.parse(LOGLINE2);
 		
 		assertEquals("Jun 01 00:14:45", record.get("BATCHDATE"));
 		assertEquals("Bank.Bank.CommunicationSystems.Proxy.production.SAN.blah", record.get("PROXYCLASS"));
@@ -86,7 +85,7 @@ public class ProxyLogParserTest {
 	
 	@Test
 	public void parseLogLine3() {
-		HashMap<String, String> record = parser.parseLogLine(LOGLINE3);
+		HashMap<String, String> record = parser.parse(LOGLINE3);
 		
 		assertEquals("Jun 01 05:14:45", record.get("BATCHDATE"));
 		assertEquals("Bank.Bank.CommunicationSystems.Proxy.production.SAN.blah", record.get("PROXYCLASS"));
