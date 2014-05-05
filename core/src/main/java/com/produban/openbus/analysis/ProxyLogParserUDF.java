@@ -22,22 +22,22 @@ public class ProxyLogParserUDF extends EvalFunc<Tuple> {
 			TupleFactory tf = TupleFactory.getInstance();
 			Tuple tuple = tf.newTuple();
 
-			HashMap<String, String> parsedLine = parser.parseLogLine(line);
+			HashMap<String, String> parsedLine = parser.parse(line);
 
-			tuple.append(parsedLine.get("BATCHDATE"));
-			tuple.append(parsedLine.get("PROXYCLASS"));
-			tuple.append(parsedLine.get("PROXYIP"));
-			tuple.append(parsedLine.get("USER"));
-			tuple.append(parsedLine.get("REQUESTDATE"));
-			tuple.append(parsedLine.get("HTTPMETHOD"));
-			tuple.append(parsedLine.get("URL"));
-			tuple.append(parsedLine.get("HTTPSTATUS"));
-			tuple.append(parsedLine.get("PORT"));
-			tuple.append(parsedLine.get("SQUIDRESULTCODE"));
-			tuple.append(parsedLine.get("SQUIDHIERARCHYCODE"));
-			tuple.append(parsedLine.get("POLICY"));
-			tuple.append(parsedLine.get("EXTRAFIELDS"));
-			tuple.append(parsedLine.get("CLIENTIP"));
+			tuple.append(parsedLine.get(ProxyLogParser.BATCHDATE));
+			tuple.append(parsedLine.get(ProxyLogParser.PROXYCLASS));
+			tuple.append(parsedLine.get(ProxyLogParser.PROXYIP));
+			tuple.append(parsedLine.get(ProxyLogParser.USER));
+			tuple.append(parsedLine.get(ProxyLogParser.REQUESTDATE));
+			tuple.append(parsedLine.get(ProxyLogParser.HTTPMETHOD));
+			tuple.append(parsedLine.get(ProxyLogParser.URL));
+			tuple.append(parsedLine.get(ProxyLogParser.HTTPSTATUS));
+			tuple.append(parsedLine.get(ProxyLogParser.PORT));
+			tuple.append(parsedLine.get(ProxyLogParser.SQUIDRESULTCODE));
+			tuple.append(parsedLine.get(ProxyLogParser.SQUIDHIERARCHYCODE));
+			tuple.append(parsedLine.get(ProxyLogParser.POLICY));
+			tuple.append(parsedLine.get(ProxyLogParser.EXTRAFIELDS));
+			tuple.append(parsedLine.get(ProxyLogParser.CLIENTIP));
 
 			return tuple;
 		} catch (Exception e) {
@@ -49,20 +49,20 @@ public class ProxyLogParserUDF extends EvalFunc<Tuple> {
      try {
          Schema s = new Schema();
 
-         s.add(new Schema.FieldSchema("batch_date", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("proxy_class", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("proxy_ip", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("user", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("request_date", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("http_method", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("url", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("http_status", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("port", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("squid_result_code", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("squid_hierarchy_code", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("policy", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("extra_fields", DataType.CHARARRAY));
-         s.add(new Schema.FieldSchema("client_ip", DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.BATCHDATE, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.PROXYCLASS, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.PROXYIP, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.USER, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.REQUESTDATE, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.HTTPMETHOD, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.URL, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.HTTPSTATUS, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.PORT, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.SQUIDRESULTCODE, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.SQUIDHIERARCHYCODE, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.POLICY, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.EXTRAFIELDS, DataType.CHARARRAY));
+         s.add(new Schema.FieldSchema(ProxyLogParser.CLIENTIP, DataType.CHARARRAY));
 
          return s;
      } catch (Exception e) {
