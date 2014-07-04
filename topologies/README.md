@@ -17,6 +17,7 @@ Deploying the Openbus architecture in your environment involves the following de
 
 Since Storm-HDFS already has its own Hadoop dependencies (2.2.0 by default), if you are using a different version in your cluster, you must exclude the plugin dependency as follows:
 
+```xml
 <dependency>
   <groupId>com.github.ptgoetz</groupId>
   <artifactId>storm-hdfs</artifactId>
@@ -32,6 +33,7 @@ Since Storm-HDFS already has its own Hadoop dependencies (2.2.0 by default), if 
 		</exclusion>
 	</exclusions>
 </dependency>
+```
 
 Once Storm-HDFS dependencies are excluded you must include you Hadoop version based dependencies.
 
