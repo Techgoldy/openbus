@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title th:text="#{create.label.title}"></title>
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/styles.css}" />
+<link rel="stylesheet" type="text/css" media="all"	th:href="@{/styles/menu.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery.dataTables.css}" />
+
+<script type="text/javascript">
+	var queryTypeTooltip = '<span th:text="#{create.tooltip.type1}"></span><br/><i><span th:text="#{create.tooltip.type2}"></span></i>';
+	var querySelectTooltip = '<span th:text="#{create.tooltip.select1}"></span><br/><span th:text="#{create.tooltip.select2}"></span><br/><i><span th:text="#{create.tooltip.select3}"></span></i>';
+	var queryFromTooltip = '<span th:text="#{create.tooltip.from1}"></span><br/><br/><i><span th:text="#{create.tooltip.from2}"></span></i>';
+	var queryWhereTooltip = '<span th:text="#{create.tooltip.where1}"></span><br/><i><span th:text="#{create.tooltip.where2}"></span></i>';
+	var timestampTooltip = '<span th:text="#{create.tooltip.timestamp}"/>';
+	
+	$(document).ready(function() {
+		var query = '';
+		
+		// Select source function
+		$('#selSources').click(function() {
+			$('#idSource').val($('#selSources').val());
+			$('#selSourceName').val($( "#selSources option:selected" ).text());
+			$('#selFields').load('getFieldsBySource', {idSource: $('#idSource').val()} );
+			//$('#selFieldsId').load('getFieldsBySource', {idSource: $('#idSource').val()} );
+			$('#txtQueryFrom').val("FROM " + $( "#selSources option:selected" ).text());
+		});
+		
+		// Select Fields function
+		$('#selFields').change(function(){ 
+			query += $('#selFields option:selected' ).text() + ' ';
+			//$('#txtQuerySelect').val($('#txtQuerySelect').val() + query);
+		});
+		
+		// Tooltip functions
+		$('#txtQueryType').balloon({ position: 'top',contents: queryTypeTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
+		$('#txtQuerySelect').balloon({ position: 'top',contents: querySelectTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
+		//$('#txtQueryFrom').balloon({ position: 'top',contents: queryFromTooltip});
+		//$('#txtQueryWhere').balloon({ position: 'top',contents: queryWhereTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
+		$('#txtTimestamp').balloon({ position: 'top',contents: timestampTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
+		
+		// Timestamp function
+		/*
+		$('input[type=radio][name=rdTimestamp]').change(function() {
+			if($("#rdTimestampSi").is(':checked')){
+				if($('#txtTimestamp').val() == ''){
+					$("#txtTimestamp").attr('required', '');					
+				}
+				else{
+					$("#txtTimestamp").removeAttr('required'); 
+				}
+			}
+			else{
+				$("#txtTimestamp").removeAttr('required'); 
+			}
+		});
+		*/
+		
+		// Submit function		
+		$('#createForm').submit(function( event ) {
+			$('#txtQueryFrom').removeAttr('disabled');
+			$("#loadingDiv").show();
+		});
+		
+	});
+	
+</script>
+</head>
+<body>
+	<div id='loadingDiv'>
+	    <img src="/images/ajax-loader.gif" th:attr="src=@{/images/ajax-loader.gif}" />
+	</div> 	
+	<div class="container">
+			<form id="createForm" th:action="@{/console/createBatchMetric}" th:object="${metricaBatch}" method="post" >
+				<h2 th:text="#{create.label.title}"></h2>
+				<div id="tableContainer" style="width:800px;height:480px; overflow:auto;">
+					<table>
+						<tr>
+							<td><label for="lblMetricName" class="classLabel"  th:text="#{create.label.nombre}"></label>*</td>
+							<td><label for="lblMetricDescription" class="classLabel" th:text="#{create.label.descripcion}"></label></td>
+						</tr>	
+						<tr>
+							<td><input id="txtMetricName" type="text" class="classText" th:field="*{batchMetricName}" required="required"/></td>
+							<td><input id="txtMetricDescription" type="text" class="classText" th:field="*{batchMetricDesc}" /></td>
+						</tr>		 
+						<tr>
+							<td><label for="lblInputs" class="classLabel" th:text="#{create.label.origenes}"></label>*</td>
+							<td id="tdLblFields">
+								<label for="lblFields" class="classLabel" th:text="#{create.label.campos}"></label>
+								<label for="lblFieldsId" class="classLabel" style="width:150px;display:none;" th:text="#{create.label.camposid}"></label>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<select id="selSources" name="selSources" class="classSelect" multiple="multiple" required="required">
+									<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
+								</select>
+								<input id="selSourceName" name="selSourceName" type="hidden"/>
+							</td>
+							<td id="tdSelectFields">
+								<select id="selFields" class="classSelect" multiple="multiple">
+									<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
+								</select>
+								<!-- 
+								<select id="selFieldsId" class="classSelect" multiple="multiple" style="width:148px;display:none;">
+									<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
+								</select>
+								 -->
+								<input id="idSource" type="hidden"/>
+							</td>			
+						</tr>
+						<tr><td></td></tr>
+						<tr>
+							<td><label for="lblQueryType" class="classLabel" th:text="#{create.label.query.type}"></label>*</td>
+							<td>
+								<label for="lblQuery" class="classLabel" th:text="#{create.label.tipo}"></label>*
+								<input type="radio" name="rdMetricType" value="Batch" required="required" th:text="#{create.label.tipo.batch}"/>
+								<input type="radio" name="rdMetricType" value="Online" required="required" th:text="#{create.label.tipo.online}"/>				
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><textarea class="classQuery" id="txtQueryType" rows="3" cols="102" name="txtQueryType" required="required"></textarea></td><td></td>
+						</tr>
+						<tr>
+							<td><label for="lblQuerySelect" class="classLabel" th:text="#{create.label.query.select}"></label>*</td>
+							<td>
+								<label for="lblTimestamp" class="classLabel" th:text="#{create.label.timestamp}"/>
+								<!-- 
+								<input type="radio" name="rdTimestamp" id="rdTimestampSi" th:text="#{create.label.timestamp.si}" />
+								<input type="radio" name="rdTimestamp" id="rdTimestampNo" th:text="#{create.label.timestamp.no}"/>
+								 -->
+								<input id="txtTimestamp" type="text" name="txtTimestamp" th:value="#{create.value.tiemstamp}" class="classText" style="border: 1px solid #CCC;background: #F6F6F6;font-family: 'Tahoma';color:#1C94C4;margin:5px;width:215px;"/>				
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><textarea class="classQuery" id="txtQuerySelect" rows="3" cols="102" name="txtQuerySelect" required="required"></textarea></td><td></td>
+						</tr>
+						<tr>
+							<td colspan="2"><label for="lblQueryFrom" class="classLabel" th:text="#{create.label.query.form}"></label></td>
+						</tr>
+						<tr>
+							<td colspan="2"><textarea disabled="disabled" class="classQuery" id="txtQueryFrom" rows="1" cols="102" name="txtQueryFrom" required="required"></textarea></td><td></td>
+						</tr>
+						<tr>
+							<td colspan="2"><label for="lblQueryWhere" class="classLabel" th:text="#{create.label.query.where}"></label></td>
+						</tr>
+						<tr>
+							<td colspan="2"><textarea class="classQuery" id="txtQueryWhere" rows="3" cols="102" name="txtQueryWhere"></textarea></td><td></td>
+						</tr>
+						<tr height="10"></tr>
+						<tr>
+							<td><input id="btSubmit" type="submit" class="classButton" value="Crear y lanzar m&eacute;trica"/></td>
+						</tr>
+					</table>
+				</div>					
+			</form>
+	</div>
+</body>
+</html>

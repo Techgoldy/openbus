@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title th:text="#{show.label.title}"></title>
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery.dataTables.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery-ui.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/dataTables.jqueryui.css}" />
+<script th:src="@{/js/jquery.dataTables.min.js}" />
+<script th:src="@{/js/dataTables.bootstrap.js}" />
+<script th:src="@{/js/jquery-ui.min.js}" />
+
+<script type="text/javascript" class="init">
+$(document).ready(function() {
+	$('#loadingDiv').hide();
+	$(document).ajaxStart(function(){$("#loadingDiv").show();});
+	$(document).ajaxStop(function(){$("#loadingDiv").hide();});
+	
+	var table = $('#example').DataTable({	
+        "scrollY": "300px",
+        "scrollCollapse": true,
+        "jQueryUI":       true,
+        "language": {
+            "lengthMenu": "_MENU_ <span th:text='#{show.datatable.lengthmenu}'></span>",
+            "zeroRecords": "<span th:text='#{exception.message.resource}'></span>",
+            "info": "<span th:text='#{show.datatable.info}'></span> _PAGE_ de _PAGES_",
+            "infoEmpty": "",
+            "infoFiltered": "",
+            "loadingRecords": "<span th:text='#{show.datatable.loadingRecords}'></span>.",
+            "processing":     "<span th:text='#{show.datatable.processing}'></span>",
+            "search":         "<span th:text='#{show.datatable.search}'></span>",
+            "zeroRecords":    "<span th:text='#{show.datatable.zeroRecords}'></span>",
+            "paginate": {
+                "first":      "<span th:text='#{show.datatable.first}'></span>",
+                "last":       "<span th:text='#{show.datatable.last}'></span>",
+                "next":       "<span th:text='#{show.datatable.next}'></span>",
+                "previous":   "<span th:text='#{show.datatable.previous}'></span>"
+            }
+        }
+	});
+	
+	 $("#tabs").tabs( {
+	        "activate": function(event, ui) {$( $.fn.dataTable.tables( true ) ).DataTable().columns.adjust();}
+     } );
+});
+
+function relaunchMetric(idMetric){
+	$( "#divShow" ).load('reLaunchMetric', {idMetric: idMetric}, function() {
+		var table = $('#example').DataTable({
+			"scrollY": "300px",
+	        "scrollCollapse": true,
+	        "jQueryUI":       true,
+	        "language": {
+	            "lengthMenu": "_MENU_ <span th:text='#{show.datatable.lengthmenu}'></span>",
+	            "zeroRecords": "<span th:text='#{exception.message.resource}'></span>",
+	            "info": "<span th:text='#{show.datatable.info}'></span> _PAGE_ de _PAGES_",
+	            "infoEmpty": "",
+	            "infoFiltered": "",
+	            "loadingRecords": "<span th:text='#{show.datatable.loadingRecords}'></span>.",
+	            "processing":     "<span th:text='#{show.datatable.processing}'></span>",
+	            "search":         "<span th:text='#{show.datatable.search}'></span>",
+	            "zeroRecords":    "<span th:text='#{show.datatable.zeroRecords}'></span>",
+	            "paginate": {
+	                "first":      "<span th:text='#{show.datatable.first}'></span>",
+	                "last":       "<span th:text='#{show.datatable.last}'></span>",
+	                "next":       "<span th:text='#{show.datatable.next}'></span>",
+	                "previous":   "<span th:text='#{show.datatable.previous}'></span>"
+	            }
+	        }
+		});		
+	});
+}
+</script>		
+
+</head>
+<body>
+<div class="container">
+	<h2 th:text="#{show.label.title}"></h2>
+	
+	<div id='loadingDiv'>
+	    <img src="/images/ajax-loader.gif" th:attr="src=@{/images/ajax-loader.gif}" />
+	</div> 	
+	<div th:fragment="divShow" id="divShow">
+		<p th:if="${errorCreateBatchMetric} == true">
+	 		<div class="alert alert-danger alert-error">
+		  		<strong th:text="#{show.label.error1}"></strong>
+		  		<span th:text="#{show.label.error2}"></span>
+		  	</div>
+	 		</p>
+	 	<p th:if="${errorCreateBatchMetric} == false">
+	  		<div class="alert alert-success">
+		  		<strong th:text="#{show.label.ok1}"></strong>
+		  		<span th:text="#{show.label.ok2}"></span>
+		  	</div>
+		</p>
+		<table id="example" class="display" cellspacing="0" width="100%">
+		    <thead>
+		    <tr>
+		        <th th:text="#{show.label.nombre}"></th>
+		        <th th:text="#{show.label.descripcion}"></th>
+		        <th th:text="#{show.label.planificacion}"></th>
+		        <th th:text="#{show.label.origen}"></th>
+		        <th th:text="#{show.label.fechaultlanz}"></th>
+		        <th>&nbsp;</th>
+		    </tr>
+		    </thead>
+		    <tbody>
+		    <tr th:each="metric : ${lstMetrics}">
+		        <td th:text="${metric.batchMetricName}"></td>
+		        <td th:text="${metric.batchMetricDesc}"></td>
+		        <td th:text="${metric.planificacion}"></td>
+		        <td th:text="${metric.esIndex}"></td>
+		        <td th:text="${metric.fechaUltModif}"></td>
+		        <td><input type="button" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:relaunchMetric(\'' + ${metric.id} + '\');'"/></td>
+		    </tr>
+		    </tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>

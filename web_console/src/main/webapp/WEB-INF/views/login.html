@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title th:text="#{login.label.title}"></title>
+<link rel="stylesheet" type="text/css" media="all"	th:href="@{/styles/menu.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap-theme.min.css}" />
+<script th:src="@{/js/bootstrap.min.js}" />
+</head>
+<body>
+	<div class="header">
+		<img th:src="@{/images/logo.png}" style="margin-left:200px" title="Logo de Produban" alt="Logo de Produban" />
+	</div>
+
+	<div class="form-signin">
+		<div id="sidebar">
+		</div>
+		<div class="main-content" id="main-content">
+			  <form action="authentication" th:action="@{/authentication}" method="post" class="form-signin">
+		  		<p th:if="${error}" style="margin-top:20px;">
+		  		  	<div class="alert alert-danger alert-error">
+				  		<strong th:text="#{login.label.error1}"></strong>
+				  		<span th:text="#{login.label.error2}"></span>
+				  	</div>
+		  		</p>
+		        <h2 style="max-width: 250px;  margin-left: 150px;" th:text="#{login.label.title}"></h2>
+		        <input type="j_username" name="j_username" class="form-login" placeholder="Username" required="required" autofocus="autofocus" />
+		        <input id="j_password" name="j_password" type="password" class="form-login" placeholder="Password" />
+		        <button class="btn btn-lg btn-primary btn-block form-login" type="submit" th:text="#{login.label.button}"></button>
+		      </form>
+		</div>
+    </div>
+</body>
+</html>

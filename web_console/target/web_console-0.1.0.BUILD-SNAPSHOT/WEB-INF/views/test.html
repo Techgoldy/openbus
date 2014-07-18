@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta charset="ISO-8859-1" />
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('.trigger').click(function(e){
+         e.preventDefault();
+         var link = $(this).attr("href");
+         $('#target').load(link);
+      });
+});
+
+</script>
+</head>
+
+<body>
+<div id='content'>
+This is some stuff that I want left alone.
+<a href="testload1.html" class="trigger">Click here</a>
+<a href="testload2.html" class="trigger">Click here</a>
+</div>
+<div id="target">
+</div>
+</body>
+</html>
