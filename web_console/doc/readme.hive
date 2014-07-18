@@ -1,0 +1,11 @@
+Requerimientos y pasos a seguir para instalar el proyecto:
+
+- Instalar desde un entorno Linux o con una máquina virtual de cloudera.
+- Tener instalado la version 1.6 de Java.
+- Extraer el archivo en un directorio (tar -xvf hivehbaseconnector.tar).
+- Abrir el eclipse e importar el proyecto como existente en el workspace.
+- Ejecutar maven install desde eclipse.
+- Dotar de permisos de escritura al archivo 'putLogInHdfs.sh' (chmod 777 putLogInHdfs).
+- Ejecutar el archivo 'putLogInHdfs.sh' (./putLogInHdfs.sh').
+- Cambiar si se desea el archivo 'LogExample.log', este es un log tipo para luego extraer métricas y datos.
+- Ejecutar los test unitarios con junit de 'com.produban.openbus2.hive' y 'com.produban.openbus2.hbase'.

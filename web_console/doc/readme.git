@@ -1,0 +1,11 @@
+#Crear repositorio y subir archivos
+git clone [nombre_repositorio] (https://github.com/produban/openbus.git)
+git checkout -b [nombre_rama](web_console)
+git add *
+git commit -m "mensaje"
+git push origin [nombre_rama](web_console)
+
+#Si se quieren borrar archivos
+rm -r --cached [nombre_archivo]
+git commit -m "mensaje"
+git push origin [nombre_rama](web_console)

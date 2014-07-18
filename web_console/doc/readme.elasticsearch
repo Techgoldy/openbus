@@ -1,0 +1,56 @@
+Requerimientos:
+
+- elasticsearch-1.2.0.tar.gz : Distribución de elasticsearch
+- elasticsearch-hadoop-2.0.0.RC1.jar : Librería para la integración con Hive
+- Java 1.7
+
+Configuración:
+
+- Instalar al menos la versión 1.7 de Java, con la 1.6 no funcionará la versión 1.2.0 de ES.
+- Copiar elasticsearch-hadoop-2.0.0.RC1.jar en el directorio de librerías de hive, en nuestro caso : /usr/lib/hive/lib
+- Copiar la siguiente entrada en /usr/lib/hive/conf/hive-site.xml
+
+    <property>
+            <name>hive.aux.jars.path</name>
+            <value>file:///usr/lib/hive/lib/elasticsearch-hadoop-2.0.0.RC1.jar</value>   
+    </property>
+
+- (Opcional) Lanzar desde línea de comandos:
+
+        hive -hiveconf hive.aux.jars.path=/usr/lib/hive/lib/elasticsearch-hadoop-2.0.0.RC1.jar
+       
+- Lanzar desde la consola Hive:
+
+        ADD JAR /usr/lib/hive/lib/elasticsearch-hadoop-2.0.0.RC1.jar;
+       
+
+Ejecución:
+
+- Reiniciar hive server y arrancar elasticsearch server
+
+- Para la creación de la tabla e inserción de datos en ES, desde Hive:
+
+        CREATE EXTERNAL TABLE metrica_es(
+                usercode STRING,
+                cuenta BIGINT
+        )
+        STORED BY 'org.elasticsearch.hadoop.hive.EsStorageHandler'
+        TBLPROPERTIES('es.resource' = 'proxy/metrica_es/');
+       
+        INSERT INTO TABLE metrica_es SELECT usercode,count(1) FROM metrica1 GROUP BY usercode;
+       
+- Para la visualización de los datos en Hive:
+
+        SELECT * FROM metrica_es;
+       
+- Para la visualización de los datos en ES:
+
+        Para obtener no hay que especificar index/type/id, sino que podemos usar “_search?”
+
+         curl -XGET "http://localhost:9200/proxy/metrica_es/_search?q=cuenta=1&size=20"
+
+        Borrado:
+
+        El ejemplo borraría todos los docs del type “metricas”
+
+        curl -XDELETE "http://localhost:9200/proxy/metrica_es"
