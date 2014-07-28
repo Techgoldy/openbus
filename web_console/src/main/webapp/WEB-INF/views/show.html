@@ -13,8 +13,13 @@
 <script th:src="@{/js/jquery-ui.min.js}" />
 
 <script type="text/javascript" class="init">
+var idMetric = null;
+var rowSelected = false;
+var table = null;
+
 $(document).ready(function() {
-	var table = $('#example').DataTable({	
+	table = $('#example').DataTable({
+		"columnDefs": [{ "visible": false, "targets": 0 }],	
         "scrollY": "300px",
         "scrollCollapse": true,
         "jQueryUI":       true,
@@ -34,39 +39,107 @@ $(document).ready(function() {
                 "next":       "<span th:text='#{show.datatable.next}'></span>",
                 "previous":   "<span th:text='#{show.datatable.previous}'></span>"
             }
-        }
+        }        
 	});
 	
-	 $("#tabs").tabs( {
-	        "activate": function(event, ui) {$( $.fn.dataTable.tables( true ) ).DataTable().columns.adjust();}
-     } );
+	$(document).tooltip({
+        track:true
+    });
+	
+	$(".close").click(function(){
+	      $("#errorDiv").hide();
+	      $("#warningDiv").hide();
+	      $("#messageDiv").hide();
+	});
 });
 
-function relaunchMetric(idMetric){
-	$( "#divShow" ).load('reLaunchMetric', {idMetric: idMetric}, function() {
-		var table = $('#example').DataTable({
-			"scrollY": "300px",
-	        "scrollCollapse": true,
-	        "jQueryUI":       true,
-	        "language": {
-	            "lengthMenu": "_MENU_ <span th:text='#{show.datatable.lengthmenu}'></span>",
-	            "zeroRecords": "<span th:text='#{exception.message.resource}'></span>",
-	            "info": "<span th:text='#{show.datatable.info1}'></span> _START_ to _END_ of _TOTAL_ <span th:text='#{show.datatable.info2}'></span>",
-	            "infoEmpty": "",
-	            "infoFiltered": "",
-	            "loadingRecords": "<span th:text='#{show.datatable.loadingRecords}'></span>.",
-	            "processing":     "<span th:text='#{show.datatable.processing}'></span>",
-	            "search":         "<span th:text='#{show.datatable.search}'></span>",
-	            "zeroRecords":    "<span th:text='#{show.datatable.zeroRecords}'></span>",
-	            "paginate": {
-	                "first":      "<span th:text='#{show.datatable.first}'></span>",
-	                "last":       "<span th:text='#{show.datatable.last}'></span>",
-	                "next":       "<span th:text='#{show.datatable.next}'></span>",
-	                "previous":   "<span th:text='#{show.datatable.previous}'></span>"
-	            }
-	        }
-		});		
-	});
+$('#example tbody').on('click', 'tr', function () {
+	idMetric = table.row(this).data()[0];		
+    if ( $(this).hasClass('selected') ) {
+        $(this).removeClass('selected');	            
+        rowSelected = false;
+    }
+    else {
+        table.$('tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+        rowSelected = true;
+    }
+});
+
+$('#example tbody').on('dblclick', 'tr', function () {
+    if ( $(this).hasClass('selected') ) {
+        $(this).removeClass('selected');	            
+        rowSelected = false;
+    }
+    else {
+        table.$('tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+        rowSelected = true;
+        idMetric = table.row(this).data()[0];
+        $(".main-content").load('console/updateMetric', {idMetric: idMetric} );
+    }
+});
+
+function deleteMetric(){
+	if (idMetric != null){
+		if(rowSelected){
+			$.ajax({ 						
+			    url: "/web_console/console/deleteMetric", 
+			    type: 'GET', 
+			    data: {idMetric: idMetric},
+			    success: function(data) { 
+					$(".main-content").load('/web_console/console/show');
+			    	$("#loadingDiv").hide();
+			    	$("#messageDiv").show();
+			    },
+			    error:function(error) {
+			    	$("#loadingDiv").hide();
+			    	$("#errorDiv").show();
+			    }			    
+			});			
+		}
+		else{
+			$("#warningDiv").show();
+		}
+	}
+	else{
+		$("#warningDiv").show();
+	}
+}
+
+function modifyMetric(){
+	if (idMetric != null){
+		if(rowSelected){
+			$(".main-content").load('console/updateMetric', {idMetric: idMetric} );
+		}
+		else{
+			$("#warningDiv").show();
+		}
+	}
+	else{
+		$("#warningDiv").show();
+	}
+}
+
+function refreshTable(){
+	$(".main-content").load('console/show');
+}		
+
+function reLaunchMetric(idMetric){
+	$.ajax({ 						
+	    url: "/web_console/console/reLaunchMetric", 
+	    type: 'GET', 
+	    data: {idMetric: idMetric},
+	    success: function(data) { 
+			$(".main-content").load('/web_console/console/show');
+	    	$("#loadingDiv").hide();
+	    	$("#messageDiv").show();
+	    },
+	    error:function(error) {
+	    	$("#loadingDiv").hide();
+	    	$("#errorDiv").show();
+	    }			    
+	});			
 }
 </script>		
 
@@ -75,40 +148,55 @@ function relaunchMetric(idMetric){
 <div class="container">
 	<h2 th:text="#{show.label.title}"></h2>
 	<div id='loadingDiv'>
-	    <img src="/images/ajax-loader.gif" th:attr="src=@{/images/ajax-loader.gif}" />
+	    <img th:attr="src=@{/images/ajax-loader.gif}" />
 	</div> 	
 	<div th:fragment="divShow" id="divShow">
-		<p th:if="${errorCreateBatchMetric} == true">
-	 		<div class="alert alert-danger alert-error">
-		  		<strong th:text="#{show.label.error1}"></strong>
-		  		<span th:text="#{show.label.error2}"></span>
-		  	</div>
-	 		</p>
-	 	<p th:if="${errorCreateBatchMetric} == false">
-	  		<div class="alert alert-success">
-		  		<strong th:text="#{show.label.ok1}"></strong>
-		  		<span th:text="#{show.label.ok2}"></span>
-		  	</div>
-		</p>
+ 		<div id="errorDiv" class="alert alert-danger alert-error" style="display:none">
+ 			<button type="button" class="close">&times;</button>
+	  		<strong th:text="#{show.label.error1}"></strong>
+	  		<span th:text="#{show.label.error2}"></span>
+	  	</div>
+  		<div id="messageDiv" class="alert alert-success" style="display:none">
+  			<button type="button" class="close">&times;</button>
+	  		<strong th:text="#{show.label.ok1}"></strong>
+	  		<span th:text="#{show.label.ok2}"></span>
+	  	</div>
+  		<div id="warningDiv" class="alert alert-warning" style="display:none">
+	  		<button type="button" class="close">&times;</button>
+	  		<span th:text="#{show.label.error3}"></span>
+	  	</div>
+		<button id="btModify" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.modify}" th:title="#{show.label.modify}" onclick="modifyMetric();"/>
+		<button id="btDelete" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.delete}" th:title="#{show.label.delete}" onclick="deleteMetric();"/>
+		<a href="#" th:title="#{show.label.refresh}" onclick="refreshTable();"><img id="imgRefresh" th:attr="src=@{/images/refresh.ico}" style="height:30px" ></img></a>
+		<p></p>		
 		<table id="example" class="display" cellspacing="0" width="100%">
 		    <thead>
 		    <tr>
+		    	<th th:text="#{show.label.nombre}"></th>
 		        <th th:text="#{show.label.nombre}"></th>
 		        <th th:text="#{show.label.descripcion}"></th>
 		        <th th:text="#{show.label.planificacion}"></th>
 		        <th th:text="#{show.label.origen}"></th>
 		        <th th:text="#{show.label.fechaultlanz}"></th>
+		        <th th:text="#{show.label.estado}"></th>
 		        <th>&nbsp;</th>
 		    </tr>
 		    </thead>
 		    <tbody>
 		    <tr th:each="metric : ${lstMetrics}">
+		    	<td th:text="${metric.id}"></td>
 		        <td th:text="${metric.batchMetricName}"></td>
 		        <td th:text="${metric.batchMetricDesc}"></td>
 		        <td th:text="${metric.planificacion}"></td>
 		        <td th:text="${metric.esIndex}"></td>
 		        <td th:text="${metric.fechaUltModif}"></td>
-		        <td><input type="button" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:relaunchMetric(\'' + ${metric.id} + '\');'"/></td>
+		        <p th:if="${metric.estado} != Error" >
+		        	<td th:text="${metric.estado}" style="color:#3ADF00"></td>
+		        </p>
+		        <p th:if="${metric.estado} == Error" >
+		        	<td th:text="${metric.estado}" style="color:#FF0000" th:title="${metric.error}"></td>
+		        </p>
+		        <td><input type="button" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
 		    </tr>
 		    </tbody>
 		</table>

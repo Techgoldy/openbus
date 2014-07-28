@@ -101,7 +101,6 @@ div#loadingDiv{
     position: fixed;
     top: 50%;
     left: 50%;
-    background: url("/images/ajax-loader.gif");
     text-align:center;
     padding:10px;
     font:normal 16px Tahoma, Geneva, sans-serif;

@@ -1,20 +1,26 @@
 .classSelect {
 	padding: 0;
-	width: 310px;
-	background: #F6F6F6;
-	font-family: "Tahoma";
-	color: #1C94C4;
+	width: 315px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
 	margin: 5px;
-	padding: 5px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 	height: 150px;
 }
 
 .classQuery {
-	border: 1px solid #CCC;
-	background: #F6F6F6;
-	font-family: "Tahoma";
-	color: #1C94C4;
-	margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    margin: 5px;
 }
 
 .classLabel {
@@ -26,10 +32,18 @@
 }
 
 .classText {
-	border: 1px solid #CCC;
-	background: #F6F6F6;
-	font-family: "Tahoma";
-	color: #1C94C4;	
-	margin: 5px;
-	width: 310px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 315px;
+    margin: 5px;
+}
+
+.popover{
+    width:350px;
+    max-height:350px;   
 }

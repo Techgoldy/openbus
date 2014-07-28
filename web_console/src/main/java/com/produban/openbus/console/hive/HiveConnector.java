@@ -27,7 +27,8 @@ public class HiveConnector {
 	    System.setProperty("HADOOP_USER_NAME", prop.getProperty("hive.driver.user"));
 	}
 	catch (Exception e) {
-	    LOG.error(e.getMessage());
+	    e.printStackTrace();
+	    throw e;
 	}
 	return con;
     }
@@ -41,7 +42,7 @@ public class HiveConnector {
 	    LOG.info("Query done");
 	}
 	catch (Exception e) {
-	    LOG.error(e.getMessage());
+	    e.printStackTrace();
 	    throw e;
 	}
 	finally {

@@ -13,6 +13,8 @@
 <script th:src="@{/js/dataTables.bootstrap.js}" />
 <script th:src="@{/js/jquery.balloon.min.js}" />
 <script th:src="@{/js/jquery-ui.min.js}" />
+<script th:src="@{/js/bootstrap.min.js}" />
+<script th:src="@{/js/jquery.validate.min.js}" />
 <title></title>
 <script>
 $(document).ready(function(){
@@ -20,10 +22,6 @@ $(document).ready(function(){
 	    e.preventDefault();
 	    $('.' + $(this).data('container')).load(this.href);
 	});
-	
-	if('${createBatchMetric}'){
-		$('.' + $(this).data('container')).load('/console/create');
-	}
 	
 	// Ajax functions
 	$('#loadingDiv').hide();
@@ -49,6 +47,7 @@ $(document).ready(function(){
 			 		<div class="alert alert-danger alert-error">
 				  		<strong th:text="#{create.label.error1}"></strong>
 				  		<span th:text="#{create.label.error2}"></span>
+				  		<span th:text="${messageError}"></span>
 				  	</div>
 			 		</p>
 			 	<p th:if="${errorCreateBatchMetric} == false">

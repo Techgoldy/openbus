@@ -120,4 +120,76 @@ privileged aspect MetricaBatch_Roo_JavaBean {
         this.isUpdated = isUpdated;
     }
     
+    public String MetricaBatch.getTypeQuery() {
+        return this.typeQuery;
+    }
+    
+    public void MetricaBatch.setTypeQuery(String typeQuery) {
+        this.typeQuery = typeQuery;
+    }
+    
+    public String MetricaBatch.getSelectQuery() {
+        return this.selectQuery;
+    }
+    
+    public void MetricaBatch.setSelectQuery(String selectQuery) {
+        this.selectQuery = selectQuery;
+    }
+    
+    public String MetricaBatch.getFromQuery() {
+        return this.FromQuery;
+    }
+    
+    public void MetricaBatch.setFromQuery(String FromQuery) {
+        this.FromQuery = FromQuery;
+    }
+    
+    public String MetricaBatch.getWhereQuery() {
+        return this.WhereQuery;
+    }
+    
+    public void MetricaBatch.setWhereQuery(String WhereQuery) {
+        this.WhereQuery = WhereQuery;
+    }
+    
+    public String MetricaBatch.getSourceId() {
+        return this.sourceId;
+    }
+    
+    public void MetricaBatch.setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+    }
+    
+    public String MetricaBatch.getEsTimestamp() {
+        return this.esTimestamp;
+    }
+    
+    public void MetricaBatch.setEsTimestamp(String esTimestamp) {
+        this.esTimestamp = esTimestamp;
+    }
+    
+    public Boolean MetricaBatch.getIsBatch() {
+        return this.isBatch;
+    }
+    
+    public void MetricaBatch.setIsBatch(Boolean isBatch) {
+        this.isBatch = isBatch;
+    }
+    
+    public String MetricaBatch.getEstado() {
+        return this.estado;
+    }
+    
+    public void MetricaBatch.setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+    public String MetricaBatch.getError() {
+        return this.error;
+    }
+    
+    public void MetricaBatch.setError(String error) {
+        this.error = error;
+    }
+    
 }

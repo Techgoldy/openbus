@@ -39,17 +39,26 @@ privileged aspect MetricaBatchDataOnDemand_Roo_DataOnDemand {
         setBatchMetricDesc(obj, index);
         setBatchMetricName(obj, index);
         setCreateCode(obj, index);
+        setError(obj, index);
         setEsCamposId(obj, index);
         setEsIndex(obj, index);
+        setEsTimestamp(obj, index);
         setEsType(obj, index);
+        setEstado(obj, index);
         setFechaCreacion(obj, index);
         setFechaUltModif(obj, index);
+        setFromQuery(obj, index);
+        setIsBatch(obj, index);
         setIsCreated(obj, index);
         setIsUpdated(obj, index);
         setPlanificacion(obj, index);
         setQueryCode(obj, index);
+        setSelectQuery(obj, index);
+        setSourceId(obj, index);
+        setTypeQuery(obj, index);
         setUsuarioCreacion(obj, index);
         setUsuarioModificacion(obj, index);
+        setWhereQuery(obj, index);
         return obj;
     }
     
@@ -68,6 +77,11 @@ privileged aspect MetricaBatchDataOnDemand_Roo_DataOnDemand {
         obj.setCreateCode(createCode);
     }
     
+    public void MetricaBatchDataOnDemand.setError(MetricaBatch obj, int index) {
+        String error = "error_" + index;
+        obj.setError(error);
+    }
+    
     public void MetricaBatchDataOnDemand.setEsCamposId(MetricaBatch obj, int index) {
         String esCamposId = "esCamposId_" + index;
         obj.setEsCamposId(esCamposId);
@@ -78,9 +92,19 @@ privileged aspect MetricaBatchDataOnDemand_Roo_DataOnDemand {
         obj.setEsIndex(esIndex);
     }
     
+    public void MetricaBatchDataOnDemand.setEsTimestamp(MetricaBatch obj, int index) {
+        String esTimestamp = "esTimestamp_" + index;
+        obj.setEsTimestamp(esTimestamp);
+    }
+    
     public void MetricaBatchDataOnDemand.setEsType(MetricaBatch obj, int index) {
         String esType = "esType_" + index;
         obj.setEsType(esType);
+    }
+    
+    public void MetricaBatchDataOnDemand.setEstado(MetricaBatch obj, int index) {
+        String estado = "estado_" + index;
+        obj.setEstado(estado);
     }
     
     public void MetricaBatchDataOnDemand.setFechaCreacion(MetricaBatch obj, int index) {
@@ -91,6 +115,16 @@ privileged aspect MetricaBatchDataOnDemand_Roo_DataOnDemand {
     public void MetricaBatchDataOnDemand.setFechaUltModif(MetricaBatch obj, int index) {
         Date fechaUltModif = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setFechaUltModif(fechaUltModif);
+    }
+    
+    public void MetricaBatchDataOnDemand.setFromQuery(MetricaBatch obj, int index) {
+        String FromQuery = "FromQuery_" + index;
+        obj.setFromQuery(FromQuery);
+    }
+    
+    public void MetricaBatchDataOnDemand.setIsBatch(MetricaBatch obj, int index) {
+        Boolean isBatch = Boolean.TRUE;
+        obj.setIsBatch(isBatch);
     }
     
     public void MetricaBatchDataOnDemand.setIsCreated(MetricaBatch obj, int index) {
@@ -113,6 +147,21 @@ privileged aspect MetricaBatchDataOnDemand_Roo_DataOnDemand {
         obj.setQueryCode(queryCode);
     }
     
+    public void MetricaBatchDataOnDemand.setSelectQuery(MetricaBatch obj, int index) {
+        String selectQuery = "selectQuery_" + index;
+        obj.setSelectQuery(selectQuery);
+    }
+    
+    public void MetricaBatchDataOnDemand.setSourceId(MetricaBatch obj, int index) {
+        String sourceId = "sourceId_" + index;
+        obj.setSourceId(sourceId);
+    }
+    
+    public void MetricaBatchDataOnDemand.setTypeQuery(MetricaBatch obj, int index) {
+        String typeQuery = "typeQuery_" + index;
+        obj.setTypeQuery(typeQuery);
+    }
+    
     public void MetricaBatchDataOnDemand.setUsuarioCreacion(MetricaBatch obj, int index) {
         String usuarioCreacion = "usuarioCreacion_" + index;
         obj.setUsuarioCreacion(usuarioCreacion);
@@ -121,6 +170,11 @@ privileged aspect MetricaBatchDataOnDemand_Roo_DataOnDemand {
     public void MetricaBatchDataOnDemand.setUsuarioModificacion(MetricaBatch obj, int index) {
         String usuarioModificacion = "usuarioModificacion_" + index;
         obj.setUsuarioModificacion(usuarioModificacion);
+    }
+    
+    public void MetricaBatchDataOnDemand.setWhereQuery(MetricaBatch obj, int index) {
+        String WhereQuery = "WhereQuery_" + index;
+        obj.setWhereQuery(WhereQuery);
     }
     
     public MetricaBatch MetricaBatchDataOnDemand.getSpecificMetricaBatch(int index) {

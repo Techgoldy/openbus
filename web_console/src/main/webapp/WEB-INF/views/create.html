@@ -6,40 +6,40 @@
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/styles.css}" />
 <link rel="stylesheet" type="text/css" media="all"	th:href="@{/styles/menu.css}" />
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
-<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery.dataTables.css}" />
 
 <script type="text/javascript">
+/*
 	var queryTypeTooltip = '<span th:text="#{create.tooltip.type1}"></span><br/><i><span th:text="#{create.tooltip.type2}"></span></i>';
 	var querySelectTooltip = '<span th:text="#{create.tooltip.select1}"></span><br/><span th:text="#{create.tooltip.select2}"></span><br/><i><span th:text="#{create.tooltip.select3}"></span></i>';
 	var queryFromTooltip = '<span th:text="#{create.tooltip.from1}"></span><br/><br/><i><span th:text="#{create.tooltip.from2}"></span></i>';
 	var queryWhereTooltip = '<span th:text="#{create.tooltip.where1}"></span><br/><i><span th:text="#{create.tooltip.where2}"></span></i>';
 	var timestampTooltip = '<span th:text="#{create.tooltip.timestamp}"/>';
-	
+*/	
 	$(document).ready(function() {
 		var query = '';
-		
 		// Select source function
-		$('#selSources').click(function() {
-			$('#idSource').val($('#selSources').val());
-			$('#selSourceName').val($( "#selSources option:selected" ).text());
+		$('#sourceId').click(function() {
+			$('#idSource').val($('#sourceId').val());
+			$('#selSourceName').val($( "#sourceId option:selected" ).text());
 			$('#selFields').load('getFieldsBySource', {idSource: $('#idSource').val()} );
 			//$('#selFieldsId').load('getFieldsBySource', {idSource: $('#idSource').val()} );
-			$('#txtQueryFrom').val("FROM " + $( "#selSources option:selected" ).text());
+			$('#fromQuery').val("FROM " + $( "#sourceId option:selected" ).text());
 		});
 		
 		// Select Fields function
 		$('#selFields').change(function(){ 
 			query += $('#selFields option:selected' ).text() + ' ';
-			//$('#txtQuerySelect').val($('#txtQuerySelect').val() + query);
+			//$('#selectQuery').val($('#selectQuery').val() + query);
 		});
 		
 		// Tooltip functions
-		$('#txtQueryType').balloon({ position: 'top',contents: queryTypeTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
-		$('#txtQuerySelect').balloon({ position: 'top',contents: querySelectTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
-		//$('#txtQueryFrom').balloon({ position: 'top',contents: queryFromTooltip});
-		//$('#txtQueryWhere').balloon({ position: 'top',contents: queryWhereTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
+		/*
+		$('#typeQuery').balloon({ position: 'top',contents: queryTypeTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
+		$('#selectQuery').balloon({ position: 'top',contents: querySelectTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
+		$('#fromQuery').balloon({ position: 'top',contents: queryFromTooltip});
+		$('#whereQuery').balloon({ position: 'top',contents: queryWhereTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
 		$('#txtTimestamp').balloon({ position: 'top',contents: timestampTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
-		
+		*/
 		// Timestamp function
 		/*
 		$('input[type=radio][name=rdTimestamp]').change(function() {
@@ -57,22 +57,103 @@
 		});
 		*/
 		
-		// Submit function		
-		$('#createForm').submit(function( event ) {
-			$('#txtQueryFrom').removeAttr('disabled');
+		function CreateForm(){			
+			var createForm = this;
+			createForm.batchMetricName = $('#batchMetricName').val();
+			createForm.batchMetricDesc = $('#batchMetricDesc').val();
+			createForm.hidModif = $('#hidModif').val();			
+			createForm.rdMetricType = $('input[name=rdMetricType]:checked').val();
+			createForm.sourceId = $('#sourceId').val()[0];
+			createForm.typeQuery = $('textarea#typeQuery').val();
+			createForm.fromQuery = $('textarea#fromQuery').val();
+			createForm.selectQuery = $('textarea#selectQuery').val();
+			createForm.whereQuery = $('textarea#whereQuery').val();
+			createForm.esTimestamp = $('#esTimestamp').val();
+			createForm.selSourceName = $('#selSourceName').val();
+			createForm.error = null;
+		}
+		
+		$("#createForm").submit(function() {
+			$("#errorDiv").hide();
+			var createForm = new CreateForm();
+			$('#fromQuery').removeAttr('disabled');
+			$('#batchMetricName').removeAttr('disabled');
+			$('#batchMetricDesc').removeAttr('disabled');
+			$('#sourceId').removeAttr('disabled');
+			$('#rdMetricType').removeAttr('disabled');
+			$('#typeQuery').removeAttr('disabled');
 			$("#loadingDiv").show();
+			$.ajax({ 
+			    url: "/web_console/console/createMetricBBDDES", 
+			    type: 'POST', 
+			    dataType: 'json', 
+			    data: JSON.stringify(createForm), 
+			    contentType: 'application/json',
+			    mimeType: 'application/json',
+			    success: function(data) { 
+					if(data.id == 'ERROR'){
+				    	$("#loadingDiv").hide();
+				    	$("#errorDiv").show();
+				    	document.getElementById('errorMessage').innerHTML = data.error;
+					}
+					else{
+						$.ajax({ 						
+						    url: "/web_console/console/insertIntoHive", 
+						    type: 'GET', 
+						    data: {idMetric: data.id}
+						});
+				    	$(".main-content").load('/web_console/console/show');
+					}
+			    },
+			    error:function(error) {
+			    	document.getElementById('errorMessage').innerHTML = error;
+			    	$("#loadingDiv").hide();
+			    	$("#errorDiv").show();
+			    }
+			});		
 		});
 		
+		$('#imgTypeHelp').popover({
+	        html: true,
+	        content: function () {
+	            return $("#divTypeTooltipHelp").html();
+	        }
+	    });
+		$('#imgSelectHelp').popover({
+	        html: true,
+	        content: function () {
+	            return $("#divSelectTooltipHelp").html();
+	        }
+	    });
+		$('#imgWhereHelp').popover({
+	        html: true,
+	        content: function () {
+	            return $("#divWhereTooltipHelp").html();
+	        }
+	    });
+		$('#imgTimestampHelp').popover({
+	        html: true,
+	        content: function () {
+	            return $("#divTimestampTooltipHelp").html();
+	        }
+	    });
 	});
 	
 </script>
 </head>
 <body>
 	<div id='loadingDiv'>
-	    <img src="/images/ajax-loader.gif" th:attr="src=@{/images/ajax-loader.gif}" />
+	    <img th:attr="src=@{/images/ajax-loader.gif}" />
 	</div> 	
 	<div class="container">
-			<form id="createForm" th:action="@{/console/createBatchMetric}" th:object="${metricaBatch}" method="post" >
+			<div id="errorDiv" style="width:800px;display:none">
+			    <div class="alert alert-danger alert-error">
+			  		<strong th:text="#{create.label.error1}"></strong>
+			  		<span th:text="#{create.label.error2}">: </span>
+			  		<span id="errorMessage"></span>
+			    </div>
+			</div>
+			<form id="createForm" action="javascript:return false;" th:object="${metricaBatch}" method="post" >
 				<h2 th:text="#{create.label.title}"></h2>
 				<div id="tableContainer" style="width:800px;height:480px; overflow:auto;">
 					<table>
@@ -81,8 +162,20 @@
 							<td><label for="lblMetricDescription" class="classLabel" th:text="#{create.label.descripcion}"></label></td>
 						</tr>	
 						<tr>
-							<td><input id="txtMetricName" type="text" class="classText" th:field="*{batchMetricName}" required="required"/></td>
-							<td><input id="txtMetricDescription" type="text" class="classText" th:field="*{batchMetricDesc}" /></td>
+						<div class="form-group">
+							<p th:if="${metricaBatch.id} == null">						
+								<td><input id="batchMetricName" name="batchMetricName" type="text" required="required" class="classText" th:field="*{batchMetricName}" th:value="${metricaBatch.batchMetricName}"/></td>
+							</p>
+							<p th:if="${metricaBatch.id} != null">						
+								<td><input disabled="disabled" id="batchMetricName" name="batchMetricName" type="text" required="required" class="classText" th:field="*{batchMetricName}" th:value="${metricaBatch.batchMetricName}"/></td>
+							</p>
+						</div>
+							<p th:if="${metricaBatch.id} == null">
+								<td><input id="batchMetricDesc" name="batchMetricDesc" type="text" class="classText" th:field="*{batchMetricDesc}" th:value="${metricaBatch.batchMetricDesc}"/></td>
+							</p>													
+							<p th:if="${metricaBatch.id} != null">
+								<td><input disabled="disabled" id="batchMetricDesc" name="batchMetricDesc" type="text" class="classText" th:field="*{batchMetricDesc}" th:value="${metricaBatch.batchMetricDesc}"/></td>								
+							</p>
 						</tr>		 
 						<tr>
 							<td><label for="lblInputs" class="classLabel" th:text="#{create.label.origenes}"></label>*</td>
@@ -93,13 +186,13 @@
 						</tr>
 						<tr>
 							<td valign="top">
-								<select id="selSources" name="selSources" class="classSelect" multiple="multiple" required="required">
+								<select id="sourceId" name="sourceId" class="classSelect" required="required" th:field="*{sourceId}" multiple="multiple">
 									<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
 								</select>
 								<input id="selSourceName" name="selSourceName" type="hidden"/>
 							</td>
 							<td id="tdSelectFields">
-								<select id="selFields" class="classSelect" multiple="multiple">
+								<select id="selFields" name="selFields" class="classSelect" multiple="multiple"> 
 									<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
 								</select>
 								<!-- 
@@ -112,48 +205,111 @@
 						</tr>
 						<tr><td></td></tr>
 						<tr>
-							<td><label for="lblQueryType" class="classLabel" th:text="#{create.label.query.type}"></label>*</td>
+							<td><label for="lblQueryType" class="classLabel" th:text="#{create.label.query.type}"></label>*
+								<a href="#" th:title="#{create.label.help}">
+									<img id="imgTypeHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px" ></img>
+								</a> 
+							</td>
 							<td>
-								<label for="lblQuery" class="classLabel" th:text="#{create.label.tipo}"></label>*
-								<input type="radio" name="rdMetricType" value="Batch" required="required" th:text="#{create.label.tipo.batch}"/>
-								<input type="radio" name="rdMetricType" value="Online" required="required" th:text="#{create.label.tipo.online}"/>				
+								<p th:if="${metricaBatch.id} == null">
+									<label for="lblQuery" class="classLabel" th:text="#{create.label.tipo}"></label>*
+									<input type="radio" name="rdMetricType" value="1" required="required" th:text="#{create.label.tipo.batch}"/>
+									<input type="radio" name="rdMetricType" value="0" required="required" th:text="#{create.label.tipo.online}"/>
+								</p>
+								<p th:if="${metricaBatch.id} != null">
+									<label for="lblQuery" class="classLabel" th:text="#{create.label.tipo}"></label>*
+									<p th:if="${metricaBatch.isBatch} == false">								
+										<input disabled="disabled" type="radio" name="rdMetricType" value="1" required="required" th:text="#{create.label.tipo.batch}"/>
+										<input disabled="disabled" type="radio" name="rdMetricType" value="0" required="required" th:text="#{create.label.tipo.online}" checked="checked"/>
+									</p>				
+									<p th:if="${metricaBatch.isBatch} == true">								
+										<input disabled="disabled" type="radio" name="rdMetricType" value="1" required="required" th:text="#{create.label.tipo.batch}" checked="checked"/>
+										<input disabled="disabled" type="radio" name="rdMetricType" value="0" required="required" th:text="#{create.label.tipo.online}"/>
+									</p>
+								</p>													
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"><textarea class="classQuery" id="txtQueryType" rows="3" cols="102" name="txtQueryType" required="required"></textarea></td><td></td>
+							<p th:if="${metricaBatch.id} == null">						
+								<td colspan="2"><textarea class="classQuery" id="typeQuery" th:field="*{typeQuery}" rows="3" cols="100" name="typeQuery" required="required" ></textarea></td><td></td>
+							</p>
+							<p th:if="${metricaBatch.id} != null">						
+								<td colspan="2"><textarea disabled="disabled" class="classQuery" id="typeQuery" th:field="*{typeQuery}" rows="3" cols="100" name="typeQuery" required="required" ></textarea></td><td></td>
+							</p>
 						</tr>
 						<tr>
-							<td><label for="lblQuerySelect" class="classLabel" th:text="#{create.label.query.select}"></label>*</td>
+							<td><label for="lblQuerySelect" class="classLabel" th:text="#{create.label.query.select}"></label>*
+								<a href="#" th:title="#{create.label.help}">
+									<img id="imgSelectHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px" ></img>
+								</a> 
+							</td>
 							<td>
-								<label for="lblTimestamp" class="classLabel" th:text="#{create.label.timestamp}"/>
 								<!-- 
 								<input type="radio" name="rdTimestamp" id="rdTimestampSi" th:text="#{create.label.timestamp.si}" />
 								<input type="radio" name="rdTimestamp" id="rdTimestampNo" th:text="#{create.label.timestamp.no}"/>
 								 -->
-								<input id="txtTimestamp" type="text" name="txtTimestamp" th:value="#{create.value.tiemstamp}" class="classText" style="border: 1px solid #CCC;background: #F6F6F6;font-family: 'Tahoma';color:#1C94C4;margin:5px;width:215px;"/>				
+								 <p th:if="${metricaBatch.esTimestamp} == null">
+									<a href="#" th:title="#{create.label.help}">
+										<img id="imgTimestampHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
+									</a> 
+									<label for="lblTimestamp" class="classLabel" th:text="#{create.label.timestamp}"/>
+									<input id="esTimestamp" type="text" name="esTimestamp" th:value="#{create.value.tiemstamp}" class="classText" style="width:195px;"/>
+								</p>				
+								 <p th:if="${metricaBatch.esTimestamp} != null">
+									<a href="#" th:title="#{create.label.help}">
+										<img id="imgTimestampHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
+									</a> 
+									<label for="lblTimestamp" class="classLabel" th:text="#{create.label.timestamp}"/>
+									<input id="esTimestamp" type="text" th:field="*{esTimestamp}" name="esTimestamp" th:value="#{create.value.tiemstamp}" class="classText" style="width:195px;"/>
+								</p>				
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"><textarea class="classQuery" id="txtQuerySelect" rows="3" cols="102" name="txtQuerySelect" required="required"></textarea></td><td></td>
+							<td colspan="2"><textarea class="classQuery" id="selectQuery" th:field="*{selectQuery}" rows="3" cols="100" name="selectQuery" required="required"></textarea></td><td></td>
 						</tr>
 						<tr>
 							<td colspan="2"><label for="lblQueryFrom" class="classLabel" th:text="#{create.label.query.form}"></label></td>
 						</tr>
 						<tr>
-							<td colspan="2"><textarea disabled="disabled" class="classQuery" id="txtQueryFrom" rows="1" cols="102" name="txtQueryFrom" required="required"></textarea></td><td></td>
+							<td colspan="2"><textarea disabled="disabled" class="classQuery" id="fromQuery" th:field="*{fromQuery}" rows="1" cols="100" name="fromQuery" required="required"></textarea></td><td></td>
 						</tr>
 						<tr>
-							<td colspan="2"><label for="lblQueryWhere" class="classLabel" th:text="#{create.label.query.where}"></label></td>
+							<td colspan="2"><label for="lblQueryWhere" class="classLabel" th:text="#{create.label.query.where}"></label>
+								<a href="#" th:title="#{create.label.help}">
+									<img id="imgWhereHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px" ></img>
+								</a> 
+							</td>
 						</tr>
 						<tr>
-							<td colspan="2"><textarea class="classQuery" id="txtQueryWhere" rows="3" cols="102" name="txtQueryWhere"></textarea></td><td></td>
+							<td colspan="2"><textarea class="classQuery" id="whereQuery" th:field="*{whereQuery}" rows="3" cols="100" name="whereQuery"></textarea></td><td></td>
 						</tr>
 						<tr height="10"></tr>
 						<tr>
-							<td><input id="btSubmit" type="submit" class="classButton" value="Crear y lanzar m&eacute;trica"/></td>
+							<p th:if="${metricaBatch.id} == null">
+								<td><input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.lanzar}"/></td>
+								<input id="hidModif" name="hidModif" type="hidden" value="0"/>
+							</p>
+							<p th:if="${metricaBatch.id} != null">
+								<td><input id="btSubmit" type="submit" disabled="disabled" class="classButton" th:value="#{create.label.actualizar}"/></td>
+								<input id="hidModif" name="hidModif" type="hidden" value="1"/>
+							</p>
 						</tr>
 					</table>
-				</div>					
+				</div>
+				<div id="divTypeTooltipHelp" style="display:none">
+					<span th:text="#{create.tooltip.type1}"></span><br/><i><span th:text="#{create.tooltip.type2}"></span></i>
+				</div>
+				<div id="divSelectTooltipHelp" style="display:none">
+					<span th:text="#{create.tooltip.select1}"></span><br/><span th:text="#{create.tooltip.select2}"></span><br/>
+					<i><span th:text="#{create.tooltip.select3}"></span></i><br/>				
+					<i><span th:text="#{create.tooltip.select4}"></span></i>
+				</div>
+				<div id="divWhereTooltipHelp" style="display:none">
+					<span th:text="#{create.tooltip.where1}"></span><br/><i><span th:text="#{create.tooltip.where2}"></span></i>
+				</div>
+				<div id="divTimestampTooltipHelp" style="display:none">
+					<span th:text="#{create.tooltip.timestamp}"/>
+				</div>
 			</form>
 	</div>
 </body>

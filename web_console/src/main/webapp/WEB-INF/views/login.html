@@ -3,10 +3,13 @@
 <head>
 <meta charset="ISO-8859-1" />
 <title th:text="#{login.label.title}"></title>
-<link rel="stylesheet" type="text/css" media="all"	th:href="@{/styles/menu.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/menu.css}" />
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap-theme.min.css}" />
+
+<script th:src="@{/js/jquery-1.11.1.min.js}" />
 <script th:src="@{/js/bootstrap.min.js}" />
+
 </head>
 <body>
 	<div class="header">
@@ -20,6 +23,7 @@
 			  <form action="authentication" th:action="@{/authentication}" method="post" class="form-signin">
 		  		<p th:if="${error}" style="margin-top:20px;">
 		  		  	<div class="alert alert-danger alert-error">
+		  		  		<a href="#" class="close" data-dismiss="alert">&times;</a>
 				  		<strong th:text="#{login.label.error1}"></strong>
 				  		<span th:text="#{login.label.error2}"></span>
 				  	</div>
