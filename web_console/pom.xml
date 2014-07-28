@@ -17,6 +17,7 @@
 		<thymeleaf.version>2.1.0.RELEASE</thymeleaf.version>
 		<hive.version>0.12.0-cdh5.0.0</hive.version>
 		<dandelion.version>0.10.0</dandelion.version>
+		<jackson.version>1.8.1</jackson.version>		
 	</properties>
 	<profiles>
 	    <profile>
@@ -429,6 +430,16 @@
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-contrib</artifactId>
 			<version>${hive.version}</version>
+		</dependency>        
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>        
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>        
     </dependencies>
 	<build>
