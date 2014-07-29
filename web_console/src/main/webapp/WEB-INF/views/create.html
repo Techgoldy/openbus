@@ -8,6 +8,8 @@
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
 
 <script type="text/javascript">
+//<![CDATA[
+
 /*
 	var queryTypeTooltip = '<span th:text="#{create.tooltip.type1}"></span><br/><i><span th:text="#{create.tooltip.type2}"></span></i>';
 	var querySelectTooltip = '<span th:text="#{create.tooltip.select1}"></span><br/><span th:text="#{create.tooltip.select2}"></span><br/><i><span th:text="#{create.tooltip.select3}"></span></i>';
@@ -82,35 +84,72 @@
 			$('#sourceId').removeAttr('disabled');
 			$('#rdMetricType').removeAttr('disabled');
 			$('#typeQuery').removeAttr('disabled');
+			$('#esTimestamp').removeAttr('disabled');
 			$("#loadingDiv").show();
-			$.ajax({ 
-			    url: "/web_console/console/createMetricBBDDES", 
-			    type: 'POST', 
-			    dataType: 'json', 
-			    data: JSON.stringify(createForm), 
-			    contentType: 'application/json',
-			    mimeType: 'application/json',
-			    success: function(data) { 
-					if(data.id == 'ERROR'){
+			
+			if ($("#hidModif").val() != 0){			
+				$.ajax({ 
+				    url: "/web_console/console/updateMetricBBDDES", 
+				    type: 'POST', 
+				    dataType: 'json', 
+				    data: JSON.stringify(createForm), 
+				    contentType: 'application/json',
+				    mimeType: 'application/json',
+				    success: function(data) { 
+						if(data.id == 'ERROR'){
+					    	$("#loadingDiv").hide();
+					    	$("#errorDiv").show();
+					    	document.getElementById('errorMessage').innerHTML = data.error;
+						}
+						else{
+							$.ajax({ 						
+							    url: "/web_console/console/insertIntoHiveRel", 
+							    type: 'POST', 
+							    dataType: 'json', 
+							    data: JSON.stringify(createForm), 
+							    contentType: 'application/json',
+							    mimeType: 'application/json'				    
+							});
+					    	$(".main-content").load('/web_console/console/show');
+						}
+				    },
+				    error:function(error) {
+				    	document.getElementById('errorMessage').innerHTML = error;
 				    	$("#loadingDiv").hide();
 				    	$("#errorDiv").show();
-				    	document.getElementById('errorMessage').innerHTML = data.error;
-					}
-					else{
-						$.ajax({ 						
-						    url: "/web_console/console/insertIntoHive", 
-						    type: 'GET', 
-						    data: {idMetric: data.id}
-						});
-				    	$(".main-content").load('/web_console/console/show');
-					}
-			    },
-			    error:function(error) {
-			    	document.getElementById('errorMessage').innerHTML = error;
-			    	$("#loadingDiv").hide();
-			    	$("#errorDiv").show();
-			    }
-			});		
+				    }
+				});
+			}
+			else{
+				$.ajax({ 
+				    url: "/web_console/console/createMetricBBDDES", 
+				    type: 'POST', 
+				    dataType: 'json', 
+				    data: JSON.stringify(createForm), 
+				    contentType: 'application/json',
+				    mimeType: 'application/json',
+				    success: function(data) { 
+						if(data.id == 'ERROR'){
+					    	$("#loadingDiv").hide();
+					    	$("#errorDiv").show();
+					    	document.getElementById('errorMessage').innerHTML = data.error;
+						}
+						else{
+							$.ajax({ 						
+							    url: "/web_console/console/insertIntoHive", 
+							    type: 'GET', 
+							    data: {idMetric: data.id}
+							});
+					    	$(".main-content").load('/web_console/console/show');
+						}
+				    },
+				    error:function(error) {
+				    	document.getElementById('errorMessage').innerHTML = error;
+				    	$("#loadingDiv").hide();
+				    	$("#errorDiv").show();
+				    }
+				});
+			}
 		});
 		
 		$('#imgTypeHelp').popover({
@@ -138,7 +177,7 @@
 	        }
 	    });
 	});
-	
+//]]>
 </script>
 </head>
 <body>
@@ -155,7 +194,7 @@
 			</div>
 			<form id="createForm" action="javascript:return false;" th:object="${metricaBatch}" method="post" >
 				<h2 th:text="#{create.label.title}"></h2>
-				<div id="tableContainer" style="width:800px;height:480px; overflow:auto;">
+				<div id="tableContainer" style="width:800px;height:400px; overflow:auto;">
 					<table>
 						<tr>
 							<td><label for="lblMetricName" class="classLabel"  th:text="#{create.label.nombre}"></label>*</td>
@@ -186,15 +225,29 @@
 						</tr>
 						<tr>
 							<td valign="top">
-								<select id="sourceId" name="sourceId" class="classSelect" required="required" th:field="*{sourceId}" multiple="multiple">
-									<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
-								</select>
+								<p th:if="${metricaBatch.id} == null">							
+									<select id="sourceId" name="sourceId" class="classSelect" required="required" th:field="*{sourceId}" multiple="multiple">
+										<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
+									</select>
+								</p>
+								<p th:if="${metricaBatch.id} != null">							
+									<select disabled="disabled" id="sourceId" name="sourceId" class="classSelect" required="required" th:field="*{sourceId}" multiple="multiple">
+										<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
+									</select>
+								</p>
 								<input id="selSourceName" name="selSourceName" type="hidden"/>
 							</td>
 							<td id="tdSelectFields">
-								<select id="selFields" name="selFields" class="classSelect" multiple="multiple"> 
-									<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
-								</select>
+								<p th:if="${metricaBatch.id} == null">							
+									<select id="selFields" name="selFields" class="classSelect" multiple="multiple"> 
+										<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
+									</select>
+								</p>
+								<p th:if="${metricaBatch.id} != null">							
+									<select disabled="disabled" id="selFields" name="selFields" class="classSelect" multiple="multiple"> 
+										<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
+									</select>
+								</p>
 								<!-- 
 								<select id="selFieldsId" class="classSelect" multiple="multiple" style="width:148px;display:none;">
 									<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
@@ -260,7 +313,7 @@
 										<img id="imgTimestampHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
 									</a> 
 									<label for="lblTimestamp" class="classLabel" th:text="#{create.label.timestamp}"/>
-									<input id="esTimestamp" type="text" th:field="*{esTimestamp}" name="esTimestamp" th:value="#{create.value.tiemstamp}" class="classText" style="width:195px;"/>
+									<input disabled="disabled" id="esTimestamp" type="text" th:field="*{esTimestamp}" name="esTimestamp" th:value="#{create.value.tiemstamp}" class="classText" style="width:195px;"/>
 								</p>				
 							</td>
 						</tr>
@@ -268,7 +321,7 @@
 							<td colspan="2"><textarea class="classQuery" id="selectQuery" th:field="*{selectQuery}" rows="3" cols="100" name="selectQuery" required="required"></textarea></td><td></td>
 						</tr>
 						<tr>
-							<td colspan="2"><label for="lblQueryFrom" class="classLabel" th:text="#{create.label.query.form}"></label></td>
+							<td colspan="2"><label for="lblQueryFrom" class="classLabel" th:text="#{create.label.query.from}"></label></td>
 						</tr>
 						<tr>
 							<td colspan="2"><textarea disabled="disabled" class="classQuery" id="fromQuery" th:field="*{fromQuery}" rows="1" cols="100" name="fromQuery" required="required"></textarea></td><td></td>
@@ -284,18 +337,25 @@
 							<td colspan="2"><textarea class="classQuery" id="whereQuery" th:field="*{whereQuery}" rows="3" cols="100" name="whereQuery"></textarea></td><td></td>
 						</tr>
 						<tr height="10"></tr>
-						<tr>
-							<p th:if="${metricaBatch.id} == null">
-								<td><input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.lanzar}"/></td>
-								<input id="hidModif" name="hidModif" type="hidden" value="0"/>
-							</p>
-							<p th:if="${metricaBatch.id} != null">
-								<td><input id="btSubmit" type="submit" disabled="disabled" class="classButton" th:value="#{create.label.actualizar}"/></td>
-								<input id="hidModif" name="hidModif" type="hidden" value="1"/>
-							</p>
-						</tr>
 					</table>
 				</div>
+				<br/>
+				<div id="divButton" style="margin-left:4px;">
+					<p th:if="${metricaBatch.id} == null">
+						<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.lanzar}"/>
+						<input id="hidModif" name="hidModif" type="hidden" value="0"/>
+					</p>
+					<p th:if="${metricaBatch.id} != null">
+						<p th:if="${metricaBatch.estado} == Error">
+							<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.actualizar}"/>
+							<input id="hidModif" name="hidModif" type="hidden" th:value="${metricaBatch.id}"/>
+						</p>
+						<p th:if="${metricaBatch.estado} != Error">
+							<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.actualizar}"/>
+							<input id="hidModif" name="hidModif" type="hidden" th:value="${metricaBatch.id}"/>
+						</p>
+					</p>
+				</div>					
 				<div id="divTypeTooltipHelp" style="display:none">
 					<span th:text="#{create.tooltip.type1}"></span><br/><i><span th:text="#{create.tooltip.type2}"></span></i>
 				</div>

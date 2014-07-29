@@ -106,12 +106,26 @@ public class ConsoleController {
 	metricaBatch.setEsIndex(form.getSelSourceName());
 	metricaBatch.setEsTimestamp(form.getEsTimestamp());
 	metricaBatch.setEsType(form.getBatchMetricName());
+	metricaBatch.setFechaUltModif(new Date());	
 	metricaBatch.setUsuarioCreacion((String) session.getAttribute("username"));
 	metricaBatch.setTypeQuery(form.getTypeQuery());
 	metricaBatch.setFromQuery(form.getFromQuery());
 	metricaBatch.setSelectQuery(form.getSelectQuery());
 	metricaBatch.setWhereQuery(form.getWhereQuery());
+	
+	String strSelectQuery = metricaBatch.getSelectQuery();
+	String strFromQuery = metricaBatch.getFromQuery();
+	String strWhereQuery = metricaBatch.getWhereQuery();
+
+	StringBuilder insertQuery = new StringBuilder();
+        insertQuery.append("INSERT OVERWRITE TABLE " + metricaBatch.getEsType() + " ");
+        insertQuery.append(strSelectQuery + " ");
+        insertQuery.append(strFromQuery + " ");
+        insertQuery.append(strWhereQuery);
+        
+	metricaBatch.setQueryCode(insertQuery.toString());
 	metricaBatch.setEstado(ESTADO_EN_EJECUCION);
+	
 	if (isBatch.equals("1")) {
 	    metricaBatch.setIsBatch(true);
 	    metricaBatch.setPlanificacion("");
@@ -162,7 +176,7 @@ public class ConsoleController {
 	HiveConnector hiveConnector = new HiveConnector();
 	hiveConnector.executeQuery(dropQuery);
 	hiveConnector.executeQuery(externalQuery.toString());
-	metricaBatch.setQueryCode(externalQuery.toString());
+	metricaBatch.setCreateCode(externalQuery.toString());
 	metricaBatchService.updateMetricaBatch(metricaBatch);
 	return metricaBatch;
     }
@@ -173,27 +187,9 @@ public class ConsoleController {
 	MetricaBatch metricaBatch = null;
 	try {
 	    metricaBatch = metricaBatchService.findMetricaBatch(new Long(idMetric));
-
-	    Properties prop = new Properties();
-	    ClassLoader loader = Thread.currentThread().getContextClassLoader();
-	    InputStream resourceStream = loader.getResourceAsStream("META-INF/spring/environment.properties");
-	    prop.load(resourceStream);
-
-	    String strSelectQuery = metricaBatch.getSelectQuery();
-	    String strFromQuery = metricaBatch.getFromQuery();
-	    String strWhereQuery = metricaBatch.getWhereQuery();
-
-	    StringBuilder insertQuery = new StringBuilder();
-	    insertQuery.append("INSERT OVERWRITE TABLE " + metricaBatch.getEsType() + " ");
-	    insertQuery.append(strSelectQuery + " ");
-	    insertQuery.append(strFromQuery + " ");
-	    insertQuery.append(strWhereQuery);
-
 	    HiveConnector hiveConnector = new HiveConnector();
-	    hiveConnector.executeQuery(insertQuery.toString());
-
+	    hiveConnector.executeQuery(metricaBatch.getQueryCode());
 	    metricaBatch.setFechaUltModif(new Date());
-	    metricaBatch.setQueryCode(insertQuery.toString());
 	    metricaBatch.setEstado(ESTADO_OK);
 	}
 	catch (Exception e) {
@@ -207,6 +203,61 @@ public class ConsoleController {
 	return response;
     }
 
+    @RequestMapping(value = "/updateMetricBBDDES", method = RequestMethod.POST)
+    public @ResponseBody CreateForm updateMetricBBDDES(Model model, HttpSession session, @RequestBody final CreateForm form){
+	try {
+	    MetricaBatch metricaBatch = null;
+	    metricaBatch = metricaBatchService.findMetricaBatch(new Long(form.getHidModif()));
+	    metricaBatch.setFechaUltModif(new Date());
+	    metricaBatch.setIsUpdated(true);
+	    
+	    String strSelectQuery = form.getSelectQuery();
+	    String strFromQuery = form.getFromQuery();
+	    String strWhereQuery = form.getWhereQuery();
+	    
+	    StringBuilder insertQuery = new StringBuilder();
+	    insertQuery.append("INSERT OVERWRITE TABLE " + metricaBatch.getEsType() + " ");
+	    insertQuery.append(strSelectQuery + " ");
+	    insertQuery.append(strFromQuery + " ");
+	    insertQuery.append(strWhereQuery);
+
+    	    metricaBatch.setSelectQuery(form.getSelectQuery());
+    	    metricaBatch.setWhereQuery(form.getWhereQuery());	    
+	    metricaBatch.setFechaUltModif(new Date());
+	    metricaBatch.setQueryCode(insertQuery.toString());
+	    metricaBatch.setEstado(ESTADO_EN_EJECUCION);
+	    
+	    metricaBatchService.updateMetricaBatch(metricaBatch);
+	}
+	catch (Exception e) {
+	    form.setId("ERROR");
+	    form.setError(e.toString());
+	}
+	return form; 
+    }
+    
+    @RequestMapping(value = "/insertIntoHiveRel", method = RequestMethod.POST)
+    public @ResponseBody String insertIntoHiveRel(@RequestBody final CreateForm form) throws Exception{
+	String response = "";
+	MetricaBatch metricaBatch = null;
+	try {
+	    metricaBatch = metricaBatchService.findMetricaBatch(new Long(form.getHidModif()));
+	    HiveConnector hiveConnector = new HiveConnector();
+	    hiveConnector.executeQuery(metricaBatch.getQueryCode());
+	    metricaBatch.setFechaUltModif(new Date());
+	    metricaBatch.setEstado(ESTADO_OK);
+	}
+	catch (Exception e) {
+	    metricaBatch.setEstado(ESTADO_ERROR);
+	    metricaBatch.setError(e.toString());
+	    response = "Error al insertar en Hive : " + e.toString();
+	    metricaBatchService.updateMetricaBatch(metricaBatch);
+	    throw e;
+	}
+	metricaBatchService.updateMetricaBatch(metricaBatch);
+	return response;
+    }    
+    
     @RequestMapping(value = "/reLaunchMetric", method = RequestMethod.GET)
     public @ResponseBody String reLaunchMetric(@RequestParam String idMetric, Model model)  throws Exception{
 	insertIntoHive(idMetric);

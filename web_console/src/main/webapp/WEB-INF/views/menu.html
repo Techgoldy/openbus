@@ -15,8 +15,10 @@
 <script th:src="@{/js/jquery-ui.min.js}" />
 <script th:src="@{/js/bootstrap.min.js}" />
 <script th:src="@{/js/jquery.validate.min.js}" />
-<title></title>
-<script>
+<title th:text="#{exception.label.title.console}"></title>
+
+<script type="text/javascript">
+//<![CDATA[
 $(document).ready(function(){
 	$('.link').click(function(e) {
 	    e.preventDefault();
@@ -29,6 +31,7 @@ $(document).ready(function(){
 	$(document).ajaxStop(function(){$("#loadingDiv").hide();}); 
 	
 });
+//]]>
 </script>
 </head>
 <body>

@@ -42,3 +42,29 @@ service type --interface ~.service.MetricaBatchService --entity ~.domain.Metrica
 exit
 jpa setup --provider ECLIPSELINK --database MYSQL 
 jpa setup --provider HIBERNATE --database MYSQL 
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-21 14:20:03
+field string --fieldName queryType --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName queryType --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName typeQuery --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName selectQuery --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName FromQuery --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName WhereQuery --class com.produban.openbus.console.domain.MetricaBatch
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-07-21 14:37:13
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-21 15:22:01
+// [failed] field set --fieldName idOrigen --type ~.domain.OrigenEstructurado --class ~.domain.MetricaBatch --cardinality ONE_TO_ONE
+// [failed] field set --class ~.domain.MetricaBatch --fieldName idOrigen --type ~.domain.OrigenEstructurado --cardinality ONE_TO_ONE
+field reference --fieldName idOrigen --type ~.domain.OrigenEstructurado --class ~.domain.MetricaBatch
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-07-21 15:32:41
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-21 16:22:15
+field string --fieldName sourceId --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName esTimestamp --class com.produban.openbus.console.domain.MetricaBatch
+field boolean --fieldName isBatch --class com.produban.openbus.console.domain.MetricaBatch
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-24 11:37:15
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-07-24 11:37:37
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-24 11:37:54
+field string --fieldName estado --class com.produban.openbus.console.domain.MetricaBatch
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-25 14:18:26
+field string --fieldName error --class com.produban.openbus.console.domain.MetricaBatch

@@ -4,18 +4,12 @@
 <meta charset="ISO-8859-1" />
 <title th:text="#{show.label.title}"></title>
 
-<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
-<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery.dataTables.css}" />
-<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery-ui.css}" />
-<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/dataTables.jqueryui.css}" />
-<script th:src="@{/js/jquery.dataTables.min.js}" />
-<script th:src="@{/js/dataTables.bootstrap.js}" />
-<script th:src="@{/js/jquery-ui.min.js}" />
-
-<script type="text/javascript" class="init">
+<script type="text/javascript">
+//<![CDATA[
 var idMetric = null;
 var rowSelected = false;
 var table = null;
+
 
 $(document).ready(function() {
 	table = $('#example').DataTable({
@@ -23,23 +17,10 @@ $(document).ready(function() {
         "scrollY": "300px",
         "scrollCollapse": true,
         "jQueryUI":       true,
+        "order": [[ 5, "desc" ]],
         "language": {
-            "lengthMenu": "_MENU_ <span th:text='#{show.datatable.lengthmenu}'></span>",
-            "zeroRecords": "<span th:text='#{exception.message.resource}'></span>",
-            "info": "<span th:text='#{show.datatable.info1}'></span> _START_ to _END_ of _TOTAL_ <span th:text='#{show.datatable.info2}'></span>",
-            "infoEmpty": "",
-            "infoFiltered": "",
-            "loadingRecords": "<span th:text='#{show.datatable.loadingRecords}'></span>.",
-            "processing":     "<span th:text='#{show.datatable.processing}'></span>",
-            "search":         "<span th:text='#{show.datatable.search}'></span>",
-            "zeroRecords":    "<span th:text='#{show.datatable.zeroRecords}'></span>",
-            "paginate": {
-                "first":      "<span th:text='#{show.datatable.first}'></span>",
-                "last":       "<span th:text='#{show.datatable.last}'></span>",
-                "next":       "<span th:text='#{show.datatable.next}'></span>",
-                "previous":   "<span th:text='#{show.datatable.previous}'></span>"
-            }
-        }        
+            "url": "/web_console/styles/es_es.lang"
+        }
 	});
 	
 	$(document).tooltip({
@@ -89,8 +70,6 @@ function deleteMetric(){
 			    data: {idMetric: idMetric},
 			    success: function(data) { 
 					$(".main-content").load('/web_console/console/show');
-			    	$("#loadingDiv").hide();
-			    	$("#messageDiv").show();
 			    },
 			    error:function(error) {
 			    	$("#loadingDiv").hide();
@@ -131,9 +110,10 @@ function reLaunchMetric(idMetric){
 	    type: 'GET', 
 	    data: {idMetric: idMetric},
 	    success: function(data) { 
-			$(".main-content").load('/web_console/console/show');
-	    	$("#loadingDiv").hide();
-	    	$("#messageDiv").show();
+			$(".main-content").load('/web_console/console/show', function (){
+		    	$("#loadingDiv").hide();
+		    	$("#messageDiv").show();
+			});
 	    },
 	    error:function(error) {
 	    	$("#loadingDiv").hide();
@@ -141,8 +121,8 @@ function reLaunchMetric(idMetric){
 	    }			    
 	});			
 }
+//]]>
 </script>		
-
 </head>
 <body>
 <div class="container">
@@ -191,12 +171,22 @@ function reLaunchMetric(idMetric){
 		        <td th:text="${metric.esIndex}"></td>
 		        <td th:text="${metric.fechaUltModif}"></td>
 		        <p th:if="${metric.estado} != Error" >
-		        	<td th:text="${metric.estado}" style="color:#3ADF00"></td>
+		        	<p th:if="${metric.estado} == Ok" >
+		        		<td th:text="${metric.estado}" style="color:#3ADF00"></td>
+		        	</p>
+		        	<p th:if="${metric.estado} != Ok" >
+		        		<td th:text="${metric.estado}" style="color:#FFBF00"></td>
+		        	</p>
 		        </p>
 		        <p th:if="${metric.estado} == Error" >
 		        	<td th:text="${metric.estado}" style="color:#FF0000" th:title="${metric.error}"></td>
 		        </p>
-		        <td><input type="button" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
+		        <p th:if="${metric.estado} == Ok" >
+		        	<td><input type="button" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
+		        </p>
+		        <p th:if="${metric.estado} != Ok" >
+		        	<td><input type="button" disabled="disabled" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
+		        </p>
 		    </tr>
 		    </tbody>
 		</table>
