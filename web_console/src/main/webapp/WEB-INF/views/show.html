@@ -21,6 +21,7 @@ var table = null;
 
 
 $(document).ready(function() {
+
 	table = $('#example').DataTable({
 		"columnDefs": [{ "visible": false, "targets": 0 }],	
         "scrollY": "300px",
@@ -31,7 +32,9 @@ $(document).ready(function() {
             "url": "/web_console/styles/es_es.lang"
         }
 	});
-	
+
+	$('input[type=search]').val('pp');
+
 	$(document).tooltip({
         track:true
     });
@@ -110,7 +113,9 @@ function modifyMetric(){
 }
 
 function refreshTable(){
-	$(".main-content").load('console/show');
+	var txtSearch = $('input[type=search]').val();	
+	$(".main-content").load('console/show', function (){
+	});
 }		
 
 function reLaunchMetric(idMetric){

@@ -60,6 +60,35 @@ insert into campos_origen (nombre_campo, tipo_campo) values ('SCBYTES', 'int');
 insert into campos_origen (nombre_campo, tipo_campo) values ('CSBYTES', 'int');
 insert into campos_origen (nombre_campo, tipo_campo) values ('VIRUSID', 'string');
 insert into campos_origen (nombre_campo, tipo_campo) values ('DESTINATIONIP', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('ICID', 'int');
+insert into campos_origen (nombre_campo, tipo_campo) values ('MID', 'int');
+insert into campos_origen (nombre_campo, tipo_campo) values ('RID', 'int');
+insert into campos_origen (nombre_campo, tipo_campo) values ('DCID', 'int');
+insert into campos_origen (nombre_campo, tipo_campo) values ('SUBJECT', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('MAILFROM', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('MAILTO', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('RESPONSE', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('BYTES', 'int');
+insert into campos_origen (nombre_campo, tipo_campo) values ('INTERFACE', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('PUERTO', 'int');
+insert into campos_origen (nombre_campo, tipo_campo) values ('INTERFACEIP', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('HOSTIP', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('HOSTNAME', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('HOSTVERIFIED', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('DSNBOUNCE', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('BOUNCEDESC', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('SPAMCASE', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('DCIDDELAY', 'int');
+insert into campos_origen (nombre_campo, tipo_campo) values ('MIDDELAY', 'int');
+insert into campos_origen (nombre_campo, tipo_campo) values ('RIDDELAY', 'int');
+insert into campos_origen (nombre_campo, tipo_campo) values ('DSNDELAY', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('DELAYDESC', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('ANTIVIRUS', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('REPUTATION', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('RANGO', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('SCORE', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('FILTROCONTENIDO', 'string');
+insert into campos_origen (nombre_campo, tipo_campo) values ('MARKETINGCASE', 'string');
 
 insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
 values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_postfix'), 1);
@@ -163,5 +192,65 @@ insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos
 values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_bluecoat'), 49);
 insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
 values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_bluecoat'), 50);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 1);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 51);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 52);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 53);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 54);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 55);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 56);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 57);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 58);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 59);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 60);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 61);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 62);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 63);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 64);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 65);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 66);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 67);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 68);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 69);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 70);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 71);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 72);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 73);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 74);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 75);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 76);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 77);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 78);
+insert into origen_estructurado_hs_campos_origen (origen_estructurado, hs_campos_origen) 
+values ((select id from origen_estructurado where origen_estructurado.kafka_topic = 'ob_src_ironport'), 79);
 
 commit;
