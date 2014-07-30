@@ -271,6 +271,14 @@ public class ConsoleController {
 	return "/show";
     }
 
+    @RequestMapping("/refresh")
+    public String refreshMetrics(@RequestParam String search, Model model) {
+	List<MetricaBatch> lstMetrics = metricaBatchService.findAllMetricaBatches();
+	model.addAttribute("lstMetrics", lstMetrics);
+	model.addAttribute("search", search);
+	return "/show";
+    }
+    
     @RequestMapping("/updateMetric")
     public String updateMetric(@RequestParam String idMetric, Model model) {
 	List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();

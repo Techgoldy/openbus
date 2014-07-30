@@ -13,15 +13,20 @@
 <script th:src="@{/js/dataTables.bootstrap.js}" />
 <script th:src="@{/js/jquery-ui.min.js}" />
 
-<script type="text/javascript">
+<script th:inline="javascript">
 //<![CDATA[
 var idMetric = null;
 var rowSelected = false;
 var table = null;
 
-
 $(document).ready(function() {
-
+	var search = /*[[${search}]]*/ "";
+	setTimeout(function() {
+		$('input[type=search]').val(search);
+		e = $.Event('keyup');
+		e.keyCode= 13;
+		$('input[type=search]').trigger(e);		
+	}, 150);	
 	table = $('#example').DataTable({
 		"columnDefs": [{ "visible": false, "targets": 0 }],	
         "scrollY": "300px",
@@ -32,9 +37,7 @@ $(document).ready(function() {
             "url": "/web_console/styles/es_es.lang"
         }
 	});
-
-	$('input[type=search]').val('pp');
-
+	
 	$(document).tooltip({
         track:true
     });
@@ -114,8 +117,7 @@ function modifyMetric(){
 
 function refreshTable(){
 	var txtSearch = $('input[type=search]').val();	
-	$(".main-content").load('console/show', function (){
-	});
+	$(".main-content").load('console/refresh', {search: txtSearch});
 }		
 
 function reLaunchMetric(idMetric){
