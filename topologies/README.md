@@ -75,4 +75,22 @@ It is possible to rotate the file's name once it reaches a Max size or a certain
 
 - SYNC_MILLIS_PERIOD: Every "SYNC_MILLIS_PERIOD" millis the parsed data will be written to disk.
 
+In this project 3 different topologies have been created:
+
+- Postfix mailing
+- Bluecuat proxy
+- IronPort 
+
+For each type of entry 2 classes will be created:
+
+- Origin parser class: Trident BaseFunction which will allow us to process each register from the kafka topic and split it into fields. In this project `ProxyParser`, `PostfixParser` and `IronportParser`.
+- Topology submiter: This class will submit each topology to the Storm cluster. In this project `OpenbusProxyTopology`, `OpenbusPostfixTopology` and `OpenbusIronportTopology`.
+
+For running one of the topologies it is only needed to upload the JAR into Storm as follows:
+
+``./bin/storm jar <JAR FILE> <Main Topology class> <properties file>`
+
+For example:
+
+`./bin/storm jar topologies-0.0.1-SNAPSHOT.jar com.produban.openbus.topologies.OpenbusProxyTopology proxy.properties`
 

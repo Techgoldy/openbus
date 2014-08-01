@@ -12,8 +12,6 @@ import java.util.regex.Pattern;
 import storm.trident.operation.BaseFunction;
 import storm.trident.operation.TridentCollector;
 import storm.trident.tuple.TridentTuple;
-import backtype.storm.Constants;
-import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
 
@@ -119,11 +117,7 @@ public class PostfixParser extends BaseFunction{
 
 		return salida;
 	}
-	
-	private static boolean isTickTuple(Tuple tuple) {
-		return tuple.getSourceComponent().equals(Constants.SYSTEM_COMPONENT_ID)
-			&& tuple.getSourceStreamId().equals(Constants.SYSTEM_TICK_STREAM_ID);
-	    }
+
 
 	
 }

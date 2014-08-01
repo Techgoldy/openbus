@@ -20,7 +20,7 @@ import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.tuple.Fields;
 
-public class OpenbusPostfixTopology {
+public class OpenbusProxyTopology {
 public static void main(String[] args) {
 			
 		if(args.length!=1){
@@ -48,11 +48,10 @@ public static void main(String[] args) {
                 Boolean.getBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING"))); //si es desde el principio
 
 		//Campos que detectaremos desde el parseador.
-		Fields hdfsFields = new Fields("EVENTTIMESTAMP","SMTPDID","MSGID","CLEANUPID"
-				,"QMGRID","SMTPID","ERRORID","CLIENTE","CLIENTEIP","ACCION","SERVER"
-				,"SERVERIP","MESSAGEID","FROM","SIZE","NRCPT","TO","TOSERVERNAME"
-				,"TOSERVERIP","TOSERVERPORT","DELAY","DSN","STATUS","STATUSDESC"
-				,"AMAVISID");
+		Fields hdfsFields = new Fields( "eventTimeStamp","timeTaken","clientIP","User","Group","Exception"
+				,"filterResult","category","referer","responseCode","action","method","contentType"
+				,"protocol","requestDomain","requestPort","requestPath","requestQuery","requestURIExtension"
+				,"userAgent","serverIP","scBytes","csBytes","virusID","destinationIP");
 		
 		//Formato del nombre del fichero
 	    OpenbusFileNameFormat fileNameFormat = new OpenbusFileNameFormat()
@@ -113,7 +112,7 @@ public static void main(String[] args) {
 		if(tipo.equals("kafka")){ //Si leemos desde Kafka
 			parseaLogs	= topology.newStream("spout1", openbusBrokerSpout.getPartitionedTridentSpout())
 		       .each(new Fields("bytes"),
-		    		 new PostfixParser(tipo),
+		    		 new ProxyParser(tipo),
 		    		 hdfsFields);
 		    	parseaLogs.partitionPersist(factory, hdfsFields, new OpenbusHdfsUpdater(), new Fields());
 		}
@@ -121,7 +120,7 @@ public static void main(String[] args) {
 			SimpleFileStringSpout spout1 = new SimpleFileStringSpout(propiedades.getProperty("INPUT_FILE"), "bytes");
 			parseaLogs	= topology.newStream("spout1", spout1)
 				       .each(new Fields("bytes"),
-				    		 new PostfixParser(tipo),
+				    		 new ProxyParser(tipo),
 				    		 hdfsFields);
 			parseaLogs.partitionPersist(factory, hdfsFields, new OpenbusHdfsUpdater(), new Fields());
 		}

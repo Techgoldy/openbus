@@ -1,6 +1,7 @@
 package com.produban.openbus.topologies;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.storm.hdfs.trident.rotation.FileRotationPolicy;
 
@@ -71,7 +72,15 @@ public class TimeStampRotationPolicy implements FileRotationPolicy  {
 		// TODO Auto-generated method stub
 		boolean result=false;
 		long diferencia;
-		ultimoRegistro=getCalendarTimestamp(tupla.getString(0));
+		List objetos =tupla.getValues();
+		
+		if (objetos.get(0) instanceof String){
+			ultimoRegistro=getCalendarTimestamp(tupla.getString(0));
+		}else if(objetos.get(0) instanceof byte[]){
+			ultimoRegistro=getCalendarTimestamp(new String((byte[]) tupla.toArray()[0]));
+		}
+		
+		//ultimoRegistro=getCalendarTimestamp(tupla.getString(0));
 		if (limiteTimeStamp==null){
 			//inicializamos
 			result=true;
