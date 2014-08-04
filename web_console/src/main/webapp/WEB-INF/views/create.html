@@ -9,14 +9,6 @@
 
 <script type="text/javascript">
 //<![CDATA[
-
-/*
-	var queryTypeTooltip = '<span th:text="#{create.tooltip.type1}"></span><br/><i><span th:text="#{create.tooltip.type2}"></span></i>';
-	var querySelectTooltip = '<span th:text="#{create.tooltip.select1}"></span><br/><span th:text="#{create.tooltip.select2}"></span><br/><i><span th:text="#{create.tooltip.select3}"></span></i>';
-	var queryFromTooltip = '<span th:text="#{create.tooltip.from1}"></span><br/><br/><i><span th:text="#{create.tooltip.from2}"></span></i>';
-	var queryWhereTooltip = '<span th:text="#{create.tooltip.where1}"></span><br/><i><span th:text="#{create.tooltip.where2}"></span></i>';
-	var timestampTooltip = '<span th:text="#{create.tooltip.timestamp}"/>';
-*/	
 	$(document).ready(function() {
 		var query = '';
 		// Select source function
@@ -34,14 +26,6 @@
 			//$('#selectQuery').val($('#selectQuery').val() + query);
 		});
 		
-		// Tooltip functions
-		/*
-		$('#typeQuery').balloon({ position: 'top',contents: queryTypeTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
-		$('#selectQuery').balloon({ position: 'top',contents: querySelectTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
-		$('#fromQuery').balloon({ position: 'top',contents: queryFromTooltip});
-		$('#whereQuery').balloon({ position: 'top',contents: queryWhereTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
-		$('#txtTimestamp').balloon({ position: 'top',contents: timestampTooltip, css: {width: '400px',backgroundColor: "#F5BCA9",opacity: "1"}});
-		*/
 		// Timestamp function
 		/*
 		$('input[type=radio][name=rdTimestamp]').change(function() {
@@ -176,6 +160,12 @@
 	            return $("#divTimestampTooltipHelp").html();
 	        }
 	    });
+		
+		$(".close").click(function(){
+		      $("#errorDiv").hide();
+		      $("#warningDiv").hide();
+		      $("#messageDiv").hide();
+		});	
 	});
 //]]>
 </script>
@@ -187,11 +177,13 @@
 	<div class="container">
 			<div id="errorDiv" style="width:800px;display:none">
 			    <div class="alert alert-danger alert-error">
+			    	<button type="button" class="close">&times;</button>
 			  		<strong th:text="#{create.label.error1}"></strong>
 			  		<span th:text="#{create.label.error2}">: </span>
 			  		<span id="errorMessage"></span>
 			    </div>
 			</div>
+												
 			<form id="createForm" action="javascript:return false;" th:object="${metricaBatch}" method="post" >
 				<h2 th:text="#{create.label.title}"></h2>
 				<div id="tableContainer" style="width:800px;height:400px; overflow:auto;">
@@ -226,12 +218,12 @@
 						<tr>
 							<td valign="top">
 								<p th:if="${metricaBatch.id} == null">							
-									<select id="sourceId" name="sourceId" class="classSelect" required="required" th:field="*{sourceId}" multiple="multiple">
+									<select id="sourceId" name="sourceId" required="required" th:field="*{sourceId}" class="classSelect">
 										<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
 									</select>
 								</p>
 								<p th:if="${metricaBatch.id} != null">							
-									<select disabled="disabled" id="sourceId" name="sourceId" class="classSelect" required="required" th:field="*{sourceId}" multiple="multiple">
+									<select disabled="disabled" id="sourceId" name="sourceId" class="classSelect" required="required" th:field="*{sourceId}">
 										<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
 									</select>
 								</p>
@@ -248,11 +240,6 @@
 										<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
 									</select>
 								</p>
-								<!-- 
-								<select id="selFieldsId" class="classSelect" multiple="multiple" style="width:148px;display:none;">
-									<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
-								</select>
-								 -->
 								<input id="idSource" type="hidden"/>
 							</td>			
 						</tr>
@@ -270,12 +257,13 @@
 									<input type="radio" name="rdMetricType" value="0" required="required" th:text="#{create.label.tipo.online}"/>
 								</p>
 								<p th:if="${metricaBatch.id} != null">
-									<label for="lblQuery" class="classLabel" th:text="#{create.label.tipo}"></label>*
 									<p th:if="${metricaBatch.isBatch} == false">								
+										<label for="lblQuery" class="classLabel" th:text="#{create.label.tipo}"></label>*
 										<input disabled="disabled" type="radio" name="rdMetricType" value="1" required="required" th:text="#{create.label.tipo.batch}"/>
 										<input disabled="disabled" type="radio" name="rdMetricType" value="0" required="required" th:text="#{create.label.tipo.online}" checked="checked"/>
 									</p>				
 									<p th:if="${metricaBatch.isBatch} == true">								
+										<label for="lblQuery" class="classLabel" th:text="#{create.label.tipo}"></label>*
 										<input disabled="disabled" type="radio" name="rdMetricType" value="1" required="required" th:text="#{create.label.tipo.batch}" checked="checked"/>
 										<input disabled="disabled" type="radio" name="rdMetricType" value="0" required="required" th:text="#{create.label.tipo.online}"/>
 									</p>

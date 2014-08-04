@@ -125,17 +125,13 @@ function reLaunchMetric(idMetric){
 	    url: "/web_console/console/reLaunchMetric", 
 	    type: 'GET', 
 	    data: {idMetric: idMetric},
-	    success: function(data) { 
-			$(".main-content").load('/web_console/console/show', function (){
-		    	$("#loadingDiv").hide();
-		    	$("#messageDiv").show();
-			});
-	    },
+	    success: function(data) {},
 	    error:function(error) {
 	    	$("#loadingDiv").hide();
 	    	$("#errorDiv").show();
 	    }			    
-	});			
+	});
+	$(".main-content").load('/web_console/console/show');
 }
 //]]>
 </script>		

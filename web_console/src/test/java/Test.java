@@ -1,12 +1,24 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.apache.http.HttpEntity;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.produban.openbus.console.util.HttpConnector;
 
 
 
 public class Test {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {/*
 	String s = "SELECT " +
 	"CONCAT(YEAR(eventTimeStamp),MONTH(eventTimeStamp)) as ID,"+
 	"MONTH(eventTimeStamp) as MES,"+
@@ -52,6 +64,114 @@ public class Test {
 	    hmSelectFieldsModif.put(keyModif,valueModif);
 	}
 	System.out.println(hmSelectFieldsModif);
+	*/
+	
+	HttpConnector httpConnector = new HttpConnector();
+	String existsUrl = "http://localhost:9200/_stats/_indexes?pretty";
+	HttpEntity entity = null;
+	try {
+	    entity = httpConnector.launchHttp(existsUrl,"GET",null);
+	}
+	catch (Exception e1) {
+	    // TODO Auto-generated catch block
+	    e1.printStackTrace();
+	}
+	
+	JSONParser parser = new JSONParser();
+	Object obj = null;
+	try {
+	    try {
+		obj = parser.parse(new BufferedReader(new InputStreamReader(entity.getContent())));
+	    }
+	    catch (IllegalStateException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	    catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }	    
+	}
+	catch (ParseException e1) {
+	    // TODO Auto-generated catch block
+	    e1.printStackTrace();
+	}
+	JSONObject jsonObject = (JSONObject) obj;
+	jsonObject = (JSONObject)jsonObject.get("indices");
+	
+	String json = null;
+	String strTypeQuery = "ID string,mes bigint,ano bigint,ultimo string,primero string";
+	String type = "uno";
+	
+	Map<String, Map> map1 = new HashMap<String, Map>();
+	Map<String, Map> map2 = new HashMap<String, Map>();
+	Map<String, Map> map3 = new HashMap<String, Map>();
+	
+	map1.put(type,map2);
+	map2.put("properties", map3);
+	String [] array1 = strTypeQuery.split(",");
+	Map<String, String> valuesMap = null;
+	for (int i=0;i<array1.length;i++){
+	    valuesMap = new HashMap<String, String>();
+	    String [] array2 = array1[i].split(" ");
+	    array2[1] = array2[1].toLowerCase();
+	    array2[1] = array2[1].replaceAll("\n", "");
+	    array2[0] = array2[0].replaceAll("\n", ""); 
+	    
+	    if("bigint".equals(array2[1]) || "int".equals(array2[1])){
+		array2[1] = "long";
+	    }
+	    valuesMap.clear();
+	    valuesMap.put("type", array2[1]);
+	    if ("string".equals(array2[1])){
+		valuesMap.put("index", "not_analyzed");		
+	    }
+	    map3.put(array2[0], valuesMap);
+	}
+	if (" " != null && (! " ".equals(""))){
+	    valuesMap = new HashMap<String, String>();
+	    valuesMap.put("type", "date");
+	    valuesMap.put("format", "dateOptionalTime");
+	    map3.put("@timestamp", valuesMap);
+	}		
+	
+	ObjectMapper objectMapper = new ObjectMapper();
+	try {
+	    json = objectMapper.writeValueAsString(map1);
+	}
+	catch (JsonGenerationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	catch (JsonMappingException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	
+	if (jsonObject.get("new4") != null){ // Existe el indice, se lanza PUT
+	    String putUrl = "http://localhost:9200/new/uno/_mapping";
+	    try {
+		entity = httpConnector.launchHttp(putUrl,"PUT",json);
+	    }
+	    catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	}
+	else{ // No existe el indice, se lanza POST
+	    String postUrl = "http://localhost:9200/new4/";
+	    try {
+		entity = httpConnector.launchHttp(postUrl,"POST",json);
+	    }
+	    catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	}
+	
     }
-
 }

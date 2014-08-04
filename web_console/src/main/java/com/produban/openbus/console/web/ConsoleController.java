@@ -1,9 +1,13 @@
 package com.produban.openbus.console.web;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -11,7 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.http.HttpEntity;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +38,7 @@ import com.produban.openbus.console.domain.OrigenEstructurado;
 import com.produban.openbus.console.hive.HiveConnector;
 import com.produban.openbus.console.service.MetricaBatchService;
 import com.produban.openbus.console.service.OrigenEstructuradoService;
+import com.produban.openbus.console.util.HttpConnector;
 
 @RequestMapping("/console/**")
 @Controller
@@ -81,11 +90,15 @@ public class ConsoleController {
 	    if (isModif.equals("0")) {
 		metricaBatch.setIsCreated(true);
 		metricaBatch.setFechaCreacion(new Date());
+		LOG.info("SAVE BBDD running....");
 		metricaBatchService.saveMetricaBatch(metricaBatch);
+		LOG.info("SAVE BBDD done");
 	    }
 	    else {
 		metricaBatch.setIsUpdated(true);
+		LOG.info("UPDATE BBDD running....");
 		metricaBatchService.updateMetricaBatch(metricaBatch);
+		LOG.info("UPDATE BBDD done");
 	    }
 	    form.setId(metricaBatch.getId().toString());
 	}
@@ -147,10 +160,10 @@ public class ConsoleController {
 	String strTimestamp = metricaBatch.getEsTimestamp();
 	String strQuerySelect = metricaBatch.getSelectQuery();
 
-	// CURL DELETE
+	// Se crea el indice en elasticsearch
+	createESIndex(metricaBatch.getEsIndex(),metricaBatch.getEsType(),strTypeQuery,prop,strTimestamp);
 	
-	
-	String dropQuery = "DROP TABLE " + metricaBatch.getEsType();
+	String dropQuery = "DROP TABLE IF EXISTS " + metricaBatch.getEsType();
 	
 	StringBuilder externalQuery = new StringBuilder();
 	externalQuery.append("CREATE EXTERNAL TABLE ");
@@ -177,10 +190,75 @@ public class ConsoleController {
 	hiveConnector.executeQuery(dropQuery);
 	hiveConnector.executeQuery(externalQuery.toString());
 	metricaBatch.setCreateCode(externalQuery.toString());
+	LOG.info("UPDATE BBDD running....");
 	metricaBatchService.updateMetricaBatch(metricaBatch);
+	LOG.info("UPDATE BBDD done");
 	return metricaBatch;
     }
 
+    private void createESIndex(String index, String type, String strTypeQuery, Properties prop, String timestamp) throws Exception{ 
+	HttpConnector httpConnector = new HttpConnector();
+
+	Map<String, Map> mapPost = new HashMap<String, Map>();
+	Map<String, Map> mapPut = new HashMap<String, Map>();
+	Map<String, Map> map2 = new HashMap<String, Map>();
+	Map<String, Map> map3 = new HashMap<String, Map>();
+
+	ObjectMapper objectMapper = new ObjectMapper();
+	
+	String existsUrl = "http://" + prop.getProperty("elastic.url.datanode1") + ":" +prop.getProperty("elastic.port.datanodes") + "/_stats/_indexes?pretty";
+	HttpEntity entity = httpConnector.launchHttp(existsUrl,"GET",null);
+	
+	JSONParser parser = new JSONParser();
+	Object obj = parser.parse(new BufferedReader(new InputStreamReader(entity.getContent())));
+	JSONObject jsonObject = (JSONObject) obj;
+	jsonObject = (JSONObject)jsonObject.get("indices");
+	String json = null;
+	
+	mapPost.put("mappings",mapPut);
+	mapPut.put(type,map2);
+	map2.put("properties", map3);
+	String [] array1 = strTypeQuery.split(",");
+	Map<String, String> valuesMap = null;
+	for (int i=0;i<array1.length;i++){
+	    valuesMap = new HashMap<String, String>();
+	    String [] array2 = array1[i].split(" ");
+	    array2[1] = array2[1].toLowerCase();
+	    array2[1] = array2[1].replaceAll("\n", "");
+	    array2[0] = array2[0].replaceAll("\n", ""); 
+	    
+	    if("bigint".equals(array2[1]) || "int".equals(array2[1])){
+		array2[1] = "long";
+	    }
+	    valuesMap.clear();
+	    valuesMap.put("type", array2[1]);
+	    if ("string".equals(array2[1])){
+		valuesMap.put("index", "not_analyzed");		
+	    }
+	    map3.put(array2[0], valuesMap);
+	}
+	
+	if (timestamp != null && (! timestamp.equals(""))){
+	    valuesMap = new HashMap<String, String>();
+	    valuesMap.put("type", "date");
+	    valuesMap.put("format", "dateOptionalTime");
+	    map3.put("@timestamp", valuesMap);
+	}	
+	
+	if (jsonObject.get(index) != null){ // Existe el indice, se lanza PUT
+	    String putUrl = "http://" + prop.getProperty("elastic.url.datanode1") + ":" + prop.getProperty("elastic.port.datanodes") + "/" + index + "/" + type + "/_mapping";
+	    json = objectMapper.writeValueAsString(mapPut);
+
+	    entity = httpConnector.launchHttp(putUrl,"PUT",json);
+	}
+	else{ // No existe el indice, se lanza POST
+	    String postUrl = "http://" + prop.getProperty("elastic.url.datanode1") + ":" +prop.getProperty("elastic.port.datanodes") + "/" + index + "/";
+	    json = objectMapper.writeValueAsString(mapPost);
+
+	    entity = httpConnector.launchHttp(postUrl,"POST",json);
+	}
+    }
+    
     @RequestMapping(value = "/insertIntoHive", method = RequestMethod.GET)
     public @ResponseBody String insertIntoHive(@RequestParam String idMetric) throws Exception{
 	String response = "";
@@ -196,10 +274,14 @@ public class ConsoleController {
 	    metricaBatch.setEstado(ESTADO_ERROR);
 	    metricaBatch.setError(e.toString());
 	    response = "Error al insertar en Hive : " + e.toString();
+	    LOG.info("UPDATE BBDD running....");	    
 	    metricaBatchService.updateMetricaBatch(metricaBatch);
+	    LOG.info("UPDATE BBDD done");
 	    throw e;
 	}
+	LOG.info("UPDATE BBDD running....");
 	metricaBatchService.updateMetricaBatch(metricaBatch);
+	LOG.info("UPDATE BBDD done");
 	return response;
     }
 
@@ -225,9 +307,10 @@ public class ConsoleController {
     	    metricaBatch.setWhereQuery(form.getWhereQuery());	    
 	    metricaBatch.setFechaUltModif(new Date());
 	    metricaBatch.setQueryCode(insertQuery.toString());
-	    metricaBatch.setEstado(ESTADO_EN_EJECUCION);
 	    
+	    LOG.info("UPDATE BBDD running....");
 	    metricaBatchService.updateMetricaBatch(metricaBatch);
+	    LOG.info("UPDATE BBDD done");
 	}
 	catch (Exception e) {
 	    form.setId("ERROR");
@@ -251,10 +334,14 @@ public class ConsoleController {
 	    metricaBatch.setEstado(ESTADO_ERROR);
 	    metricaBatch.setError(e.toString());
 	    response = "Error al insertar en Hive : " + e.toString();
+	    LOG.info("UPDATE BBDD running....");
 	    metricaBatchService.updateMetricaBatch(metricaBatch);
+	    LOG.info("UPDATE BBDD done");
 	    throw e;
 	}
+	LOG.info("UPDATE BBDD running....");
 	metricaBatchService.updateMetricaBatch(metricaBatch);
+	LOG.info("UPDATE BBDD done");
 	return response;
     }    
     
@@ -290,8 +377,21 @@ public class ConsoleController {
 
     @RequestMapping(value = "/deleteMetric", method = RequestMethod.GET)
     public @ResponseBody String deleteMetric(@RequestParam String idMetric, Model model) throws Exception{
+	Properties prop = new Properties();
+	ClassLoader loader = Thread.currentThread().getContextClassLoader();
+	InputStream resourceStream = loader.getResourceAsStream("META-INF/spring/environment.properties");
+	prop.load(resourceStream);
+	
 	MetricaBatch metricaBatch = metricaBatchService.findMetricaBatch(new Long(idMetric));
+	HttpConnector httpConnector = new HttpConnector();
+	String url = "http://" + prop.getProperty("elastic.url.datanode1") + ":" +prop.getProperty("elastic.port.datanodes") + "/" + metricaBatch.getEsIndex() + "/" + metricaBatch.getEsType();
+	httpConnector.launchHttp(url,"DELETE",null);
+	
+	HiveConnector hiveConnector = new HiveConnector();
+	hiveConnector.executeQuery("DROP TABLE " + metricaBatch.getEsType());	
+	LOG.info("DELETE BBDD running....");
 	metricaBatchService.deleteMetricaBatch(metricaBatch);
+	LOG.info("DELETE BBDD done");
 	return "";
     }
 
@@ -308,10 +408,39 @@ public class ConsoleController {
 	return "/login";
     }
 
-    @RequestMapping("/test")
-    public String test() {
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test(@RequestParam String url, @RequestParam String action) {
+	HttpConnector httpConnector = new HttpConnector();
+	try {
+		Properties prop = new Properties();
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		InputStream resourceStream = loader.getResourceAsStream("META-INF/spring/environment.properties");
+		prop.load(resourceStream);
+	    
+		//String urlIndexExists = "http://" + prop.getProperty("elastic.url.datanode1") + ":" +prop.getProperty("elastic.port.datanodes") + "/_stats/_indexes?pretty";
+		String urlIndexExists = "http://" + "localhost" + ":" + "9200" + "/_stats/_indexes?pretty";
+		LOG.info("HTTP Action = " + urlIndexExists);
+		HttpEntity entity = httpConnector.launchHttp(urlIndexExists,"GET",null);
+		
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(new BufferedReader(new InputStreamReader(entity.getContent())));
+		JSONObject jsonObject = (JSONObject) obj;
+		jsonObject = (JSONObject)jsonObject.get("indices");
+		if (jsonObject.get("new2") == null){
+		    LOG.info("NOl = " + jsonObject.get("indices"));
+		}
+		else{
+		    LOG.info("SIL = " + jsonObject.get("new2"));
+		    LOG.info("SIL = " + jsonObject.get("indices"));
+		}
+	}
+	catch (Exception e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 	return "/test";
     }
+    
     
     
     // METODOS ANTIGUOS
