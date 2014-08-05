@@ -11,6 +11,12 @@
 //<![CDATA[
 	$(document).ready(function() {
 		var query = '';
+		setTimeout(function() {
+			$('#sourceId').prop('disabled', false);
+			$('#sourceId').click();
+			$('#sourceId').prop('disabled', true);
+		}, 150);		
+		
 		// Select source function
 		$('#sourceId').click(function() {
 			$('#idSource').val($('#sourceId').val());
@@ -62,13 +68,13 @@
 		$("#createForm").submit(function() {
 			$("#errorDiv").hide();
 			var createForm = new CreateForm();
-			$('#fromQuery').removeAttr('disabled');
-			$('#batchMetricName').removeAttr('disabled');
-			$('#batchMetricDesc').removeAttr('disabled');
-			$('#sourceId').removeAttr('disabled');
-			$('#rdMetricType').removeAttr('disabled');
-			$('#typeQuery').removeAttr('disabled');
-			$('#esTimestamp').removeAttr('disabled');
+			$('#fromQuery').prop('disabled', false);
+			$('#batchMetricName').prop('disabled', false);
+			$('#batchMetricDesc').prop('disabled', false);
+			$('#sourceId').prop('disabled', false);
+			$('#rdMetricType').prop('disabled', false);
+			$('#typeQuery').prop('disabled', false);
+			$('#esTimestamp').prop('disabled', false);
 			$("#loadingDiv").show();
 			
 			if ($("#hidModif").val() != 0){			
@@ -84,6 +90,9 @@
 					    	$("#loadingDiv").hide();
 					    	$("#errorDiv").show();
 					    	document.getElementById('errorMessage').innerHTML = data.error;
+							$('#fromQuery').prop('disabled', true);
+							$('#rdMetricType').prop('disabled', true);
+							$('#sourceId').prop('disabled', true);
 						}
 						else{
 							$.ajax({ 						
@@ -193,20 +202,8 @@
 							<td><label for="lblMetricDescription" class="classLabel" th:text="#{create.label.descripcion}"></label></td>
 						</tr>	
 						<tr>
-						<div class="form-group">
-							<p th:if="${metricaBatch.id} == null">						
-								<td><input id="batchMetricName" name="batchMetricName" type="text" required="required" class="classText" th:field="*{batchMetricName}" th:value="${metricaBatch.batchMetricName}"/></td>
-							</p>
-							<p th:if="${metricaBatch.id} != null">						
-								<td><input disabled="disabled" id="batchMetricName" name="batchMetricName" type="text" required="required" class="classText" th:field="*{batchMetricName}" th:value="${metricaBatch.batchMetricName}"/></td>
-							</p>
-						</div>
-							<p th:if="${metricaBatch.id} == null">
-								<td><input id="batchMetricDesc" name="batchMetricDesc" type="text" class="classText" th:field="*{batchMetricDesc}" th:value="${metricaBatch.batchMetricDesc}"/></td>
-							</p>													
-							<p th:if="${metricaBatch.id} != null">
-								<td><input disabled="disabled" id="batchMetricDesc" name="batchMetricDesc" type="text" class="classText" th:field="*{batchMetricDesc}" th:value="${metricaBatch.batchMetricDesc}"/></td>								
-							</p>
+							<td><input id="batchMetricName" name="batchMetricName" type="text" required="required" class="classText" th:field="*{batchMetricName}" th:value="${metricaBatch.batchMetricName}"/></td>
+							<td><input id="batchMetricDesc" name="batchMetricDesc" type="text" class="classText" th:field="*{batchMetricDesc}" th:value="${metricaBatch.batchMetricDesc}"/></td>
 						</tr>		 
 						<tr>
 							<td><label for="lblInputs" class="classLabel" th:text="#{create.label.origenes}"></label>*</td>
@@ -271,12 +268,7 @@
 							</td>
 						</tr>
 						<tr>
-							<p th:if="${metricaBatch.id} == null">						
-								<td colspan="2"><textarea class="classQuery" id="typeQuery" th:field="*{typeQuery}" rows="3" cols="100" name="typeQuery" required="required" ></textarea></td><td></td>
-							</p>
-							<p th:if="${metricaBatch.id} != null">						
-								<td colspan="2"><textarea disabled="disabled" class="classQuery" id="typeQuery" th:field="*{typeQuery}" rows="3" cols="100" name="typeQuery" required="required" ></textarea></td><td></td>
-							</p>
+							<td colspan="2"><textarea class="classQuery" id="typeQuery" th:field="*{typeQuery}" rows="3" cols="100" name="typeQuery" required="required" ></textarea></td><td></td>
 						</tr>
 						<tr>
 							<td><label for="lblQuerySelect" class="classLabel" th:text="#{create.label.query.select}"></label>*
@@ -301,7 +293,7 @@
 										<img id="imgTimestampHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
 									</a> 
 									<label for="lblTimestamp" class="classLabel" th:text="#{create.label.timestamp}"/>
-									<input disabled="disabled" id="esTimestamp" type="text" th:field="*{esTimestamp}" name="esTimestamp" th:value="#{create.value.tiemstamp}" class="classText" style="width:195px;"/>
+									<input id="esTimestamp" type="text" th:field="*{esTimestamp}" name="esTimestamp" class="classText" style="width:195px;"/>
 								</p>				
 							</td>
 						</tr>

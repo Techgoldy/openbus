@@ -7,6 +7,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
@@ -26,6 +27,8 @@ public class HttpConnector {
 	    HttpDelete requestDelete = null;
 	    HttpGet requestGet = null;
 	    HttpResponse response = null;
+	    HttpHead requestHead = null;
+	    
 	    StringEntity input = null;
 	    if (json != null) {
 		input = new StringEntity(json);
@@ -58,15 +61,20 @@ public class HttpConnector {
 		requestGet = new HttpGet(url);
 		response = httpClient.execute(requestGet);
 	    }
+	    else if (action.equals("HEAD")) {
+		requestHead = new HttpHead(url);
+		response = httpClient.execute(requestHead);
+	    }
 	    else {
 		throw new Exception("No existe ninguna accion");
 	    }
 
-	    LOG.info(action + " done");
 	    if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 400) {
+		LOG.error(response.getStatusLine().getReasonPhrase());
 		throw new IOException("Error code = " + response.getStatusLine().getStatusCode());
 
 	    }
+	    LOG.info(action + " done");
 	    return response.getEntity();
 	}
 	catch (Exception e) {
