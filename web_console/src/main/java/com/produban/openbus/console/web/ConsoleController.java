@@ -4,12 +4,16 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -75,6 +79,11 @@ public class ConsoleController {
 	for (CamposOrigen field : hsFields) {
 	    lstFields.add(field);
 	}
+	Collections.sort(lstFields, new Comparator<CamposOrigen>(){
+	    public int compare(CamposOrigen s1, CamposOrigen s2) {
+	        return s1.getNombreCampo().compareTo(s2.getNombreCampo());
+	    }
+	});
 	model.addAttribute("lstFields", lstFields);
 	return "/create :: #selFields";
     }
@@ -309,6 +318,15 @@ public class ConsoleController {
 	    catch (Exception e) {
 		LOG.warn("Index not found in elasticsearch");
 	    }	    
+
+	    try {
+		url = "http://" + prop.getProperty("elastic.url.datanode1") + ":" + prop.getProperty("elastic.port.datanodes") + "/" + metricaBatch.getEsIndex() + "/"
+				+ form.getBatchMetricName();	    
+		httpConnector.launchHttp(url, "DELETE", null);
+	    }
+	    catch (Exception e) {
+		LOG.warn("Index not found in elasticsearch");
+	    }	    
 	    
 	    // Se crea el indice en elasticsearch
 	    createESIndex(metricaBatch.getEsIndex(), form.getBatchMetricName(), form.getTypeQuery(), prop, form.getEsTimestamp());
@@ -407,7 +425,23 @@ public class ConsoleController {
 
     @RequestMapping(value = "/reLaunchMetric", method = RequestMethod.GET)
     public @ResponseBody String reLaunchMetric(@RequestParam String idMetric, Model model) throws Exception {
-	insertIntoHive(idMetric);
+	MetricaBatch metricaBatch = null;
+	try {
+	    metricaBatch = metricaBatchService.findMetricaBatch(new Long(idMetric));
+	    metricaBatch.setFechaUltModif(new Date());
+	    metricaBatch.setEstado(ESTADO_EN_EJECUCION);
+	}
+	catch (Exception e) {
+	    metricaBatch.setEstado(ESTADO_ERROR);
+	    metricaBatch.setError(e.toString());
+	    LOG.info("UPDATE BBDD running....");
+	    metricaBatchService.updateMetricaBatch(metricaBatch);
+	    LOG.info("UPDATE BBDD done");
+	    throw e;
+	}
+	LOG.info("UPDATE BBDD running....");
+	metricaBatchService.updateMetricaBatch(metricaBatch);
+	LOG.info("UPDATE BBDD done");
 	return "";
     }
 
@@ -446,7 +480,12 @@ public class ConsoleController {
 	HttpConnector httpConnector = new HttpConnector();
 	String url = "http://" + prop.getProperty("elastic.url.datanode1") + ":" + prop.getProperty("elastic.port.datanodes") + "/" + metricaBatch.getEsIndex() + "/"
 		+ metricaBatch.getEsType();
-	httpConnector.launchHttp(url, "DELETE", null);
+	try {
+	    httpConnector.launchHttp(url, "DELETE", null);
+	}
+	catch (Exception e) {
+	    LOG.warn("Index not found in elasticsearch");
+	}	    
 
 	HiveConnector hiveConnector = new HiveConnector();
 	hiveConnector.executeQuery("DROP TABLE " + metricaBatch.getEsType());

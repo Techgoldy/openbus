@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta charset="ISO-8859-1" />
+<title th:text="#{exception.label.title.console}"></title>
+
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/styles.css}" />
 <link rel="stylesheet" type="text/css" media="all"	th:href="@{/styles/menu.css}" />
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
@@ -16,7 +19,6 @@
 <script th:src="@{/js/bootstrap.min.js}" />
 <script th:src="@{/js/jquery.validate.min.js}" />
 
-<title th:text="#{exception.label.title.console}"></title>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -29,8 +31,8 @@ $(document).ready(function(){
 	// Ajax functions
 	$('#loadingDiv').hide();
 	$(document).ajaxStart(function(){$("#loadingDiv").show();});
-	$(document).ajaxStop(function(){$("#loadingDiv").hide();}); 
-	
+	$(document).ajaxStop(function(){$("#loadingDiv").hide();}); 	
+
 });
 //]]>
 </script>
