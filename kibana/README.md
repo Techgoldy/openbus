@@ -5,7 +5,7 @@ A continuación se detallarán los informes generados, indicando los indices, qu
 
 #Dashboards
 
-1.- Inicio
+##1. Inicio
 
 Antes de empezar a desarrollar los dashboards es necesario conocer la estructura de datos a explotar que reside en ElasticSearch.
 Con el fin de simplificar este paso se ha generado un primer informe que lista los distintos index y types de nuestro ElasticSearch. Dicho informe puede ser usado como punto de partida para construir nuevos.
@@ -24,7 +24,7 @@ Los datos son los siguientes:
   Índices | Listado de los `index` definidos en la instancia que se use de ElasticSearch.
   Métricas | Listado de los `_type` definidos en la instancia que se use de ElasticSearch.
 
-2.- Envío entre servidores
+##2. Envío entre servidores
 
 Dashboard creado para ver el tráfico de correos entre los servidores de envío y recepción de los mismos.
 
@@ -50,7 +50,7 @@ Los datos son los siguientes:
   Top Emisores | Lista de los 10 servidores que más correos han emitido.
   Top Receptores | Lista de los 10 servidores que más correos han recibido.
   
-3.- Métricas Ironport
+##3.- Métricas Ironport
 
 Dashboard con la información de los informes Cisco para IronPort.
 
@@ -87,7 +87,7 @@ Los datos son los siguientes:
   Correo Entrante | Histograma y tabla en los que, para el correo ENTRANTE, se muestra la división en función del filtro de descarte o si ha sido correo aceptado.
   Correo Saliente | Histograma y tabla en los que, para el correo SALIENTE, se muestra la división en función del filtro de descarte o si ha sido correo aceptado.
   
-4.- Métricas ironport AWSTATS
+##4. Métricas ironport AWSTATS
 
 Dashboard con la información mostrada para AWSTATS de IronPort.
 
@@ -124,7 +124,7 @@ Los datos son los siguientes:
   TOP RECEPTORES - CORREOS / TOP RECEPTORES - BYTES | Lista de los 10 receptores que más correos han recibido por cantidad y tamaño en sus correos del mes.
   Correos erróneos o rechazados | Cantidad de correos erroneos o rechazados clasificados por DSN para el mes seleccionado.
   
-5.- Métricas Postfix
+##5. Métricas Postfix
 
 Dashboard con la información del informe AWSTATS para Postfix Mailing.
 
@@ -159,7 +159,7 @@ Los datos son los siguientes:
   Top Receptores | Lista de los 20 receptores que más correos han recibido por cantidad y tamaño en sus correos del mes.
   Errores de envío | Cantidad,tamaño y porcentaje de correos erroneos o rechazados clasificados por DSN para el mes seleccionado.
   
-6.- Proxy - Peticiones por user, Agent y response
+##6. Proxy - Peticiones por user, Agent y response
 
 Dashboard con las peticiones proxy por usuario, navegador, respuesta y clasificado por hora/minuto para diferenciar si han sido realizadas dentro o fuera de horario laboral.
 
@@ -187,7 +187,7 @@ Los datos son los siguientes:
   Por extensión | Ranking de las 20 extensiones más repetidas en las descargas de los usuarios para el periodo seleccionado.
   Detalle de la selección | Todos los registros de descargas para la selección realizada.
   
-7.- Proxy Bluecoat
+##7. Proxy Bluecoat
 
 Dashboard que muestra datos de proxy por usuario, dominio y tipos de descargas
 
@@ -223,7 +223,7 @@ Los datos son los siguientes:
   Top descargas comprimidos / Detalles | Gráfico con el top 5 de descargas de comprimidos por usuario. En la tabla de detalle se podrán ver todos los registros asociados a dichas descargas.
   Top descargas videos / Detalles | Gráfico con el top 5 de descargas de vídeo por usuario. En la tabla de detalle se podrán ver todos los registros asociados a dichas descargas.
 
-8.- Registros diarios
+##8. Registros diarios
 
 Dashboard que muestra el total de correos enviados, recibidos y erróneos, así como donde se han generado.
 
@@ -251,7 +251,7 @@ Los datos son los siguientes:
   Receptores | Top 10 de los usuarios que más correos han recibido.
   Localización | Geolocalización de la emisión de los mensajes.
 
-9.- Rangos Proxy
+##9. Rangos Proxy
 
 Dashboard para analizar la cantidad de descargas de ejecutables en función del tamaño de los ficheros descargados. Se hacen 3 rangos:
 - Inferiores a 1Mb
