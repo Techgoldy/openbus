@@ -50,7 +50,7 @@ Los datos son los siguientes:
   Top Emisores | Lista de los 10 servidores que más correos han emitido.
   Top Receptores | Lista de los 10 servidores que más correos han recibido.
   
-##3.- Métricas Ironport
+##3. Métricas Ironport
 
 Dashboard con la información de los informes Cisco para IronPort.
 
