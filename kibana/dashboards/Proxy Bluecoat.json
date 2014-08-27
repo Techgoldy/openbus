@@ -1,0 +1,792 @@
+{
+  "title": "Proxy Bluecoat",
+  "services": {
+    "query": {
+      "list": {
+        "0": {
+          "query": "*",
+          "alias": "",
+          "color": "#7EB26D",
+          "id": 0,
+          "pin": false,
+          "type": "lucene",
+          "enable": true
+        },
+        "1": {
+          "id": 1,
+          "color": "#EAB839",
+          "alias": "Conteo peticiones de usuario",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "_type:\"peticiones_usuario\""
+        },
+        "2": {
+          "id": 2,
+          "color": "#6ED0E0",
+          "alias": "",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "_type:\"peticiones_dominio_usuario\""
+        },
+        "3": {
+          "id": 3,
+          "color": "#EF843C",
+          "alias": "",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "_type:\"peticiones_usuario_maquina\""
+        },
+        "4": {
+          "id": 4,
+          "color": "#E24D42",
+          "alias": "",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "_type:\"descarga_dominio\""
+        },
+        "5": {
+          "id": 5,
+          "color": "#BF1B00",
+          "alias": "Descargas de archivos ejecutables",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "_type:\"descarga_ejecutables_usuario\" AND -usercode:\"-\" AND ( \".exe\" OR \".pl\")"
+        },
+        "6": {
+          "id": 6,
+          "color": "#E5AC0E",
+          "alias": "Descargas de archivis comprimidos",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "_type:\"descarga_comprimidos_usuario\" AND -usercode:\"-\""
+        },
+        "7": {
+          "id": 7,
+          "color": "#447EBC",
+          "alias": "Descargas de archivos de vídeo",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "_type:\"descarga_video_usuario\" AND -usercode:\"-\" AND (\".flv\" OR \".avi\" OR \".mp4\")"
+        }
+      },
+      "ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "filter": {
+      "list": {
+        "0": {
+          "type": "time",
+          "from": "2014-07-18T08:00:00.000Z",
+          "to": "2014-07-30T08:40:00.000Z",
+          "field": "@timestamp",
+          "mandate": "must",
+          "active": true,
+          "alias": "",
+          "id": 0
+        }
+      },
+      "ids": [
+        0
+      ]
+    }
+  },
+  "rows": [
+    {
+      "title": "Histograma",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "count",
+          "time_field": "@timestamp",
+          "value_field": null,
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              1
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": false,
+          "resolution": 100,
+          "interval": "1h",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": false,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": false,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Conteo de peticiones"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Peticiones",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "usercode",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "total",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "table",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              1
+            ]
+          },
+          "tmode": "terms_stats",
+          "tstat": "total",
+          "valuefield": "peticiones",
+          "title": "Peticiones por usuario"
+        },
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "usuario_dominio",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "total",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "table",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              2
+            ]
+          },
+          "tmode": "terms_stats",
+          "tstat": "total",
+          "valuefield": "peticiones",
+          "title": "Peticiones por usuario y dominio"
+        },
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "usuario_maquina",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "total",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "table",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              3
+            ]
+          },
+          "tmode": "terms_stats",
+          "tstat": "total",
+          "valuefield": "peticiones",
+          "title": "Peticiones por usuario y máquina"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Descargas Por Dominio",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "requestdomain",
+          "exclude": [],
+          "missing": true,
+          "other": true,
+          "size": 20,
+          "order": "total",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              4
+            ]
+          },
+          "tmode": "terms_stats",
+          "tstat": "total",
+          "valuefield": "descargas",
+          "title": "Descargas por dominio"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "histograma de descargas",
+      "height": "190px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 10,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "total",
+          "time_field": "@timestamp",
+          "value_field": "descargas",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              5,
+              6,
+              7
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": false,
+          "resolution": 100,
+          "interval": "30m",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": false,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Descargas"
+        },
+        {
+          "span": 2,
+          "editable": true,
+          "type": "trends",
+          "loadingEditor": false,
+          "ago": "30m",
+          "arrangement": "vertical",
+          "reverse": false,
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              5,
+              6,
+              7
+            ]
+          },
+          "style": {
+            "font-size": "14pt"
+          },
+          "title": "Tendencias"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Descargas Ejecutables",
+      "height": "180px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "usuario_descarga",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 5,
+          "order": "total",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "below",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              5
+            ]
+          },
+          "tmode": "terms_stats",
+          "tstat": "total",
+          "valuefield": "descargas",
+          "title": "Top Descargas ejecutables"
+        },
+        {
+          "error": false,
+          "span": 8,
+          "editable": true,
+          "type": "table",
+          "loadingEditor": false,
+          "size": 10,
+          "pages": 5000,
+          "offset": 0,
+          "sort": [
+            "_score",
+            "desc"
+          ],
+          "overflow": "min-height",
+          "fields": [
+            "usercode",
+            "recurso",
+            "@timestamp"
+          ],
+          "highlight": [],
+          "sortable": true,
+          "header": true,
+          "paging": true,
+          "field_list": true,
+          "all_fields": false,
+          "trimFactor": 300,
+          "localTime": false,
+          "timeField": "@timestamp",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              5
+            ]
+          },
+          "style": {
+            "font-size": "9pt"
+          },
+          "normTimes": true,
+          "title": "DETALLES"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Descargas Comprimidos",
+      "height": "260px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "usuario_descarga",
+          "exclude": [],
+          "missing": true,
+          "other": true,
+          "size": 5,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "below",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              6
+            ]
+          },
+          "tmode": "terms_stats",
+          "tstat": "total",
+          "valuefield": "descargas",
+          "title": "Top descargas comprimidos"
+        },
+        {
+          "error": false,
+          "span": 8,
+          "editable": true,
+          "type": "table",
+          "loadingEditor": false,
+          "size": 10,
+          "pages": 500,
+          "offset": 0,
+          "sort": [
+            "_score",
+            "desc"
+          ],
+          "overflow": "min-height",
+          "fields": [
+            "usercode",
+            "recurso",
+            "@timestamp"
+          ],
+          "highlight": [],
+          "sortable": true,
+          "header": true,
+          "paging": true,
+          "field_list": true,
+          "all_fields": false,
+          "trimFactor": 100,
+          "localTime": false,
+          "timeField": "@timestamp",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              6
+            ]
+          },
+          "style": {
+            "font-size": "9pt"
+          },
+          "normTimes": true,
+          "title": "Detalles"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Descarga Vídeo",
+      "height": "237px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "usuario_descarga",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 5,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "below",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              7
+            ]
+          },
+          "tmode": "terms_stats",
+          "tstat": "total",
+          "valuefield": "descargas",
+          "title": "top descargas videos"
+        },
+        {
+          "error": false,
+          "span": 8,
+          "editable": true,
+          "type": "table",
+          "loadingEditor": false,
+          "size": 10,
+          "pages": 5000,
+          "offset": 0,
+          "sort": [
+            "@timestamp",
+            "desc"
+          ],
+          "overflow": "min-height",
+          "fields": [
+            "usercode",
+            "recurso",
+            "@timestamp"
+          ],
+          "highlight": [],
+          "sortable": true,
+          "header": true,
+          "paging": true,
+          "field_list": true,
+          "all_fields": false,
+          "trimFactor": 100,
+          "localTime": false,
+          "timeField": "@timestamp",
+          "spyable": true,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              7
+            ]
+          },
+          "style": {
+            "font-size": "9pt"
+          },
+          "normTimes": true,
+          "title": "Detalle"
+        }
+      ],
+      "notice": false
+    }
+  ],
+  "editable": true,
+  "failover": false,
+  "index": {
+    "interval": "none",
+    "pattern": "[logstash-]YYYY.MM.DD",
+    "default": "ob_src_bluecoat",
+    "warm_fields": false
+  },
+  "style": "dark",
+  "panel_hints": true,
+  "pulldowns": [
+    {
+      "type": "query",
+      "collapse": false,
+      "notice": false,
+      "enable": true,
+      "query": "*",
+      "pinned": true,
+      "history": [
+        "_type:\"descarga_video_usuario\" AND -usercode:\"-\" AND (\".flv\" OR \".avi\" OR \".mp4\")",
+        "_type:\"descarga_comprimidos_usuario\" AND -usercode:\"-\"",
+        "_type:\"descarga_ejecutables_usuario\" AND -usercode:\"-\" AND ( \".exe\" OR \".pl\")",
+        "_type:\"descarga_dominio\"",
+        "_type:\"peticiones_usuario_maquina\"",
+        "_type:\"peticiones_dominio_usuario\"",
+        "_type:\"peticiones_usuario\"",
+        "*",
+        "_type:\"descarga_comprimidos_usuario\" AND -usercode:\"-\" AND ()",
+        "_type:\"descarga_video_usuario\" AND -usercode:\"-\" AND (\".flv\" OR \".mpeg\" OR \".avi\" OR \".mp4\")"
+      ],
+      "remember": 10
+    },
+    {
+      "type": "filtering",
+      "collapse": false,
+      "notice": true,
+      "enable": true
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "collapse": false,
+      "notice": false,
+      "enable": true,
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "timefield": "@timestamp",
+      "now": false
+    }
+  ],
+  "loader": {
+    "save_gist": false,
+    "save_elasticsearch": true,
+    "save_local": true,
+    "save_default": true,
+    "save_temp": true,
+    "save_temp_ttl_enable": true,
+    "save_temp_ttl": "30d",
+    "load_gist": false,
+    "load_elasticsearch": true,
+    "load_elasticsearch_size": 20,
+    "load_local": false,
+    "hide": false
+  },
+  "refresh": false
+}

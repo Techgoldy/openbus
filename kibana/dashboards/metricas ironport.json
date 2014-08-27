@@ -1,0 +1,622 @@
+{
+  "title": "metricas ironport",
+  "services": {
+    "query": {
+      "list": {
+        "0": {
+          "query": "193.127.200.* AND _type:\"total_mensajes\"",
+          "alias": "Total correos Entrantes",
+          "color": "#7EB26D",
+          "id": 0,
+          "pin": false,
+          "type": "lucene",
+          "enable": true
+        },
+        "1": {
+          "id": 1,
+          "color": "#EAB839",
+          "alias": "Total correos Salientes",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "_type:\"total_mensajes\" AND 180.*"
+        },
+        "2": {
+          "id": 2,
+          "color": "#6ED0E0",
+          "alias": "Entrada - Filtro de reputación",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "193.127.200.* AND _type:\"filtro_reputacion\""
+        },
+        "3": {
+          "id": 3,
+          "color": "#EF843C",
+          "alias": "Entrada - Invalid Receptor",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "193.127.200.* AND _type:\"receptor_no_valido\""
+        },
+        "4": {
+          "id": 4,
+          "color": "#E24D42",
+          "alias": "Entrada - Spam",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "193.127.200.* AND _type:\"spam\""
+        },
+        "5": {
+          "id": 5,
+          "color": "#1F78C1",
+          "alias": "Entrada - Virus",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "193.127.200.* AND _type:\"virus\" AND antivirus:\"positive\""
+        },
+        "6": {
+          "id": 6,
+          "color": "#BA43A9",
+          "alias": "Entrada - Content Filter",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "193.127.200.* AND _type:\"content_filter\""
+        },
+        "7": {
+          "id": 7,
+          "color": "#629E51",
+          "alias": "Entrada - Marketing",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "193.127.200.* AND _type:\"marketing\""
+        },
+        "8": {
+          "id": 8,
+          "color": "#DEDAF7",
+          "alias": "Entrada - Correos limpios",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "193.127.200.* AND _type:\"correos_limpios\""
+        },
+        "9": {
+          "id": 9,
+          "color": "#6ED0E0",
+          "alias": "Salida - Filtro Reputación",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "180.* AND _type:\"filtro_reputacion\""
+        },
+        "10": {
+          "id": 10,
+          "color": "#EF843C",
+          "alias": "Salida - Invalid Receptor",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "180.* AND _type:\"receptor_no_valido\""
+        },
+        "11": {
+          "id": 11,
+          "color": "#E24D42",
+          "alias": "Salida - Spam",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "180.* AND _type:\"spam\""
+        },
+        "12": {
+          "id": 12,
+          "color": "#1F78C1",
+          "alias": "Salida  - Virus",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "180.* AND _type:\"virus\" AND antivirus:\"positive\""
+        },
+        "13": {
+          "id": 13,
+          "color": "#BA43A9",
+          "alias": "Salida - Content Filter",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "180.* AND _type:\"content_filter\""
+        },
+        "14": {
+          "id": 14,
+          "color": "#508642",
+          "alias": "Salida - Marketing",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "180.* AND _type:\"marketing\""
+        },
+        "15": {
+          "id": 15,
+          "color": "#FCEACA",
+          "alias": "Salida - Correos limpios",
+          "pin": false,
+          "type": "lucene",
+          "enable": true,
+          "query": "180.* AND _type:\"correos_limpios\""
+        }
+      },
+      "ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "filter": {
+      "list": {},
+      "ids": []
+    }
+  },
+  "rows": [
+    {
+      "title": "Correos entrantes y salientes",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "count",
+          "time_field": "@timestamp",
+          "value_field": null,
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              0,
+              1
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": false,
+          "resolution": 100,
+          "interval": "30m",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": true,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": false,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Entrante vs Saliente"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Correo Entrante",
+      "height": "278px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 8,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "count",
+          "time_field": "@timestamp",
+          "value_field": null,
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": false,
+          "resolution": 100,
+          "interval": "1h",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": false,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Correo entrante"
+        },
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "stats",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          "style": {
+            "font-size": "24pt"
+          },
+          "format": "number",
+          "mode": "count",
+          "display_breakdown": "yes",
+          "sort_field": "",
+          "sort_reverse": false,
+          "label_name": "Tipología de correos",
+          "value_name": "Value",
+          "spyable": true,
+          "show": {
+            "count": true,
+            "min": false,
+            "max": false,
+            "mean": false,
+            "std_deviation": false,
+            "sum_of_squares": false,
+            "total": false,
+            "variance": false
+          },
+          "field": "icid",
+          "unit": "correos",
+          "title": "Correos Entrantes"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "",
+      "height": "278px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 8,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "count",
+          "time_field": "@timestamp",
+          "value_field": null,
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": false,
+          "resolution": 100,
+          "interval": "1h",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": false,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Correo Saliente"
+        },
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "stats",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ]
+          },
+          "style": {
+            "font-size": "24pt"
+          },
+          "format": "number",
+          "mode": "count",
+          "display_breakdown": "yes",
+          "sort_field": "",
+          "sort_reverse": false,
+          "label_name": "Query",
+          "value_name": "Value",
+          "spyable": true,
+          "show": {
+            "count": true,
+            "min": false,
+            "max": false,
+            "mean": false,
+            "std_deviation": false,
+            "sum_of_squares": false,
+            "total": false,
+            "variance": false
+          },
+          "field": "icid",
+          "unit": "correos",
+          "title": "Correos Salientes"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "Correo Saliente",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [],
+      "notice": false
+    }
+  ],
+  "editable": true,
+  "failover": false,
+  "index": {
+    "interval": "none",
+    "pattern": "[logstash-]YYYY.MM.DD",
+    "default": "ob_src_ironport",
+    "warm_fields": false
+  },
+  "style": "dark",
+  "panel_hints": true,
+  "pulldowns": [
+    {
+      "type": "query",
+      "collapse": false,
+      "notice": false,
+      "enable": true,
+      "query": "*",
+      "pinned": true,
+      "history": [
+        "180.* AND _type:\"correos_limpios\"",
+        "180.* AND _type:\"marketing\"",
+        "180.* AND _type:\"content_filter\"",
+        "180.* AND _type:\"virus\" AND antivirus:\"positive\"",
+        "180.* AND _type:\"spam\"",
+        "180.* AND _type:\"receptor_no_valido\"",
+        "180.* AND _type:\"filtro_reputacion\"",
+        "193.127.200.* AND _type:\"correos_limpios\"",
+        "193.127.200.* AND _type:\"marketing\"",
+        "193.127.200.* AND _type:\"content_filter\""
+      ],
+      "remember": 10
+    },
+    {
+      "type": "filtering",
+      "collapse": false,
+      "notice": false,
+      "enable": true
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "collapse": false,
+      "notice": false,
+      "enable": true,
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "timefield": "@timestamp",
+      "now": false
+    }
+  ],
+  "loader": {
+    "save_gist": false,
+    "save_elasticsearch": true,
+    "save_local": true,
+    "save_default": true,
+    "save_temp": true,
+    "save_temp_ttl_enable": true,
+    "save_temp_ttl": "30d",
+    "load_gist": false,
+    "load_elasticsearch": true,
+    "load_elasticsearch_size": 20,
+    "load_local": false,
+    "hide": false
+  },
+  "refresh": false
+}
