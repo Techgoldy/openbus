@@ -102,7 +102,7 @@
               "_score",
               "desc"
             ]
-          },
+          }, 
           "auto_int": false,
           "resolution": 100,
           "interval": "10m",
