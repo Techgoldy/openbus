@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title th:text="#{create.label.title.batch}"></title>
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/styles.css}" />
+<link rel="stylesheet" type="text/css" media="all"	th:href="@{/styles/menu.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
+<script th:src="@{/js/create.js}" />
+
+<script th:inline="javascript">
+//<![CDATA[
+	$(document).ready(function() {
+		var query = '';
+		var idMetric = /*[[${metricaOnLine.id}]]*/ "";
+		
+		if (idMetric != null && idMetric != ''){
+			setTimeout(function() {
+				$('#sourceId').prop('disabled', false);
+				$('#sourceId').click();
+				$('#sourceId').prop('disabled', true);
+				$('#selFields').prop('disabled', true);
+			}, 150);
+			
+		}
+		else{
+			setTimeout(function() {
+				$('#sourceId').click();
+			}, 150);
+		}
+	});
+//]]>
+</script>
+</head>
+<body>
+	<div th:replace="header::#header"/>
+	<div th:replace="sidebar::#sidebar"/>
+	<div id='loadingDiv'><img th:attr="src=@{/images/ajax-loader.gif}" /></div>
+	<div class="container" style="left: 100px;"> 
+			<div id="errorDiv" style="width:800px;display:none">
+			    <div class="alert alert-danger alert-error">
+			    	<button type="button" class="close">&times;</button>
+			  		<strong th:text="#{create.label.error1}"></strong>
+			  		<span th:text="#{create.label.error2}">: </span>
+			  		<span id="errorMessage"></span>
+			    </div>
+			</div>
+												
+			<form id="createForm" action="javascript:return false;" th:object="${metricaOnLine}" method="post" >
+				<h2 th:text="#{create.label.title.online}"></h2>
+				<div id="tableContainer" style="width:800px;height:400px; overflow:auto;">
+					<table>
+						<tr>
+							<td><label for="lblMetricName" class="classLabel"  th:text="#{create.label.nombre}"></label>*</td>
+							<td><label for="lblMetricDescription" class="classLabel" th:text="#{create.label.descripcion}"></label></td>
+						</tr>	
+						<tr>
+							<td><input id="batchMetricName" name="batchMetricName" type="text" required="required" class="classText" th:field="*{batchMetricName}" th:value="${metricaOnLine.batchMetricName}"/></td>
+							<td><input id="batchMetricDesc" name="batchMetricDesc" type="text" class="classText" th:field="*{batchMetricDesc}" th:value="${metricaOnLine.batchMetricDesc}"/></td>
+						</tr>		 
+						<tr>
+							<td><label for="lblInputs" class="classLabel" th:text="#{create.label.origenes}"></label>*</td>
+							<td id="tdLblFields">
+								<label for="lblFields" class="classLabel" th:text="#{create.label.campos}"></label>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<select id="sourceId" name="sourceId" required="required" th:field="*{sourceId}" class="classSelect">
+									<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
+								</select>
+								<input id="selSourceName" name="selSourceName" type="hidden"/>
+							</td>
+							<td id="tdSelectFields">
+								<select id="selFields" name="selFields" class="classSelect" multiple="multiple"> 
+									<option th:each="field : ${lstFields}" th:value="${field.id}" th:text="${field.nombreCampo}"></option>
+								</select>
+								<input id="idSource" type="hidden"/>
+							</td>			
+						</tr>
+						<tr><td></td></tr>
+					</table>
+				</div>
+				<br/>
+				<div id="divButton" style="margin-left:4px;">
+					<p th:if="${metricaOnLine.id} == null">
+						<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.lanzar}"/>
+						<input id="hidModif" name="hidModif" type="hidden" value="0"/>
+					</p>
+					<p th:if="${metricaOnLine.id} != null">
+						<p th:if="${metricaOnLine.estado} == Error">
+							<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.actualizar}"/>
+							<input id="hidModif" name="hidModif" type="hidden" th:value="${metricaOnLine.id}"/>
+						</p>
+						<p th:if="${metricaOnLine.estado} != Error">
+							<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.actualizar}"/>
+							<input id="hidModif" name="hidModif" type="hidden" th:value="${metricaOnLine.id}"/>
+						</p>
+					</p>
+				</div>					
+				<div id="divTypeTooltipHelp" style="display:none">
+					<span th:text="#{create.tooltip.type1}"></span><br/><i><span th:text="#{create.tooltip.type2}"></span></i>
+				</div>
+				<div id="divSelectTooltipHelp" style="display:none">
+					<span th:text="#{create.tooltip.select1}"></span><br/><span th:text="#{create.tooltip.select2}"></span><br/>
+					<i><span th:text="#{create.tooltip.select3}"></span></i><br/>				
+					<i><span th:text="#{create.tooltip.select4}"></span></i>
+				</div>
+				<div id="divWhereTooltipHelp" style="display:none">
+					<span th:text="#{create.tooltip.where1}"></span><br/><i><span th:text="#{create.tooltip.where2}"></span></i>
+				</div>
+				<div id="divTimestampTooltipHelp" style="display:none">
+					<span th:text="#{create.tooltip.timestamp}"/>
+				</div>
+			</form>
+	</div>
+</body>
+</html>

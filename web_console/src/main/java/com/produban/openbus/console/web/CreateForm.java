@@ -13,85 +13,146 @@ public class CreateForm {
     private String fromQuery;
     private String selectQuery;
     private String whereQuery;
-    private String esTimestamp;    
+    private String esTimestamp;
     private String error;
+    private String planificacion;
     
-    public String getId() {
-        return id;
+    public String getPlanificacion()
+    {
+      return this.planificacion;
     }
-    public void setId(String id) {
-        this.id = id;
-    }    
-    public String getHidModif() {
-        return hidModif;
+    
+    public void setPlanificacion(String planificacion)
+    {
+      this.planificacion = planificacion;
     }
-    public void setHidModif(String hidModif) {
-        this.hidModif = hidModif;
+    
+    public String getId()
+    {
+      return this.id;
     }
-    public String getRdMetricType() {
-        return rdMetricType;
+    
+    public void setId(String id)
+    {
+      this.id = id;
     }
-    public void setRdMetricType(String rdMetricType) {
-        this.rdMetricType = rdMetricType;
+    
+    public String getHidModif()
+    {
+      return this.hidModif;
     }
-    public String getSourceId() {
-        return sourceId;
+    
+    public void setHidModif(String hidModif)
+    {
+      this.hidModif = hidModif;
     }
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
+    
+    public String getRdMetricType()
+    {
+      return this.rdMetricType;
     }
-    public String getSelSourceName() {
-        return selSourceName;
+    
+    public void setRdMetricType(String rdMetricType)
+    {
+      this.rdMetricType = rdMetricType;
     }
-    public void setSelSourceName(String selSourceName) {
-        this.selSourceName = selSourceName;
+    
+    public String getSourceId()
+    {
+      return this.sourceId;
     }
-    public String getBatchMetricName() {
-        return batchMetricName;
+    
+    public void setSourceId(String sourceId)
+    {
+      this.sourceId = sourceId;
     }
-    public void setBatchMetricName(String batchMetricName) {
-        this.batchMetricName = batchMetricName;
+    
+    public String getSelSourceName()
+    {
+      return this.selSourceName;
     }
-    public String getBatchMetricDesc() {
-        return batchMetricDesc;
+    
+    public void setSelSourceName(String selSourceName)
+    {
+      this.selSourceName = selSourceName;
     }
-    public void setBatchMetricDesc(String batchMetricDesc) {
-        this.batchMetricDesc = batchMetricDesc;
+    
+    public String getBatchMetricName()
+    {
+      return this.batchMetricName;
     }
-    public String getTypeQuery() {
-        return typeQuery;
+    
+    public void setBatchMetricName(String batchMetricName)
+    {
+      this.batchMetricName = batchMetricName;
     }
-    public void setTypeQuery(String typeQuery) {
-        this.typeQuery = typeQuery;
+    
+    public String getBatchMetricDesc()
+    {
+      return this.batchMetricDesc;
     }
-    public String getFromQuery() {
-        return fromQuery;
+    
+    public void setBatchMetricDesc(String batchMetricDesc)
+    {
+      this.batchMetricDesc = batchMetricDesc;
     }
-    public void setFromQuery(String fromQuery) {
-        this.fromQuery = fromQuery;
+    
+    public String getTypeQuery()
+    {
+      return this.typeQuery;
     }
-    public String getSelectQuery() {
-        return selectQuery;
+    
+    public void setTypeQuery(String typeQuery)
+    {
+      this.typeQuery = typeQuery;
     }
-    public void setSelectQuery(String selectQuery) {
-        this.selectQuery = selectQuery;
+    
+    public String getFromQuery()
+    {
+      return this.fromQuery;
     }
-    public String getWhereQuery() {
-        return whereQuery;
+    
+    public void setFromQuery(String fromQuery)
+    {
+      this.fromQuery = fromQuery;
     }
-    public void setWhereQuery(String whereQuery) {
-        this.whereQuery = whereQuery;
+    
+    public String getSelectQuery()
+    {
+      return this.selectQuery;
     }
-    public String getEsTimestamp() {
-        return esTimestamp;
+    
+    public void setSelectQuery(String selectQuery)
+    {
+      this.selectQuery = selectQuery;
     }
-    public void setEsTimestamp(String esTimestamp) {
-        this.esTimestamp = esTimestamp;
+    
+    public String getWhereQuery()
+    {
+      return this.whereQuery;
     }
-    public String getError() {
-        return error;
+    
+    public void setWhereQuery(String whereQuery)
+    {
+      this.whereQuery = whereQuery;
     }
-    public void setError(String error) {
-        this.error = error;
+    
+    public String getEsTimestamp()
+    {
+      return this.esTimestamp;
     }
-}
+    
+    public void setEsTimestamp(String esTimestamp)
+    {
+      this.esTimestamp = esTimestamp;
+    }
+    
+    public String getError()
+    {
+      return this.error;
+    }
+    
+    public void setError(String error)
+    {
+      this.error = error;
+    }}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title th:text="#{show.label.title.batch}"></title>
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery.dataTables.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery-ui-1.10.4.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/dataTables.jqueryui.css}" />
+
+<script th:src="@{/js/jquery.dataTables.min.js}" />
+<script th:src="@{/js/dataTables.bootstrap.js}" />
+<script th:src="@{/js/jquery-ui-1.10.4.min.js}" />
+<script th:src="@{/js/show.js}" />
+<script th:inline="javascript">
+//<![CDATA[
+var idMetric = null;
+var rowSelected = false;
+var table = null;
+
+$(document).ready(function() {
+	var search = /*[[${search}]]*/ "";
+	setTimeout(function() {
+		$('input[type=search]').val(search);
+		e = $.Event('keyup');
+		e.keyCode= 13;
+		$('input[type=search]').trigger(e);		
+	}, 150);	
+	table = $('#example').DataTable({
+		"columnDefs": [{ "visible": false, "targets": 0 }],	
+        "scrollY": "300px",
+        "scrollCollapse": true,
+        "jQueryUI":       true,
+        "order": [[ 5, "desc" ]],
+        "language": {
+            "url": "/web_console/styles/es_es.lang"
+        }
+	});
+	
+	$(document).tooltip({
+        track:true
+    });
+	
+	$(".close").click(function(){
+	      $("#errorDiv").hide();
+	      $("#warningDiv").hide();
+	      $("#messageDiv").hide();
+	});
+});
+//]]>
+</script>		
+</head>
+<body>
+<div class="container">
+	<h2 th:text="#{show.label.title.batch}"></h2>
+	<div id='loadingDiv'>
+	    <img th:attr="src=@{/images/ajax-loader.gif}" />
+	</div> 	
+	<div th:fragment="divShow" id="divShow">
+ 		<div id="errorDiv" class="alert alert-danger alert-error" style="display:none">
+ 			<button type="button" class="close">&times;</button>
+	  		<strong th:text="#{show.label.error1}"></strong>
+	  		<span th:text="#{show.label.error2}"></span>
+	  	</div>
+  		<div id="messageDiv" class="alert alert-success" style="display:none">
+  			<button type="button" class="close">&times;</button>
+	  		<strong th:text="#{show.label.ok1}"></strong>
+	  		<span th:text="#{show.label.ok2}"></span>
+	  	</div>
+  		<div id="warningDiv" class="alert alert-warning" style="display:none">
+	  		<button type="button" class="close">&times;</button>
+	  		<span th:text="#{show.label.error3}"></span>
+	  	</div>
+		<button id="btModify" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.modify}" th:title="#{show.label.modify}" onclick="modifyMetric();"/>
+		<button id="btDelete" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.delete}" th:title="#{show.label.delete}" onclick="deleteMetric();"/>
+		<a href="#" th:title="#{show.label.refresh}" onclick="refreshTable();"><img id="imgRefresh" th:src="@{/images/refresh.ico}" style="height:30px" ></img></a>
+		<p></p>		
+		<table id="example" class="display" cellspacing="0" width="100%">
+		    <thead>
+		    <tr>
+		    	<th th:text="#{show.label.nombre}"></th>
+		        <th th:text="#{show.label.nombre}"></th>
+		        <th th:text="#{show.label.descripcion}"></th>
+		        <th th:text="#{show.label.planificacion}"></th>
+		        <th th:text="#{show.label.origen}"></th>
+		        <th th:text="#{show.label.fechaultlanz}"></th>
+		        <th th:text="#{show.label.estado}"></th>
+		        <th>&nbsp;</th>
+		    </tr>
+		    </thead>
+		    <tbody>
+		    <tr th:each="metric : ${lstMetrics}">
+		    	<td th:text="${metric.id}"></td>
+		        <td th:text="${metric.batchMetricName}"></td>
+		        <td th:text="${metric.batchMetricDesc}"></td>
+		        <td th:text="${metric.planificacion}"></td>
+		        <td th:text="${metric.esIndex}"></td>
+		        <td th:text="${metric.fechaUltModif}"></td>
+		        <p th:if="${metric.estado} != Error" >
+		        	<p th:if="${metric.estado} == Ok" >
+		        		<td th:text="${metric.estado}" style="color:#3ADF00"></td>
+		        	</p>
+		        	<p th:if="${metric.estado} != Ok" >
+		        		<td th:text="${metric.estado}" style="color:#FFBF00"></td>
+		        	</p>
+		        </p>
+		        <p th:if="${metric.estado} == Error" >
+		        	<td th:text="${metric.estado}" style="color:#FF0000" th:title="${metric.error}"></td>
+		        </p>
+		        <p th:if="${metric.estado} == Ok" >
+		        	<td><input type="button" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
+		        </p>
+		        <p th:if="${metric.estado} != Ok" >
+		        	<td><input type="button" disabled="disabled" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
+		        </p>
+		    </tr>
+		    </tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>

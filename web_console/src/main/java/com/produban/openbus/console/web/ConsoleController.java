@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -61,12 +59,12 @@ public class ConsoleController {
     @Autowired
     private MetricaBatchService metricaBatchService;
 
-    @RequestMapping("/create")
+    @RequestMapping("/createbatch")
     public String getSources(Model model) {
 	List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();
 	model.addAttribute("lstSources", lstSources);
 	model.addAttribute("metricaBatch", new MetricaBatch());
-	return "/create";
+	return "/console/createbatch";
     }
 
     @RequestMapping(value = "/getFieldsBySource")
@@ -85,9 +83,35 @@ public class ConsoleController {
 	    }
 	});
 	model.addAttribute("lstFields", lstFields);
-	return "/create :: #selFields";
+	return "/console/createbatch :: #selFields";
     }
 
+    @RequestMapping("/createonline")
+    public String getSourcesOnLine(Model model) {
+	List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();
+	model.addAttribute("lstSources", lstSources);
+	model.addAttribute("metricaOnLine", new MetricaBatch());
+	return "/console/createonline";
+    }
+
+    @RequestMapping(value = "/getFieldsBySourceOnLine")
+    public String refreshFieldsOnLine(@RequestParam String idSource, Model model) {
+	OrigenEstructurado origenEstructurado = origenEstructuradoService.findOrigenEstructurado(Long.valueOf(idSource));
+	origenEstructurado.getHsCamposOrigen().size();
+	Set<CamposOrigen> hsFields = origenEstructurado.getHsCamposOrigen();
+
+	List<CamposOrigen> lstFields = new ArrayList<CamposOrigen>();
+	for (CamposOrigen field : hsFields) {
+	    lstFields.add(field);
+	}
+	Collections.sort(lstFields, new Comparator<CamposOrigen>(){
+	    public int compare(CamposOrigen s1, CamposOrigen s2) {
+	        return s1.getNombreCampo().compareTo(s2.getNombreCampo());
+	    }
+	});
+	model.addAttribute("lstFields", lstFields);
+	return "/console/createonline :: #selFields";
+    }    
     // ***************** CREATE *****************
     @RequestMapping(value = "/createMetricBBDDES", method = RequestMethod.POST)
     public @ResponseBody CreateForm createMetricBBDDES(Model model, HttpSession session, @RequestBody final CreateForm form) {
@@ -135,6 +159,8 @@ public class ConsoleController {
 	metricaBatch.setFromQuery(form.getFromQuery());
 	metricaBatch.setSelectQuery(form.getSelectQuery());
 	metricaBatch.setWhereQuery(form.getWhereQuery());
+	metricaBatch.setPlanificacion(form.getPlanificacion());
+	metricaBatch.setUsuarioCreacion((String) session.getAttribute("username"));
 
 	String strSelectQuery = metricaBatch.getSelectQuery();
 	String strFromQuery = metricaBatch.getFromQuery();
@@ -151,11 +177,9 @@ public class ConsoleController {
 
 	if (isBatch.equals("1")) {
 	    metricaBatch.setIsBatch(true);
-	    metricaBatch.setPlanificacion("");
 	}
 	else {
 	    metricaBatch.setIsBatch(false);
-	    metricaBatch.setPlanificacion("");
 	}
 	return metricaBatch;
     }
@@ -213,6 +237,7 @@ public class ConsoleController {
 	Map<String, Map> mapPut = new HashMap<String, Map>();
 	Map<String, Map> map2 = new HashMap<String, Map>();
 	Map<String, Map> map3 = new HashMap<String, Map>();
+	boolean bTimeStamp = false;
 
 	ObjectMapper objectMapper = new ObjectMapper();
 
@@ -230,25 +255,40 @@ public class ConsoleController {
 	map2.put("properties", map3);
 	String[] array1 = strTypeQuery.split(",");
 	Map<String, String> valuesMap = null;
+	if (timestamp == null){
+	    timestamp = "";
+	}
 	for (int i = 0; i < array1.length; i++) {
 	    valuesMap = new HashMap<String, String>();
 	    String[] array2 = array1[i].split(" ");
 	    array2[1] = array2[1].toLowerCase();
+	    array2[0] = array2[0].toLowerCase();
 	    array2[1] = array2[1].replaceAll("\n", "");
 	    array2[0] = array2[0].replaceAll("\n", "");
 
-	    if ("bigint".equals(array2[1]) || "int".equals(array2[1])) {
-		array2[1] = "long";
-	    }
-	    valuesMap.clear();
-	    valuesMap.put("type", array2[1]);
 	    if ("string".equals(array2[1])) {
+		valuesMap.put("type", "string");
 		valuesMap.put("index", "not_analyzed");
+		map3.put(array2[0], valuesMap);		
 	    }
-	    map3.put(array2[0], valuesMap);
+	    else if ("bigint".equals(array2[1]) || "int".equals(array2[1])) {
+		valuesMap.put("type", "long");
+		map3.put(array2[0], valuesMap);
+	    }
+	    else if ("timestamp".equals(array2[1])){ 
+		valuesMap.put("type", "date");
+		valuesMap.put("format", "dateOptionalTime");
+		if(timestamp.equals(array2[1])){
+		    bTimeStamp = true;
+		    map3.put("@timestamp", valuesMap);
+		}
+		else{
+		    map3.put(array2[0], valuesMap);
+		}
+	    }
 	}
 
-	if (timestamp != null && (!timestamp.equals(""))) {
+	if ((!bTimeStamp) && (!timestamp.equals(""))) {
 	    valuesMap = new HashMap<String, String>();
 	    valuesMap.put("type", "date");
 	    valuesMap.put("format", "dateOptionalTime");
@@ -302,12 +342,11 @@ public class ConsoleController {
 	try {
 	    MetricaBatch metricaBatch = null;
 	    metricaBatch = metricaBatchService.findMetricaBatch(new Long(form.getHidModif()));
-
 	    Properties prop = new Properties();
 	    ClassLoader loader = Thread.currentThread().getContextClassLoader();
 	    InputStream resourceStream = loader.getResourceAsStream("META-INF/spring/environment.properties");
 	    prop.load(resourceStream);
-
+	    
 	    // Se borra el indice de elasticsearch si existe
 	    HttpConnector httpConnector = new HttpConnector();
 	    String url = "http://" + prop.getProperty("elastic.url.datanode1") + ":" + prop.getProperty("elastic.port.datanodes") + "/" + metricaBatch.getEsIndex() + "/"
@@ -385,7 +424,15 @@ public class ConsoleController {
 	    metricaBatch.setBatchMetricDesc(form.getBatchMetricDesc());
 	    metricaBatch.setBatchMetricName(form.getBatchMetricName());
 	    metricaBatch.setEsTimestamp(form.getEsTimestamp());
-
+	    metricaBatch.setPlanificacion(form.getPlanificacion());
+	    metricaBatch.setUsuarioModificacion((String) session.getAttribute("username"));
+	    String isBatch = form.getRdMetricType();
+	    if (isBatch.equals("1")) {
+		metricaBatch.setIsBatch(true);
+	    }
+	    else {
+		metricaBatch.setIsBatch(false);
+	    }
 	    LOG.info("UPDATE BBDD running....");
 	    metricaBatchService.updateMetricaBatch(metricaBatch);
 	    LOG.info("UPDATE BBDD done");
@@ -445,11 +492,12 @@ public class ConsoleController {
 	return "";
     }
 
-    @RequestMapping("/show")
-    public String showMetrics(Model model) {
+    @RequestMapping("/showbatch")
+    public String showMetrics(Model model, HttpServletRequest request) {
 	List<MetricaBatch> lstMetrics = metricaBatchService.findAllMetricaBatches();
 	model.addAttribute("lstMetrics", lstMetrics);
-	return "/show";
+	model.addAttribute("search", request.getParameter("hidSearch"));
+	return "/console/showbatch";
     }
 
     @RequestMapping("/refresh")
@@ -457,7 +505,7 @@ public class ConsoleController {
 	List<MetricaBatch> lstMetrics = metricaBatchService.findAllMetricaBatches();
 	model.addAttribute("lstMetrics", lstMetrics);
 	model.addAttribute("search", search);
-	return "/show";
+	return "/console/showbatch";
     }
 
     @RequestMapping("/updateMetric")
@@ -466,7 +514,7 @@ public class ConsoleController {
 	model.addAttribute("lstSources", lstSources);
 	MetricaBatch metricaBatch = metricaBatchService.findMetricaBatch(new Long(idMetric));
 	model.addAttribute("metricaBatch", metricaBatch);
-	return "/create";
+	return "/console/createbatch";
     }
 
     @RequestMapping(value = "/deleteMetric", method = RequestMethod.GET)
@@ -500,42 +548,25 @@ public class ConsoleController {
 	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	String name = auth.getName();
 	session.setAttribute("username", name);
-	return "/menu";
+	return "/console/menu";
     }
-
-    @RequestMapping("/")
-    public String login(Model model) {
-	return "/login";
-    }
-
+    
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test(@RequestParam String url, @RequestParam String action) {
-	HttpConnector httpConnector = new HttpConnector();
-	try {
-	    Properties prop = new Properties();
-	    ClassLoader loader = Thread.currentThread().getContextClassLoader();
-	    InputStream resourceStream = loader.getResourceAsStream("META-INF/spring/environment.properties");
-	    prop.load(resourceStream);
-
-	    // String urlIndexExists = "http://" +
-	    // prop.getProperty("elastic.url.datanode1") + ":"
-	    // +prop.getProperty("elastic.port.datanodes") +
-	    // "/_stats/_indexes?pretty";
-	    String urlIndexExists = "http://" + "localhost" + ":" + "9200" + "/_stats/_indexes?pretty";
-	    LOG.info("HTTP Action = " + urlIndexExists);
-	    HttpEntity entity = httpConnector.launchHttp(urlIndexExists, "GET", null);
-
-	    JSONParser parser = new JSONParser();
-	    Object obj = parser.parse(new BufferedReader(new InputStreamReader(entity.getContent())));
-	    JSONObject jsonObject = (JSONObject) obj;
-	    jsonObject = (JSONObject) jsonObject.get("indices");
-	    if (jsonObject.get("new2") == null) {
-		LOG.info("NOl = " + jsonObject.get("indices"));
-	    }
-	    else {
-		LOG.info("SIL = " + jsonObject.get("new2"));
-		LOG.info("SIL = " + jsonObject.get("indices"));
-	    }
+    public String test() {
+	try {/*
+	    JobDetail job = new JobDetail();
+	    	job.setName("dummyJobName");
+	    	job.setJobClass(com.produban.openbus.console.util.ScheduledJob.class);
+	 
+	    	CronTrigger trigger = new CronTrigger();
+	    	trigger.setName("dummyTriggerName");
+	    	trigger.setCronExpression("0/30 * * * * ?");
+	 
+	    	//schedule it
+	    	Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+	    	scheduler.start();
+	    	scheduler.scheduleJob(job, trigger);
+	    	*/
 	}
 	catch (Exception e) {
 	    // TODO Auto-generated catch block
