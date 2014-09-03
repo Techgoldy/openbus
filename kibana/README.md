@@ -282,4 +282,28 @@ Los datos son los siguientes:
   Ejecutables entre 1Mb y 10 Mb  por usuario y recurso | Total de registros de descargas superiores a 10Mb para la selección.
   Top usuario descargas | Top 10 con los usuarias que más descargas han realizado.
   
+##10. Sesiones proxy
+
+Dashboard para analizar las peticiones recibidas clasificadas según sesiones de duración de 30 minutos de inactividad.
+
+Los datos son los siguientes:
+
+**index:** `bluecoat_session`
+
+**query:** 
+
+  QUERY | DESCRIPCIÓN
+  :--------|:-----------
+  _type:"total_sesiones"  | Total de peticiones clasificadas en su sesión correspondiente.
+  _type:"resumen_sesiones" | Sesiones que se han definido junto con la cantidad de peticiones que contienen.
+
+**Paneles:**
+
+  PANELES | CONTENIDO
+  :--------|:----------- 
+  Total de peticiones | Histograma que muestra el total de peticiones realizadas, independientemente de la sesión.
+  Resumen de sesión | Resumen donde se podrán ver la definición de las sesiones, asñi como la cantidad de peticiones asociadas.
+  Top 10 sesiones por usuario | Los 10 usuarios con más sesiones.
+  Top 10 peticiones por usuario | Los 10 usuarios con más peticiones.
+  Detalle de las sesiones | Muesta el total de peticiones al detalle por cada sesión.
   
