@@ -13,6 +13,9 @@
 <script th:inline="javascript">
 //<![CDATA[
 	$(document).ready(function() {
+		$.widget.bridge('uitooltip', $.ui.tooltip);
+		$.widget.bridge('uibutton', $.ui.button);
+		
 		var query = '';
 		var idMetric = /*[[${metricaBatch.id}]]*/ "";
 		var isBatch = /*[[${metricaBatch.isBatch}]]*/ "";
@@ -101,6 +104,7 @@
 			createForm.esTimestamp = $('#esTimestamp').val();
 			createForm.selSourceName = $('#selSourceName').val();
 			//createForm.planificacion = $('#planificacion').val();
+			createForm.esId = $('#esId').val();
 			createForm.error = null;
 		}
 
@@ -209,7 +213,12 @@
 		        return $("#divTimestampTooltipHelp").html();
 		    }
 		});
-
+		$('#imgEsIdHelp').popover({
+		    html: true,
+		    content: function () {
+		        return $("#divEsIdTooltipHelp").html();
+		    }
+		});
 		$(".close").click(function(){
 		      $("#errorDiv").hide();
 		      $("#warningDiv").hide();
@@ -319,7 +328,7 @@
 										<img id="imgTimestampHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
 									</a> 
 									<label for="lblTimestamp" class="classLabel" th:text="#{create.label.timestamp}"/>
-									<input id="esTimestamp" type="text" name="esTimestamp" th:value="#{create.value.tiemstamp}" class="classText" style="width:195px;"/>
+									<input id="esTimestamp" type="text" name="esTimestamp" th:value="#{create.value.timestamp}" class="classText" style="width:195px;"/>
 								</p>				
 								 <p th:if="${metricaBatch.esTimestamp} != null">
 									<a href="#" th:title="#{create.label.help}">
@@ -328,6 +337,11 @@
 									<label for="lblTimestamp" class="classLabel" th:text="#{create.label.timestamp}"/>
 									<input id="esTimestamp" type="text" th:field="*{esTimestamp}" name="esTimestamp" class="classText" style="width:195px;"/>
 								</p>				
+								<a href="#" th:title="#{create.label.help}">
+									<img id="imgEsIdHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
+								</a> 
+								<label for="lblEsId" class="classLabel" th:text="#{create.label.esid}"/>
+								<input id="esId" type="text" name="esId" th:field="*{esId}" class="classText" style="width:195px;"/>
 							</td>
 						</tr>
 						<tr>
@@ -382,6 +396,9 @@
 				</div>
 				<div id="divTimestampTooltipHelp" style="display:none">
 					<span th:text="#{create.tooltip.timestamp}"/>
+				</div>
+				<div id="divEsIdTooltipHelp" style="display:none">
+					<span th:text="#{create.tooltip.esid}"/>
 				</div>
 			</form>
 	</div>

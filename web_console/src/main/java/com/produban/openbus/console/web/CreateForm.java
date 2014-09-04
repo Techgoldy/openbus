@@ -16,7 +16,16 @@ public class CreateForm {
     private String esTimestamp;
     private String error;
     private String planificacion;
+    private String esId;
     
+    public String getEsId() {
+        return esId;
+    }
+
+    public void setEsId(String esId) {
+        this.esId = esId;
+    }
+
     public String getPlanificacion()
     {
       return this.planificacion;

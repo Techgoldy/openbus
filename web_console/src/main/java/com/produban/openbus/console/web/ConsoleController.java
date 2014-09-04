@@ -161,6 +161,7 @@ public class ConsoleController {
 	metricaBatch.setWhereQuery(form.getWhereQuery());
 	metricaBatch.setPlanificacion(form.getPlanificacion());
 	metricaBatch.setUsuarioCreacion((String) session.getAttribute("username"));
+	metricaBatch.setEsId(form.getEsId());
 
 	String strSelectQuery = metricaBatch.getSelectQuery();
 	String strFromQuery = metricaBatch.getFromQuery();
@@ -212,6 +213,12 @@ public class ConsoleController {
 	    externalQuery.append(metricaBatch.getEsCamposId());
 	    externalQuery.append("', 'es.id.field' = '");
 	    externalQuery.append(metricaBatch.getEsCamposId());
+	}
+	if (metricaBatch.getEsId() != null){
+	    externalQuery.append("', 'es.mapping.id' = '");
+	    externalQuery.append(metricaBatch.getEsId());
+	    externalQuery.append("', 'es.id.field' = '");
+	    externalQuery.append(metricaBatch.getEsId());
 	}
 	externalQuery.append("', 'es.index.auto.create' = 'true','es.nodes' = '");
 	externalQuery.append(prop.getProperty("elastic.url.datanode1") + "," + prop.getProperty("elastic.url.datanode2") + "," + prop.getProperty("elastic.url.datanode3"));
@@ -391,6 +398,13 @@ public class ConsoleController {
 		externalQuery.append("', 'es.id.field' = '");
 		externalQuery.append(metricaBatch.getEsCamposId());
 	    }
+	    if (form.getEsId() != null){
+		externalQuery.append("', 'es.mapping.id' = '");
+		externalQuery.append(form.getEsId());
+		externalQuery.append("', 'es.id.field' = '");
+		externalQuery.append(form.getEsId());
+	    }
+	    
 	    externalQuery.append("', 'es.index.auto.create' = 'true','es.nodes' = '");
 	    externalQuery.append(prop.getProperty("elastic.url.datanode1") + "," + prop.getProperty("elastic.url.datanode2") + "," + prop.getProperty("elastic.url.datanode3"));
 	    externalQuery.append("', 'es.port' = '" + prop.getProperty("elastic.port.datanodes"));
@@ -426,6 +440,7 @@ public class ConsoleController {
 	    metricaBatch.setEsTimestamp(form.getEsTimestamp());
 	    metricaBatch.setPlanificacion(form.getPlanificacion());
 	    metricaBatch.setUsuarioModificacion((String) session.getAttribute("username"));
+	    metricaBatch.setEsId(form.getEsId());
 	    String isBatch = form.getRdMetricType();
 	    if (isBatch.equals("1")) {
 		metricaBatch.setIsBatch(true);

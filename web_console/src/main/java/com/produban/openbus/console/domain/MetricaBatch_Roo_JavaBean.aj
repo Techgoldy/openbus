@@ -192,4 +192,12 @@ privileged aspect MetricaBatch_Roo_JavaBean {
         this.error = error;
     }
     
+    public String MetricaBatch.getEsId() {
+        return this.esId;
+    }
+    
+    public void MetricaBatch.setEsId(String esId) {
+        this.esId = esId;
+    }
+    
 }

@@ -71,7 +71,7 @@ $(document).ready(function() {
 	        $(this).addClass('selected');
 	        rowSelected = true;
 	        idMetric = table.row(this).data()[0];
-	        $("#main").load('console/updateMetric', {idMetric: idMetric} );
+	        window.location.href = 'updateMetric?idMetric=' + idMetric;
 	    }
 	});
 
@@ -113,7 +113,7 @@ function deleteMetric(){
 function modifyMetric(){
 	if (idMetric != null){
 		if(rowSelected){
-			$("#main").load('console/updateMetric', {idMetric: idMetric} );
+			window.location.href = 'updateMetric?idMetric=' + idMetric;
 		}
 		else{
 			$("#warningDiv").show();
@@ -130,14 +130,14 @@ function refreshTable(){
 		var url = window.location.href;
 		if(url.indexOf('hidSearch') != -1){
 			var arrayUrl = url.split('?hidSearch');
-			window.location.href = arrayUrl[0] + "?hidSearch=" + txtSearch;
+			window.location.href = arrayUrl[0] + '?hidSearch=' + txtSearch;
 		}
 		else{
-			window.location.href = url + "?hidSearch=" + txtSearch;
+			window.location.href = url + '?hidSearch=' + txtSearch;
 		}
 	}
 	else{
-		window.location.href = "showbatch";
+		window.location.href = 'showbatch';
 	}
 }		
 

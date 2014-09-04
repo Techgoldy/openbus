@@ -123,4 +123,8 @@ public class MetricaBatch {
      */
     @Column(columnDefinition = "LONGBLOB")
     private String error;
+
+    /**
+     */
+    private String esId;
 }

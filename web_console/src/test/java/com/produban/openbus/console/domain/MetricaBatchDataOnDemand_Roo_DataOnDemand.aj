@@ -41,6 +41,7 @@ privileged aspect MetricaBatchDataOnDemand_Roo_DataOnDemand {
         setCreateCode(obj, index);
         setError(obj, index);
         setEsCamposId(obj, index);
+        setEsId(obj, index);
         setEsIndex(obj, index);
         setEsTimestamp(obj, index);
         setEsType(obj, index);
@@ -85,6 +86,11 @@ privileged aspect MetricaBatchDataOnDemand_Roo_DataOnDemand {
     public void MetricaBatchDataOnDemand.setEsCamposId(MetricaBatch obj, int index) {
         String esCamposId = "esCamposId_" + index;
         obj.setEsCamposId(esCamposId);
+    }
+    
+    public void MetricaBatchDataOnDemand.setEsId(MetricaBatch obj, int index) {
+        String esId = "esId_" + index;
+        obj.setEsId(esId);
     }
     
     public void MetricaBatchDataOnDemand.setEsIndex(MetricaBatch obj, int index) {
