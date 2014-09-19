@@ -2,24 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1" />
-<title th:text="#{create.label.title.batch}"></title>
+<title th:text="#{create.label.title.online}"></title>
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/styles.css}" />
 <link rel="stylesheet" type="text/css" media="all"	th:href="@{/styles/menu.css}" />
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
-<script th:src="@{/js/create.js}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery.dataTables.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery-ui-1.10.4.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/dataTables.jqueryui.css}" />
 
+<script th:src="@{/js/jquery-1.11.1.min.js}" />
+<script th:src="@{/js/jquery.dataTables.min.js}" />                       
+<script th:src="@{/js/dataTables.bootstrap.js}" />
+<script th:src="@{/js/jquery-ui-1.10.4.min.js}" />
+<script th:src="@{/js/bootstrap.min.js}" />
 <script th:inline="javascript">
 //<![CDATA[
 	$(document).ready(function() {
 		var query = '';
-		var idMetric = /*[[${metricaOnLine.id}]]*/ "";
-		
+		var idMetric = /*[[${metricaOnLine.id}]]*/ "";		
 		if (idMetric != null && idMetric != ''){
 			setTimeout(function() {
 				$('#sourceId').prop('disabled', false);
 				$('#sourceId').click();
 				$('#sourceId').prop('disabled', true);
-				$('#selFields').prop('disabled', true);
+				//$('#selFields').prop('disabled', true);
 			}, 150);
 			
 		}
@@ -28,7 +34,227 @@
 				$('#sourceId').click();
 			}, 150);
 		}
+		
+		$.widget.bridge('uitooltip', $.ui.tooltip);
+		$.widget.bridge('uibutton', $.ui.button);
+		$(".close").click(function(){
+		      $("#errorDiv").hide();
+		      $("#warningDiv").hide();
+		      $("#messageDiv").hide();
+		});
+		
+		$('#loadingDiv').hide();
+		$(document).ajaxStart(function(){$("#loadingDiv").show();});
+		$(document).ajaxStop(function(){$("#loadingDiv").hide();});
+		
+		$('#sourceId').click(function() {
+			$('#idSource').val($('#sourceId').val());
+			$('#selSourceName').val($( "#sourceId option:selected" ).text());
+			$('#selFields').load('getFieldsBySource', {idSource: $('#idSource').val()} );
+		});
+		
+		$(document).uitooltip({
+		    track:true
+		});
+		
+		$('#queryInto').blur(function() {
+			$('#queryInto').val("insert all-events into  " + $('#queryInto').val());
+		});
+		
+		function CreateForm(){			
+			var createForm = this;
+			createForm.onLineMetricName = $('#onLineMetricName').val();
+			createForm.onLineMetricDesc = $('#onLineMetricDesc').val();
+			createForm.hidModif = $('#hidModif').val();			
+			createForm.sourceId = $('#sourceId').val()[0];
+			createForm.selSourceName = $('#selSourceName').val();
+			createForm.streamName = $('#streamName').val();
+			createForm.streamFields = $('#streamFields').val();
+			createForm.error = null;
+		}
+
+		$("#btSubmit").click(function() {
+			$("#errorDiv").hide();
+			var createForm = new CreateForm();
+			$('#onLineMetricName').prop('disabled', false);
+			$('#onLineMetricDesc').prop('disabled', false);
+			$('#sourceId').prop('disabled', false);
+			$('#selFields').prop('disabled', false);
+			$('#streamName').prop('disabled', false);
+			$('#streamFields').prop('disabled', false);
+			$("#loadingDiv").show();
+			$.ajax({ 
+			    url: "/web_console/console/createOnLineMetric", 
+			    type: 'POST', 
+			    dataType: 'json', 
+			    data: JSON.stringify(createForm), 
+			    contentType: 'application/json',
+			    mimeType: 'application/json',
+			    success: function(data) { 
+					if(data.id == 'ERROR'){
+				    	$("#loadingDiv").hide();
+				    	$("#errorDiv").show();
+				    	document.getElementById('errorMessage').innerHTML = data.error;
+					}
+					else{
+						window.location.href = "showonline";
+					}
+			    },
+			    error:function(error) {
+			    	document.getElementById('errorMessage').innerHTML = error;
+			    	$("#loadingDiv").hide();
+			    	$("#errorDiv").show();
+			    }
+			});
+		});		
+		
+		$('#imgQueryFromHelp').popover({
+		    html: true,
+		    content: function () {
+		        return $("#divQueryFromHelp").html();
+		    }
+		});
+		$('#imgQueryIntoHelp').popover({
+		    html: true,
+		    content: function () {
+		        return $("#divQueryIntoHelp").html();
+		    }
+		});
+		$('#imgQueryAsHelp').popover({
+		    html: true,
+		    content: function () {
+		        return $("#divQueryAsHelp").html();
+		    }
+		});
+		$('#imgQueryGroupByHelp').popover({
+		    html: true,
+		    content: function () {
+		        return $("#divQueryGroupBy").html();
+		    }
+		});
 	});
+	
+	
+	// QUERY CEP
+	var rowSelected = false;
+	var idQuery = null;
+	var addModal = false;
+	var queryRow = 0;
+
+	function QueryDTO(){			
+		var queryDTO = this;
+		queryDTO.rdCallback = $('input[name=rdCallback]:checked').val();
+		queryDTO.queryName = $('#queryName').val();
+		queryDTO.queryFrom = $('#queryFrom').val();
+		queryDTO.queryInto = $('#queryInto').val();
+		queryDTO.queryAs = $('#queryAs').val();
+		queryDTO.queryGroupBy = $('#queryGroupBy').val();			
+	}
+	
+	function addQuery(){
+		addModal = true;
+		$('#queryName').val(null);
+		$('#queryFrom').val(null);
+		$('#queryInto').val(null);
+		$('#queryAs').val(null);
+		$('#queryGroupBy').val(null);		
+		
+		$('#modalQuery').modal({show:true});
+		
+		var fields = $("#createQueryForm").find('textarea, input').filter('[required]:visible').serializeArray();
+		$.each(fields, function(i, field) {
+	    	$('#div'+ field.name).hide();
+	    }); 
+	}
+	
+	function modifyQuery(){
+		addModal = false;
+		if(rowSelected){
+			$.ajax({ 
+			    url: "/web_console/console/findQueryById", 
+			    type: 'POST', 
+			    data: {idQuery: idQuery},
+			    success: function(data) {
+					$('#queryName').val(data.queryName);
+					$('#queryFrom').val(data.queryFrom);
+					$('#queryInto').val(data.queryInto);
+					$('#queryAs').val(data.queryAs);
+					$('#queryGroupBy').val(data.queryGroupBy);
+					if(data.rdCallback == 1){
+						$("#rdCallback").prop("checked", true);
+					}
+					else{
+						$("#rdCallback").prop("checked", false);
+					}
+					$('#modalQuery').modal({show:true});
+			    }
+			});			
+		}
+		else{
+			$("#warningDiv").show();
+		}
+	}
+	
+	function deleteQuery(){
+		if (queryRow != null){
+			if(rowSelected){
+				$('#divTable').load('deleteQuery', {idQuery: idQuery});
+			}
+			else{
+				$("#warningDiv").show();
+			}			
+		}
+		else{
+			$("#warningDiv").show();
+		}
+	}
+	
+	function saveQuery(){
+		var bSubmit = true;
+		var fields = $("#createQueryForm").find('textarea, input').filter('[required]:visible').serializeArray();			
+		$.each(fields, function(i, field) {
+		    if (!field.value){
+		    	$('#div'+ field.name).css("color", "red");
+		    	$('#div'+ field.name).show();
+		    	bSubmit = false;
+		    }
+		    else{
+		    	$('#div'+ field.name).hide();
+		    }
+	    });
+		if (bSubmit){
+			var queryDTO = new QueryDTO();
+			if (addModal){
+				$.ajax({ 
+				    url: "/web_console/console/saveQuery", 
+				    type: 'POST', 
+				    dataType: 'json', 
+				    data: JSON.stringify(queryDTO), 
+				    contentType: 'application/json',
+				    mimeType: 'application/json',
+				    success: function(data) { 
+				    	$("#divTable").load('/web_console/console/getQueries');
+				    }
+				});
+			}
+			else{				
+				queryDTO.id = idQuery;
+				$.ajax({ 
+				    url: "/web_console/console/updateQuery", 
+				    type: 'POST', 
+				    dataType: 'json', 
+				    data: JSON.stringify(queryDTO), 
+				    contentType: 'application/json',
+				    mimeType: 'application/json',
+				    success: function(data) { 
+				    	$("#divTable").load('/web_console/console/getQueries');
+				    }
+				});
+			}
+	    	$('#modalQuery').modal('hide');
+		}
+	}
+	
 //]]>
 </script>
 </head>
@@ -46,7 +272,7 @@
 			    </div>
 			</div>
 												
-			<form id="createForm" action="javascript:return false;" th:object="${metricaOnLine}" method="post" >
+			<form id="createOnLineForm" action="javascript:return false;" th:object="${metricaOnLine}" method="post" >
 				<h2 th:text="#{create.label.title.online}"></h2>
 				<div id="tableContainer" style="width:800px;height:400px; overflow:auto;">
 					<table>
@@ -55,8 +281,8 @@
 							<td><label for="lblMetricDescription" class="classLabel" th:text="#{create.label.descripcion}"></label></td>
 						</tr>	
 						<tr>
-							<td><input id="batchMetricName" name="batchMetricName" type="text" required="required" class="classText" th:field="*{batchMetricName}" th:value="${metricaOnLine.batchMetricName}"/></td>
-							<td><input id="batchMetricDesc" name="batchMetricDesc" type="text" class="classText" th:field="*{batchMetricDesc}" th:value="${metricaOnLine.batchMetricDesc}"/></td>
+							<td><input id="onLineMetricName" name="onLineMetricName" type="text" required="required" class="classText" th:field="*{onLineMetricName}" th:value="${metricaOnLine.onLineMetricName}"/></td>
+							<td><input id="onLineMetricDesc" name="onLineMetricDesc" type="text" class="classText" th:field="*{onLineMetricDesc}" th:value="${metricaOnLine.onLineMetricDesc}"/></td>
 						</tr>		 
 						<tr>
 							<td><label for="lblInputs" class="classLabel" th:text="#{create.label.origenes}"></label>*</td>
@@ -66,9 +292,16 @@
 						</tr>
 						<tr>
 							<td valign="top">
-								<select id="sourceId" name="sourceId" required="required" th:field="*{sourceId}" class="classSelect">
-									<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
-								</select>
+								<p th:if="${metricaOnLine.id} == null">
+									<select id="sourceId" name="sourceId" required="required" class="classSelect">
+										<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
+									</select>
+								</p>
+								<p th:if="${metricaOnLine.id} != null">
+									<select id="sourceId" name="sourceId" required="required" class="classSelect" th:field="*{streamCep.origenEstructurado.id}">
+										<option th:each="source : ${lstSources}" th:value="${source.id}" th:text="${source.kafkaTopic}"></option>
+									</select>
+								</p>
 								<input id="selSourceName" name="selSourceName" type="hidden"/>
 							</td>
 							<td id="tdSelectFields">
@@ -79,23 +312,117 @@
 							</td>			
 						</tr>
 						<tr><td></td></tr>
+						<tr>
+							<td colspan="2">
+								<fieldset class="scheduler-border">
+									<legend class="scheduler-border" th:text="#{create.label.stream}"></legend>
+									<table>
+										<tr>
+											<td>
+												<label class="classLabel" for="lblStreamName" th:text="#{create.label.streams.nombre}"></label>*
+											</td>
+											<td>
+												<p th:if="${metricaOnLine.id} == null">											
+													<input id="streamName" name="streamName" type="text" required="required" class="classText"/>
+												</p>
+												<p th:if="${metricaOnLine.id} != null">											
+													<input id="streamName" name="streamName" type="text" required="required" class="classText" th:field="*{streamCep.streamName}"/>
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<td>						
+												<label class="classLabel" for="lblStreamFields" th:text="#{create.label.streams.campos}"></label>*
+											</td>
+											<td>
+												<p th:if="${metricaOnLine.id} == null">											
+													<textarea class="classQuery" id="streamFields" rows="3" cols="80" name="streamFields" required="required"></textarea>
+												</p>
+												<p th:if="${metricaOnLine.id} != null">											
+													<textarea class="classQuery" id="streamFields" rows="3" cols="80" name="streamFields" required="required" th:field="*{streamCep.streamFields}"></textarea>
+												</p>
+											</td>
+										</tr>
+									</table>							
+								</fieldset>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<fieldset class="scheduler-border">
+									<legend class="scheduler-border" th:text="#{create.label.queries}"></legend>
+									<button onclick="addQuery();" class="btn btn-primary btn-sm" th:text="#{show.label.new}" th:title="#{show.label.new}"/>
+									<button onclick="modifyQuery();" class="btn btn-primary btn-sm" th:text="#{show.label.modify}" th:title="#{show.label.modify}" />
+									<button onclick="deleteQuery();" class="btn btn-primary btn-sm" th:text="#{show.label.delete}" th:title="#{show.label.delete}" />
+									<p></p>
+							  		<div id="warningDiv" class="alert alert-warning" style="display:none">
+								  		<button type="button" class="close">&times;</button>
+								  		<span th:text="#{show.label.error3}"></span>
+								  	</div>
+								  	<script>
+								  	</script>
+								  	<div id="divTable">
+										<table id="example" class="display" cellspacing="0" width="100%" height="50%">
+				    						<script>
+				    						$(document).ready(function() {				    							
+					    						var table = null;
+			    						
+					    						table = $('#example').DataTable({
+					    							"columnDefs": [{ "visible": false, "targets": 0 }],
+					    					        "scrollY": "300px",
+					    					        "scrollCollapse": true,
+					    					        "jQueryUI":       true,
+					    					        "paging": false,
+					    					        "searching": false,
+					    					        "info": false,
+					    					        "language": {
+					    					            "url": "/web_console/styles/es_es.lang"
+					    					        }
+					    						});
+					    						
+					    						$('#example tbody').on('click', 'tr', function () {			    						
+					    							idQuery = table.row(this).data()[0];
+					    							queryRow = table.row(this).index();
+						    					    if ( $(this).hasClass('selected') ) {
+						    					        $(this).removeClass('selected');	            
+						    					        rowSelected = false;
+						    					    }
+						    					    else {
+						    					        table.$('tr.selected').removeClass('selected');
+						    					        $(this).addClass('selected');
+						    					        rowSelected = true;
+						    					    }
+					    						});
+				    						});
+				    						</script>									
+										    <thead>
+										    	<tr>
+										    		<th>&nbsp;</th>
+										    		<th th:text="#{create.label.queries}"></th>
+										    	</tr>
+										    </thead>
+				    						<tbody>
+					    						<tr th:each="query : ${queriesSession}">
+					    							<td th:text="${query.id}"></td>
+						    						<td th:text="${query.queryName}"></td>
+					    						</tr>
+				    						</tbody>
+				    					</table>
+			    					</div>
+								</fieldset>
+							</td>
+						</tr>
 					</table>
 				</div>
 				<br/>
 				<div id="divButton" style="margin-left:4px;">
 					<p th:if="${metricaOnLine.id} == null">
-						<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.lanzar}"/>
+						<input id="btSubmit" type="submit" class="btn btn-primary" th:value="#{create.label.save.online}"/>
 						<input id="hidModif" name="hidModif" type="hidden" value="0"/>
 					</p>
 					<p th:if="${metricaOnLine.id} != null">
-						<p th:if="${metricaOnLine.estado} == Error">
-							<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.actualizar}"/>
-							<input id="hidModif" name="hidModif" type="hidden" th:value="${metricaOnLine.id}"/>
-						</p>
-						<p th:if="${metricaOnLine.estado} != Error">
-							<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.actualizar}"/>
-							<input id="hidModif" name="hidModif" type="hidden" th:value="${metricaOnLine.id}"/>
-						</p>
+						<input id="btSubmit" type="submit" class="btn btn-primary" th:value="#{create.label.update.online}"/>
+						<input id="hidModif" name="hidModif" type="hidden" th:value="${metricaOnLine.id}"/>
 					</p>
 				</div>					
 				<div id="divTypeTooltipHelp" style="display:none">
@@ -113,6 +440,108 @@
 					<span th:text="#{create.tooltip.timestamp}"/>
 				</div>
 			</form>
+			
+			<!-- MODAL -->
+			<div class="modal" id="modalQuery">
+				<div class="modal-dialog">
+			      <div class="modal-content">
+			        <div class="modal-body">
+			        	<form id="createQueryForm" name="createQueryForm" action="javascript:return false;">
+							<table>
+								<tr>
+									<a id="myTooltip" title="Message"></a>
+									<td width="20%"><label for="lblQueryName" class="classLabel"  th:text="#{create.label.streams.nombre}"></label>*</td>
+									<td width="40%"><div id="divqueryName" style="display:none" th:text="#{create.tooltip.requiredField}"></div></td>
+									<td width="40%">
+										<label for="lblCallback" class="classLabel" th:text="#{create.label.callback}"></label>
+										<input type="radio" name="rdCallback" value="1" th:text="#{create.label.timestamp.si}"/>
+										<input type="radio" name="rdCallback" value="0" checked="checked" th:text="#{create.label.timestamp.no}"/>
+									</td>									
+								</tr>
+								<tr>
+									<td colspan="3">
+										<input id="queryName" name="queryName" type="text" class="classText" required="required"/>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<label for="lblQueryFrom" class="classLabel" th:text="#{create.label.query.from}"></label>*
+										<a href="#" th:title="#{create.label.help}">
+											<img id="imgQueryFromHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
+										</a> 
+									</td>
+									<td width="40%"><div id="divqueryFrom" style="display:none" th:text="#{create.tooltip.requiredField}"></div></td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<textarea class="classQuery" id="queryFrom" rows="3" cols="70" name="queryFrom" required="required"></textarea>
+										
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<label for="lblQueryInto" class="classLabel" th:text="#{create.label.query.into}"></label>*
+										<a href="#" th:title="#{create.label.help}">
+											<img id="imgQueryIntoHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
+										</a> 
+									</td>
+									<td width="40%"><div id="divqueryInto" style="display:none" th:text="#{create.tooltip.requiredField}"></div></td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<textarea class="classQuery" id="queryInto" rows="1" cols="70" name="queryInto" required="required"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<label for="lblQueryAs" class="classLabel" th:text="#{create.label.query.as}"></label>*
+										<a href="#" th:title="#{create.label.help}">
+											<img id="imgQueryAsHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
+										</a> 
+									</td>
+									<td width="40%"><div id="divqueryAs" style="display:none" th:text="#{create.tooltip.requiredField}"></div></td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<textarea class="classQuery" id="queryAs" rows="3" cols="70" name="queryAs" required="required"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<label for="lblQueryGroupBy" class="classLabel" th:text="#{create.label.query.groupby}"></label>*
+										<a href="#" th:title="#{create.label.help}">
+											<img id="imgQueryGroupByHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
+										</a> 
+									</td>
+									<td width="70%"><div id="divqueryGroupBy" style="display:none" th:text="#{create.tooltip.requiredField}"></div></td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<textarea class="classQuery" id="queryGroupBy" rows="3" cols="70" name="queryGroupBy" required="required"></textarea>
+									</td>
+								</tr>
+							</table>
+						</form>					        
+			        </div>
+			        <div class="modal-footer">
+			          <a href="#" data-dismiss="modal" class="btn" th:text="#{create.label.button.cancelar}"></a>
+					  <a href="#" onclick="saveQuery();" th:text="#{create.label.button.guardar}" class="btn btn-primary" />			          
+			        </div>
+			      </div>
+			    </div>
+			</div>				
+			<div id="divQueryFromHelp" style="display:none">
+				<span th:text="#{create.tooltip.queryfrom}"/>
+			</div>			
+			<div id="divQueryIntoHelp" style="display:none">
+				<span th:text="#{create.tooltip.queryinto}"/>
+			</div>			
+			<div id="divQueryAsHelp" style="display:none">
+				<span th:text="#{create.tooltip.queryas}"/>
+			</div>			
+			<div id="divQueryGroupBy" style="display:none">
+				<span th:text="#{create.tooltip.querygroup}"/>
+			</div>
 	</div>
 </body>
 </html>

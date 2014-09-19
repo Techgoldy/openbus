@@ -4,6 +4,7 @@
 package com.produban.openbus.console.domain;
 
 import com.produban.openbus.console.domain.CamposOrigen;
+import com.produban.openbus.console.domain.OrigenEstructurado;
 
 privileged aspect CamposOrigen_Roo_JavaBean {
     
@@ -21,6 +22,22 @@ privileged aspect CamposOrigen_Roo_JavaBean {
     
     public void CamposOrigen.setTipoCampo(String tipoCampo) {
         this.tipoCampo = tipoCampo;
+    }
+    
+    public Long CamposOrigen.getOrdenEnTabla() {
+        return this.ordenEnTabla;
+    }
+    
+    public void CamposOrigen.setOrdenEnTabla(Long ordenEnTabla) {
+        this.ordenEnTabla = ordenEnTabla;
+    }
+    
+    public OrigenEstructurado CamposOrigen.getOrigenEstructurado() {
+        return this.origenEstructurado;
+    }
+    
+    public void CamposOrigen.setOrigenEstructurado(OrigenEstructurado origenEstructurado) {
+        this.origenEstructurado = origenEstructurado;
     }
     
 }

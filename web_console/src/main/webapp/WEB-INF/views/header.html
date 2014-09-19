@@ -11,6 +11,35 @@
 </head>
 <body>
 	<div id="header" style="background-color: #6E6E6E;height:45px;">
+		<script th:inline="javascript">
+		//<![CDATA[
+		function logout(){
+			window.location.href = '/web_console/j_spring_security_logout';
+		}
+		
+		function changeLanguage(language){			
+			var url = window.location.href;
+			if(url.indexOf('idMetric') != -1){
+				if(url.indexOf('lang') != -1){
+					var arrayUrl = url.split('&lang');
+					window.location.href = arrayUrl[0] + "&lang=" + language;
+				}
+				else{
+					window.location.href = url + "&lang=" + language;
+				}
+			}
+			else{
+				if(url.indexOf('lang') != -1){
+					var arrayUrl = url.split('?lang');
+					window.location.href = arrayUrl[0] + "?lang=" + language;
+				}
+				else{
+					window.location.href = url + "?lang=" + language;
+				}
+			}
+		}
+		//]]>
+		</script>
 		<img th:src="@{/images/logo.png}" style="margin-left:200px" th:title="#{tooltip.logo.produban}" th:alt="#{tooltip.logo.produban}" />
 		<div class="btn-group" style="margin-left:100px;margin-top:5px;">
 		  <button type="button" class="btn" th:text="#{button.language.change}"></button>
@@ -19,14 +48,14 @@
 		  </button>
 		  <ul class="dropdown-menu" role="menu">
 		    <li>
-		    	<a href="?lang=us"><img style="height:20px" id="imgUSA" th:src="@{/images/usa.png}" th:title="#{tooltip.logo.usa}" th:text="#{button.language.english}" th:alt="#{tooltip.logo.usa}"></img></a>
+		    	<a href="#" onclick="changeLanguage('us');"><img style="height:20px" id="imgUSA" th:src="@{/images/usa.png}" th:title="#{tooltip.logo.usa}" th:text="#{button.language.english}" th:alt="#{tooltip.logo.usa}"></img></a>
 		    </li>
 		    <li>
-		    	<a href="?lang=es"><img style="height:20px" id="imgESP" th:src="@{/images/spain.png}" th:title="#{tooltip.logo.esp}" th:text="#{button.language.spanish}" th:alt="#{tooltip.logo.esp}"></img></a>
+		    	<a href="#" onclick="changeLanguage('es');"><img style="height:20px" id="imgESP" th:src="@{/images/spain.png}" th:title="#{tooltip.logo.esp}" th:text="#{button.language.spanish}" th:alt="#{tooltip.logo.esp}"></img></a>
 		    </li>
 		  </ul>
 		</div>
-		<button id="closeSession" style="margin-left:17px;margin-top:5px;" type="button" class="btn btn-danger" th:text="#{login.button.close.session}" onclick="window.location.href = '/web_console/j_spring_security_logout';"/>
+		<button id="closeSession" style="margin-left:17px;margin-top:5px;" type="button" class="btn btn-danger" th:text="#{login.button.close.session}" onclick="logout();"/>
 	</div>
 </body>
 </html>

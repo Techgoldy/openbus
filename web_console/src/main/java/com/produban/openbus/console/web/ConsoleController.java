@@ -1,6 +1,7 @@
 package com.produban.openbus.console.web;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -36,10 +38,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.produban.openbus.console.domain.CamposOrigen;
 import com.produban.openbus.console.domain.MetricaBatch;
+import com.produban.openbus.console.domain.MetricaOnLine;
 import com.produban.openbus.console.domain.OrigenEstructurado;
+import com.produban.openbus.console.domain.QueryCep;
+import com.produban.openbus.console.domain.StreamCep;
+import com.produban.openbus.console.dto.CreateOnLineForm;
+import com.produban.openbus.console.dto.QueryDTO;
 import com.produban.openbus.console.hive.HiveConnector;
 import com.produban.openbus.console.service.MetricaBatchService;
+import com.produban.openbus.console.service.MetricaOnLineService;
 import com.produban.openbus.console.service.OrigenEstructuradoService;
+import com.produban.openbus.console.service.QueryCepService;
 import com.produban.openbus.console.util.HttpConnector;
 
 @RequestMapping("/console/**")
@@ -58,6 +67,14 @@ public class ConsoleController {
 
     @Autowired
     private MetricaBatchService metricaBatchService;
+
+    @Autowired
+    private MetricaOnLineService metricaOnLineService;
+
+    @Autowired
+    private QueryCepService queryCepService;
+    
+    // ***************** CREATE BATCH *****************
 
     @RequestMapping("/createbatch")
     public String getSources(Model model) {
@@ -86,33 +103,7 @@ public class ConsoleController {
 	return "/console/createbatch :: #selFields";
     }
 
-    @RequestMapping("/createonline")
-    public String getSourcesOnLine(Model model) {
-	List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();
-	model.addAttribute("lstSources", lstSources);
-	model.addAttribute("metricaOnLine", new MetricaBatch());
-	return "/console/createonline";
-    }
-
-    @RequestMapping(value = "/getFieldsBySourceOnLine")
-    public String refreshFieldsOnLine(@RequestParam String idSource, Model model) {
-	OrigenEstructurado origenEstructurado = origenEstructuradoService.findOrigenEstructurado(Long.valueOf(idSource));
-	origenEstructurado.getHsCamposOrigen().size();
-	Set<CamposOrigen> hsFields = origenEstructurado.getHsCamposOrigen();
-
-	List<CamposOrigen> lstFields = new ArrayList<CamposOrigen>();
-	for (CamposOrigen field : hsFields) {
-	    lstFields.add(field);
-	}
-	Collections.sort(lstFields, new Comparator<CamposOrigen>(){
-	    public int compare(CamposOrigen s1, CamposOrigen s2) {
-	        return s1.getNombreCampo().compareTo(s2.getNombreCampo());
-	    }
-	});
-	model.addAttribute("lstFields", lstFields);
-	return "/console/createonline :: #selFields";
-    }    
-    // ***************** CREATE *****************
+    
     @RequestMapping(value = "/createMetricBBDDES", method = RequestMethod.POST)
     public @ResponseBody CreateForm createMetricBBDDES(Model model, HttpSession session, @RequestBody final CreateForm form) {
 	try {
@@ -160,7 +151,6 @@ public class ConsoleController {
 	metricaBatch.setSelectQuery(form.getSelectQuery());
 	metricaBatch.setWhereQuery(form.getWhereQuery());
 	metricaBatch.setPlanificacion(form.getPlanificacion());
-	metricaBatch.setUsuarioCreacion((String) session.getAttribute("username"));
 	metricaBatch.setEsId(form.getEsId());
 
 	String strSelectQuery = metricaBatch.getSelectQuery();
@@ -342,7 +332,7 @@ public class ConsoleController {
 	return response;
     }
 
-    // ***************** UPDATE *****************
+    // ***************** UPDATE BATCH *****************
 
     @RequestMapping(value = "/updateMetricBBDDES", method = RequestMethod.POST)
     public @ResponseBody CreateForm updateMetricBBDDES(Model model, HttpSession session, @RequestBody final CreateForm form) {
@@ -565,9 +555,301 @@ public class ConsoleController {
 	session.setAttribute("username", name);
 	return "/console/menu";
     }
+
+ // ***************** CREATE ONLINE *****************    
+    @RequestMapping("/createonline")
+    public String getSourcesOnLine(Model model, HttpSession session) {
+	List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();
+	model.addAttribute("lstSources", lstSources);
+	model.addAttribute("metricaOnLine", new MetricaOnLine());
+	
+	return "/console/createonline";
+    }
+
+    @RequestMapping(value = "/getFieldsBySourceOnLine")
+    public String refreshFieldsOnLine(@RequestParam String idSource, Model model) {
+	OrigenEstructurado origenEstructurado = origenEstructuradoService.findOrigenEstructurado(Long.valueOf(idSource));
+	origenEstructurado.getHsCamposOrigen().size();
+	Set<CamposOrigen> hsFields = origenEstructurado.getHsCamposOrigen();
+
+	List<CamposOrigen> lstFields = new ArrayList<CamposOrigen>();
+	for (CamposOrigen field : hsFields) {
+	    lstFields.add(field);
+	}
+	Collections.sort(lstFields, new Comparator<CamposOrigen>(){
+	    public int compare(CamposOrigen s1, CamposOrigen s2) {
+	        return s1.getNombreCampo().compareTo(s2.getNombreCampo());
+	    }
+	});
+	model.addAttribute("lstFields", lstFields);
+	return "/console/createonline :: #selFields";
+    }    
+    
+    @RequestMapping(value = "/saveQuery", method = RequestMethod.POST)
+    public @ResponseBody QueryDTO saveQuery(HttpServletRequest request, @RequestBody final QueryDTO queryDTO, Model model) {
+	List<QueryDTO> queriesSession = (List<QueryDTO>) request.getSession().getAttribute("queriesSession");
+	int idQuery = 1;
+	if (queriesSession == null){
+	    queriesSession = new ArrayList<QueryDTO>();
+	}
+	else if(queriesSession.size() > 0){
+	    List lstIds = new ArrayList();
+	    for (QueryDTO queryDTOAux : queriesSession){
+		lstIds.add(queryDTOAux.getId());
+	    }
+	    Collections.sort(lstIds);
+	    String lastId = (String) lstIds.get(lstIds.size() - 1);
+	    idQuery = Integer.valueOf(lastId) + 1 ;	    
+	}
+	queryDTO.setId(new Integer(idQuery).toString());
+	queriesSession.add(queryDTO);
+	request.getSession().setAttribute("queriesSession", queriesSession);
+	model.addAttribute("queriesSession", request.getSession().getAttribute("queriesSession"));
+	return queryDTO;
+    }
+
+    @RequestMapping(value = "/updateQuery", method = RequestMethod.POST)
+    public @ResponseBody QueryDTO updateQuery(HttpServletRequest request, @RequestBody final QueryDTO queryDTO, Model model) {
+	List<QueryDTO> queriesSession = (List<QueryDTO>) request.getSession().getAttribute("queriesSession");
+	for (QueryDTO queryDTOAux : queriesSession){
+	    if(queryDTOAux.getId().equals(queryDTO.getId())){
+		queryDTOAux.setQueryAs(queryDTO.getQueryAs());
+		queryDTOAux.setQueryFrom(queryDTO.getQueryFrom());
+		queryDTOAux.setQueryGroupBy(queryDTO.getQueryGroupBy());
+		queryDTOAux.setQueryInto(queryDTO.getQueryInto());
+		queryDTOAux.setQueryName(queryDTO.getQueryName());
+		queryDTOAux.setRdCallback(queryDTO.getRdCallback());
+	    }
+	}
+	request.getSession().setAttribute("queriesSession", queriesSession);
+	model.addAttribute("queriesSession", request.getSession().getAttribute("queriesSession"));
+	return queryDTO;
+    }
+
+    @RequestMapping(value = "/findQueryById", method = RequestMethod.POST)
+    public @ResponseBody QueryDTO findQueryById(@RequestParam String idQuery, HttpServletRequest request) {
+	QueryDTO queryDTO = null;
+	List<QueryDTO> queriesSession = (List<QueryDTO>) request.getSession().getAttribute("queriesSession");
+	for (QueryDTO queryDTOAux : queriesSession){
+	    if(queryDTOAux.getId().equals(idQuery)){
+		queryDTO = queryDTOAux;
+		break;
+	    }
+	}
+	return queryDTO;
+    }
+    
+    @RequestMapping(value= "/deleteQuery")
+    public String deleteQuery(@RequestParam String idQuery, HttpServletRequest request, Model model) {
+	List<QueryDTO> queriesSession = (List<QueryDTO>) request.getSession().getAttribute("queriesSession");
+	int index = 0;
+	for (QueryDTO queryDTOAux : queriesSession){
+	    if(queryDTOAux.getId().equals(idQuery)){
+		break;
+	    }
+	    index++;
+	}
+	queriesSession.remove(index);
+	request.getSession().setAttribute("queriesSession", queriesSession);
+	model.addAttribute("queriesSession", request.getSession().getAttribute("queriesSession"));
+	return "/console/createonline :: #divTable";
+    }
+
+    @RequestMapping("/getQueries")
+    public String getQueries(Model model, HttpServletRequest request) {
+	model.addAttribute("queriesSession", request.getSession().getAttribute("queriesSession"));
+	return "/console/createonline :: #divTable";
+    }
+    
+    
+    @RequestMapping(value = "/createOnLineMetric", method = RequestMethod.POST)
+    public @ResponseBody CreateOnLineForm createOnLineMetric(Model model, HttpServletRequest request, @RequestBody final CreateOnLineForm form) {
+	try {
+	    String isModif = form.getHidModif();
+	    MetricaOnLine metricaOnLine = null;
+	    StreamCep streamCep = null;
+	    if (isModif.equals("0")) {
+		metricaOnLine = new MetricaOnLine();
+		streamCep = new StreamCep();
+	    }
+	    else{
+		metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(isModif));
+		streamCep = metricaOnLine.getStreamCep();
+	    }
+	    
+
+	    OrigenEstructurado origen = origenEstructuradoService.findOrigenEstructurado(new Long(form.getSourceId()));
+	    streamCep.setOrigenEstructurado(origen);
+	    streamCep.setStreamName(form.getStreamName());
+	    streamCep.setStreamFields(form.getStreamFields());
+	    streamCep.setStreamFinal("define stream " + streamCep.getStreamName() + " (" + streamCep.getStreamFields() + ");");
+	    streamCep.setStreamCepId(null);
+	    
+	    QueryCep queryCep = null;
+	    String queryFinal = null;
+	    String outputFieldNames = null;
+	    Set<QueryCep> sQueryCep = new HashSet<QueryCep>();
+
+	    List<QueryDTO> queriesSession = (List<QueryDTO>) request.getSession().getAttribute("queriesSession");
+	    form.setQueries(queriesSession);
+	    for(QueryDTO queryDTO : form.getQueries()){
+		queryCep = new QueryCep();
+		
+		outputFieldNames = queryDTO.getQueryAs();		    
+		outputFieldNames = outputFieldNames.toLowerCase();
+		String [] arrOutputFieldNames = outputFieldNames.split(" as ");
+		List lstOutputFieldNames = new ArrayList();
+		for(int i=0;i<arrOutputFieldNames.length;i++){
+		    if (i == arrOutputFieldNames.length -1){
+			break;
+		    }
+		    else{
+			if (i == 0){
+			    lstOutputFieldNames.add(arrOutputFieldNames[i]);
+			}
+			else{
+			    String [] cc = arrOutputFieldNames[i].split(",");
+			    lstOutputFieldNames.add(cc[1]);
+			}
+		    }
+		}
+		
+		queryCep.setOutputFieldNames(lstOutputFieldNames.toString());
+		
+		if (queryDTO.getRdCallback() == null){
+			queryCep.setHasCallback(false);
+		}
+		else{
+		    if (queryDTO.getRdCallback().equals("") || queryDTO.getRdCallback().equals("0")){
+			queryCep.setHasCallback(false);
+		    }
+		    else{
+			queryCep.setHasCallback(true);
+		    }
+		}
+		
+		queryCep.setGroupBy(queryDTO.getQueryGroupBy());
+		queryCep.setOutputFieldUser(queryDTO.getQueryAs());
+		queryCep.setOutputStream(queryDTO.getQueryInto());
+		queryCep.setQueryCepId(null);
+		queryCep.setQueryDefinition(queryDTO.getQueryFrom());
+		queryCep.setQueryName(queryDTO.getQueryName());
+		queryCep.setToRemove(false);
+		
+		queryFinal = queryDTO.getQueryFrom() + " " + queryDTO.getQueryInto() + " " + queryDTO.getQueryAs() + " " + queryDTO.getQueryGroupBy();
+		queryCep.setQueryFinal(queryFinal);
+		sQueryCep.add(queryCep);
+	    }
+	    
+
+	    metricaOnLine.setHsQueryCep(sQueryCep);
+	    metricaOnLine.setStreamCep(streamCep);
+	    metricaOnLine.setOnLineMetricDesc(form.getOnLineMetricDesc());
+	    metricaOnLine.setOnLineMetricName(form.getOnLineMetricName());
+	    metricaOnLine.setUsuarioCreacion((String) request.getSession().getAttribute("username"));
+	    metricaOnLine.setEsCamposId(ES_MAPPING_ID);
+	    metricaOnLine.setEsIndex(form.getSelSourceName());
+	    metricaOnLine.setEsType(form.getOnLineMetricName());
+	    metricaOnLine.setFechaUltModif(new Date());
+	    
+	    if (isModif.equals("0")) {
+		metricaOnLine.setIsCreated(true);
+		metricaOnLine.setFechaCreacion(new Date());
+		LOG.info("SAVE BBDD running....");
+		metricaOnLineService.saveMetricaOnLine(metricaOnLine);
+		LOG.info("SAVE BBDD done");
+	    }
+	    else {
+		metricaOnLine.setIsUpdated(true);
+		LOG.info("UPDATE BBDD running....");
+		metricaOnLineService.updateMetricaOnLine(metricaOnLine);
+		LOG.info("UPDATE BBDD done");
+	    }
+	    form.setId(metricaOnLine.getId().toString());
+	}
+	catch (Exception e) {
+	    form.setId("ERROR");
+	    form.setError(e.toString());
+	    LOG.error(e);
+	}
+	return form;
+    }    
+    
+    
+    @RequestMapping("/showonline")
+    public String showOnLine(Model model, HttpServletRequest request) {
+	List<MetricaOnLine> lstMetrics = new ArrayList<MetricaOnLine>();
+	for (MetricaOnLine metricaOnLine : metricaOnLineService.findAllMetricaOnLines()){
+	    if(metricaOnLine.getStreamCep().getToRemove() == null){
+		lstMetrics.add(metricaOnLine);
+	    }
+	    else if(! metricaOnLine.getStreamCep().getToRemove()){
+		lstMetrics.add(metricaOnLine);
+	    }
+	}
+	model.addAttribute("lstMetrics", lstMetrics);
+	model.addAttribute("search", request.getParameter("hidSearch"));
+	return "/console/showonline";
+    }
+
+    @RequestMapping("/refreshOnLine")
+    public String refreshOnLineMetrics(@RequestParam String search, Model model) {
+	List<MetricaOnLine> lstMetrics = metricaOnLineService.findAllMetricaOnLines();
+	model.addAttribute("lstMetrics", lstMetrics);
+	model.addAttribute("search", search);
+	return "/console/showonline";
+    }
+
+    @RequestMapping("/updateOnLineMetric")
+    public String updateOnLineMetric(@RequestParam String idMetric, Model model, HttpServletRequest request) {
+	List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();
+	model.addAttribute("lstSources", lstSources);
+	MetricaOnLine metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(idMetric));
+	model.addAttribute("metricaOnLine", metricaOnLine);
+	List<QueryDTO> queriesBBDD = new ArrayList<QueryDTO>();
+	QueryDTO queryDTO = null;
+	for (QueryCep queryCep : metricaOnLine.getHsQueryCep()){
+	    queryDTO = new QueryDTO();
+	    queryDTO.setId(queryCep.getId().toString());
+	    queryDTO.setQueryAs(queryCep.getOutputFieldUser());
+	    queryDTO.setQueryFrom(queryCep.getQueryDefinition());
+	    queryDTO.setQueryGroupBy(queryCep.getGroupBy());
+	    queryDTO.setQueryInto(queryCep.getOutputStream());
+	    queryDTO.setQueryName(queryCep.getQueryName());
+	    if (queryCep.getHasCallback()){
+		queryDTO.setRdCallback("1");
+	    }
+	    else{
+		queryDTO.setRdCallback("0");
+	    }
+	    
+	    queriesBBDD.add(queryDTO);
+	}
+	model.addAttribute("queriesSession", queriesBBDD);
+	request.getSession().setAttribute("queriesSession", queriesBBDD);
+	return "/console/createonline";
+    }
+
+    @RequestMapping(value = "/deleteOnLineMetric", method = RequestMethod.GET)
+    public @ResponseBody String deleteOnLineMetric(@RequestParam String idMetric, Model model) throws Exception {
+	MetricaOnLine metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(idMetric));
+	metricaOnLine.setIsUpdated(true) ;
+	metricaOnLine.getStreamCep().setToRemove(true);
+	metricaOnLineService.updateMetricaOnLine(metricaOnLine);
+	for (QueryCep queryCep : metricaOnLine.getHsQueryCep()){
+	    queryCep.setToRemove(true);
+	    queryCepService.updateQueryCep(queryCep);
+	}
+	LOG.info("UPDATE BBDD running....");
+	LOG.info("UPDATE BBDD done");
+	return "";
+    }
+    
+    // ***************** TEST *****************
     
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test() {
+    public String test(Model model) {
+	List<MetricaOnLine> lstMetricaOnLine = null;
 	try {/*
 	    JobDetail job = new JobDetail();
 	    	job.setName("dummyJobName");
@@ -582,6 +864,19 @@ public class ConsoleController {
 	    	scheduler.start();
 	    	scheduler.scheduleJob(job, trigger);
 	    	*/
+		lstMetricaOnLine = metricaOnLineService.findAllMetricaOnLines();
+		for (MetricaOnLine metricaOnLine : lstMetricaOnLine){
+		    ObjectMapper mapper = new ObjectMapper();
+		    try {
+			model.addAttribute("json",mapper.writeValueAsString(metricaOnLine));
+			MetricaOnLine obj = mapper.readValue(mapper.writeValueAsString(metricaOnLine), MetricaOnLine.class);
+			System.out.println(obj);
+		    }
+		    catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		    }
+		}
 	}
 	catch (Exception e) {
 	    // TODO Auto-generated catch block
@@ -589,7 +884,38 @@ public class ConsoleController {
 	}
 	return "/test";
     }
+    
+    @RequestMapping(value = "/test2", method = RequestMethod.GET)
+    public @ResponseBody List<MetricaOnLine> test2(Model model) {
+	List<MetricaOnLine> lstMetricaOnLine = null;
+	try {
+		lstMetricaOnLine = metricaOnLineService.findAllMetricaOnLines();
+		for (MetricaOnLine metricaOnLine : lstMetricaOnLine){
+		    ObjectMapper mapper = new ObjectMapper();
+		    try {
+			model.addAttribute("json",mapper.writeValueAsString(metricaOnLine));
+			MetricaOnLine obj = mapper.readValue(mapper.writeValueAsString(metricaOnLine), MetricaOnLine.class);
+			System.out.println(obj);
+		    }
+		    catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		    }
+		}
+	}
+	catch (Exception e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	return lstMetricaOnLine;
+    }
 
+    
+    
+    
+    
+    
+    
     // METODOS ANTIGUOS
     @RequestMapping(value = "/createBatchMetric")
     public String createBatchMetric(@Valid MetricaBatch metricaBatch, BindingResult bindingResult, Model model, HttpServletRequest request, HttpSession session) {

@@ -1,18 +1,17 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import com.produban.openbus.console.util.HttpConnector;
+import com.produban.openbus.console.domain.MetricaOnLine;
+import com.produban.openbus.console.dto.QueryDTO;
 
 
 
@@ -66,6 +65,7 @@ public class Test {
 	System.out.println(hmSelectFieldsModif);
 	*/
 	
+	/*
 	HttpConnector httpConnector = new HttpConnector();
 	String existsUrl = "http://localhost:9200/_stats/_indexes?pretty";
 	HttpEntity entity = null;
@@ -171,7 +171,56 @@ public class Test {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
+	}*/
+	/*
+	String xx = "tam.MSGID AS tam,xx as c, ss as s,resp.DSN as dsn,sum(tam.SIZE) as TAMANO";
+	xx = xx.toLowerCase();
+	String [] aa = xx.split(" as ");
+	List bb = new ArrayList();
+	for(int i=0;i<aa.length;i++){
+	    if (i == aa.length -1){
+		break;
+	    }
+	    else{
+		if (i == 0){
+		    bb.add(aa[i]);
+		}
+		else{
+		    String [] cc = aa[i].split(",");
+		    bb.add(cc[1]);
+		}
+	    }
 	}
-	
+	System.out.println(bb);*/
+
+/*	
+	String url = "http://localhost:8080//web_console/online/findAllOnlineMetrics";
+	HttpClient httpClient = new DefaultHttpClient();
+	HttpGet requestGet = new HttpGet(url);
+	HttpResponse response;
+	try {
+	    response = httpClient.execute(requestGet);
+	    HttpEntity entity = response.getEntity();
+	    String json = EntityUtils.toString(entity);
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<MetricaOnLine> lstMetricaOnLine = mapper.readValue(json,mapper.getTypeFactory().constructCollectionType(List.class, MetricaOnLine.class));	    
+	    System.out.println(lstMetricaOnLine.get(0).getOnLineMetricName());
+	}
+	catch (Exception e) {
+	    e.printStackTrace();
+	}
+	*/
+	    List lstIds = new ArrayList();
+	    lstIds.add("1");
+	    lstIds.add("5");
+	    lstIds.add("9");
+	    lstIds.add("3");
+	    lstIds.add("2");
+	    lstIds.add("4");
+	    Collections.sort(lstIds);
+	    String lastId = (String) lstIds.get(lstIds.size() - 1);
+	    int idQuery = Integer.valueOf(lastId) + 1 ;
+	    System.out.println(idQuery);
+
     }
 }

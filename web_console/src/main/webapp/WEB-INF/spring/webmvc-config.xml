@@ -12,8 +12,11 @@
 
 	<mvc:interceptors>
 		<bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor" />
-		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
-			p:paramName="lang" />
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
+		<mvc:interceptor>
+			<mvc:mapping path="/console/**"/>
+			<bean class="com.produban.openbus.console.web.ConsoleInterceptor"></bean>
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 	<bean
@@ -44,6 +47,16 @@
 		</property>
 	</bean>
 
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jsonMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+     
+    <bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+     
 	<!-- Thymeleaf beans -->
 	<bean id="templateResolver"
 		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">

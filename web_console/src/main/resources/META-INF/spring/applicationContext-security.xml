@@ -19,7 +19,7 @@
     <http auto-config="true" use-expressions="true">
         <form-login login-page="/login" authentication-failure-url="/error" />
         <intercept-url pattern="/console/**" access="hasRole('ROLE_ADMIN')" />
-        <logout />
+        <logout invalidate-session="true" delete-cookies="JSESSIONID" logout-success-url="/logout" />
     </http>
 
 </beans:beans>

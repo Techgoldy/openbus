@@ -9,13 +9,9 @@
 
 <script th:src="@{/js/jquery-1.11.1.min.js}" />
 <script th:src="@{/js/bootstrap.min.js}" />
-
 <script th:inline="javascript">
 //<![CDATA[
-	$(document).ready(function() {
-		$.widget.bridge('uitooltip', $.ui.tooltip);
-		$.widget.bridge('uibutton', $.ui.button);
-		
+	$(document).ready(function() {	
 		var query = '';
 		var idMetric = /*[[${metricaBatch.id}]]*/ "";
 		var isBatch = /*[[${metricaBatch.isBatch}]]*/ "";
@@ -25,7 +21,7 @@
 				$('#sourceId').prop('disabled', false);
 				$('#sourceId').click();
 				$('#sourceId').prop('disabled', true);
-				$('#selFields').prop('disabled', true);
+				//$('#selFields').prop('disabled', true);
 			}, 150);
 			
 			/*
@@ -369,16 +365,16 @@
 				<br/>
 				<div id="divButton" style="margin-left:4px;">
 					<p th:if="${metricaBatch.id} == null">
-						<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.lanzar}"/>
+						<input id="btSubmit" type="submit" class="btn btn-primary" th:value="#{create.label.lanzar}"/>
 						<input id="hidModif" name="hidModif" type="hidden" value="0"/>
 					</p>
 					<p th:if="${metricaBatch.id} != null">
 						<p th:if="${metricaBatch.estado} == Error">
-							<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.actualizar}"/>
+							<input id="btSubmit" type="submit" class="btn btn-primary" th:value="#{create.label.actualizar}"/>
 							<input id="hidModif" name="hidModif" type="hidden" th:value="${metricaBatch.id}"/>
 						</p>
 						<p th:if="${metricaBatch.estado} != Error">
-							<input id="btSubmit" type="submit" class="classButton" th:value="#{create.label.actualizar}"/>
+							<input id="btSubmit" type="submit" class="btn btn-primary" th:value="#{create.label.actualizar}"/>
 							<input id="hidModif" name="hidModif" type="hidden" th:value="${metricaBatch.id}"/>
 						</p>
 					</p>
