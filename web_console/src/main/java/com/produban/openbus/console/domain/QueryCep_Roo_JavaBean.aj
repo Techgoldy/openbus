@@ -87,4 +87,20 @@ privileged aspect QueryCep_Roo_JavaBean {
         this.hasCallback = hasCallback;
     }
     
+    public Boolean QueryCep.getToUpdateCep() {
+        return this.toUpdateCep;
+    }
+    
+    public void QueryCep.setToUpdateCep(Boolean toUpdateCep) {
+        this.toUpdateCep = toUpdateCep;
+    }
+    
+    public String QueryCep.getError() {
+        return this.error;
+    }
+    
+    public void QueryCep.setError(String error) {
+        this.error = error;
+    }
+    
 }

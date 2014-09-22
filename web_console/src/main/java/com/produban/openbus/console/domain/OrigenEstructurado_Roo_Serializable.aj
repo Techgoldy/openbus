@@ -4,11 +4,8 @@
 package com.produban.openbus.console.domain;
 
 import com.produban.openbus.console.domain.OrigenEstructurado;
-import java.io.Serializable;
 
 privileged aspect OrigenEstructurado_Roo_Serializable {
-    
-    declare parents: OrigenEstructurado implements Serializable;
     
     private static final long OrigenEstructurado.serialVersionUID = 1L;
     

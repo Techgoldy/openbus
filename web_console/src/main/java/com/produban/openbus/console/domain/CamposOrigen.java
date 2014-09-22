@@ -1,4 +1,6 @@
 package com.produban.openbus.console.domain;
+import java.io.Serializable;
+
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
@@ -14,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @RooJpaEntity
 @RooSerializable
 @JsonIgnoreProperties("origenEstructurado")
-public class CamposOrigen {
+public class CamposOrigen implements Serializable {
 
     /**
      */

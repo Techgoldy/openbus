@@ -3,7 +3,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -11,7 +10,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
@@ -22,7 +20,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooToString
 @RooJpaEntity
 @RooSerializable
-public class MetricaOnLine implements Serializable{
+public class MetricaOnLine implements Serializable {
 
     /**
      */
@@ -83,4 +81,8 @@ public class MetricaOnLine implements Serializable{
      */
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private StreamCep streamCep;
+
+    /**
+     */
+    private String estado;
 }

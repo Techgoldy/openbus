@@ -42,7 +42,7 @@
 		</script>
 		<img th:src="@{/images/logo.png}" style="margin-left:200px" th:title="#{tooltip.logo.produban}" th:alt="#{tooltip.logo.produban}" />
 		<div class="btn-group" style="margin-left:100px;margin-top:5px;">
-		  <button type="button" class="btn" th:text="#{button.language.change}"></button>
+		  <button type="button" class="btn" th:text="#{button.language.change}" th:title="#{button.language.change}"></button>
 		  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
 		    <span class="caret"></span>
 		  </button>
@@ -55,7 +55,7 @@
 		    </li>
 		  </ul>
 		</div>
-		<button id="closeSession" style="margin-left:17px;margin-top:5px;" type="button" class="btn btn-danger" th:text="#{login.button.close.session}" onclick="logout();"/>
+		<button id="closeSession" style="margin-left:17px;margin-top:5px;" type="button" class="btn btn-danger" th:text="#{login.button.close.session}" th:title="#{login.button.close.session}" onclick="logout();"/>
 	</div>
 </body>
 </html>

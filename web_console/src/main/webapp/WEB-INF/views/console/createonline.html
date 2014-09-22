@@ -180,11 +180,11 @@
 					$('#queryInto').val(data.queryInto);
 					$('#queryAs').val(data.queryAs);
 					$('#queryGroupBy').val(data.queryGroupBy);
-					if(data.rdCallback == 1){
-						$("#rdCallback").prop("checked", true);
+					if(data.rdCallback == '1'){
+						$("#rdCallback1").prop("checked", true);
 					}
-					else{
-						$("#rdCallback").prop("checked", false);
+					else if(data.rdCallback == '0'){
+						$("#rdCallback0").prop("checked", true);
 					}
 					$('#modalQuery').modal({show:true});
 			    }
@@ -274,7 +274,7 @@
 												
 			<form id="createOnLineForm" action="javascript:return false;" th:object="${metricaOnLine}" method="post" >
 				<h2 th:text="#{create.label.title.online}"></h2>
-				<div id="tableContainer" style="width:800px;height:400px; overflow:auto;">
+				<div id="tableContainer" style="width:800px;height:450px; overflow:auto;">
 					<table>
 						<tr>
 							<td><label for="lblMetricName" class="classLabel"  th:text="#{create.label.nombre}"></label>*</td>
@@ -454,8 +454,8 @@
 									<td width="40%"><div id="divqueryName" style="display:none" th:text="#{create.tooltip.requiredField}"></div></td>
 									<td width="40%">
 										<label for="lblCallback" class="classLabel" th:text="#{create.label.callback}"></label>
-										<input type="radio" name="rdCallback" value="1" th:text="#{create.label.timestamp.si}"/>
-										<input type="radio" name="rdCallback" value="0" checked="checked" th:text="#{create.label.timestamp.no}"/>
+										<input type="radio" name="rdCallback" id="rdCallback1" value="1" th:text="#{create.label.timestamp.si}"/>
+										<input type="radio" name="rdCallback" id="rdCallback0" value="0" checked="checked" th:text="#{create.label.timestamp.no}"/>
 									</td>									
 								</tr>
 								<tr>

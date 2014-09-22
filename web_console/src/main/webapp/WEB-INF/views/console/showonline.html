@@ -3,7 +3,6 @@
 <head>
 <meta charset="ISO-8859-1" />
 <title th:text="#{show.label.title.online}"></title>
-
 <link rel="stylesheet" type="text/css" media="all"	th:href="@{/styles/menu.css}" />
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/bootstrap.min.css}" />
 <link rel="stylesheet" type="text/css" media="all" th:href="@{/styles/jquery.dataTables.css}" />
@@ -95,6 +94,8 @@ function reLaunchMetric(idMetric){
 
 $(document).ready(function() {
 	var search = /*[[${search}]]*/ "";
+	$.widget.bridge('uitooltip', $.ui.tooltip);
+	$.widget.bridge('uibutton', $.ui.button);	
 	setTimeout(function() {
 		$('input[type=search]').val(search);
 		e = $.Event('keyup');
@@ -163,8 +164,7 @@ $(document).ready(function() {
 	<input id="hidSearch" name="hidSearch" type="hidden"/>
 	<div th:replace="header::#header"/>
 	<div th:replace="sidebar::#sidebar"/>
-	<div id='loadingDiv'><img th:attr="src=@{/images/ajax-loader.gif}" /></div>
-	
+	<div id='loadingDiv'><img th:attr="src=@{/images/ajax-loader.gif}" /></div>	
 	<div class="container" style="left: 100px;">
 		<h2 th:text="#{show.label.title.online}"></h2>
 		<div id='loadingDiv'>
@@ -197,6 +197,7 @@ $(document).ready(function() {
 			        <th th:text="#{show.label.descripcion}"></th>
 			        <th th:text="#{show.label.origen}"></th>
 			        <th th:text="#{show.label.fechaultlanz}"></th>
+			        <th th:text="#{show.label.estado}"></th>
 			    </tr>
 			    </thead>
 			    <tbody>
@@ -206,6 +207,12 @@ $(document).ready(function() {
 			        <td th:text="${metric.onLineMetricDesc}"></td>
 			        <td th:text="${metric.esIndex}"></td>
 			        <td th:text="${metric.fechaUltModif}"></td>
+			        <p th:if="${metric.estado} != Error" >
+		        		<td th:text="${metric.estado}" style="color:#3ADF00"></td>
+			        </p>
+			        <p th:if="${metric.estado} == Error" >
+			        	<td th:text="${metric.estado}" style="color:#FF0000" th:title="${metric.error}"></td>
+			        </p>
 				</tr>
 			    </tbody>
 			</table>

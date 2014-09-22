@@ -4,11 +4,8 @@
 package com.produban.openbus.console.domain;
 
 import com.produban.openbus.console.domain.MetricaBatch;
-import java.io.Serializable;
 
 privileged aspect MetricaBatch_Roo_Serializable {
-    
-    declare parents: MetricaBatch implements Serializable;
     
     private static final long MetricaBatch.serialVersionUID = 1L;
     

@@ -4,11 +4,8 @@
 package com.produban.openbus.console.domain;
 
 import com.produban.openbus.console.domain.CamposOrigen;
-import java.io.Serializable;
 
 privileged aspect CamposOrigen_Roo_Serializable {
-    
-    declare parents: CamposOrigen implements Serializable;
     
     private static final long CamposOrigen.serialVersionUID = 1L;
     

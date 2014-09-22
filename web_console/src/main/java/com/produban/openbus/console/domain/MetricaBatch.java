@@ -1,24 +1,22 @@
 package com.produban.openbus.console.domain;
+import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
 import org.springframework.roo.addon.serializable.RooSerializable;
 import org.springframework.roo.addon.tostring.RooToString;
-import javax.persistence.ManyToOne;
 
 @RooJavaBean
 @RooToString
 @RooJpaEntity
 @RooSerializable
-public class MetricaBatch {
+public class MetricaBatch implements Serializable {
 
     /**
      */

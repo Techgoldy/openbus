@@ -48,7 +48,6 @@ function deleteMetric(){
 function modifyMetric(){
 	if (idMetric != null){
 		if(rowSelected){
-			//$("#main").load('console/updateMetric', {idMetric: idMetric} );
 			window.location.href = 'updateMetric?idMetric=' + idMetric; 
 		}
 		else{

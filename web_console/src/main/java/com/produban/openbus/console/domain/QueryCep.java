@@ -1,12 +1,8 @@
 package com.produban.openbus.console.domain;
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 
-import org.springframework.data.annotation.Transient;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
 import org.springframework.roo.addon.serializable.RooSerializable;
@@ -65,5 +61,11 @@ public class QueryCep implements Serializable{
      */
     @Column(columnDefinition = "BIT")
     private Boolean hasCallback;
+    
+    @Column(columnDefinition = "BIT")
+    private Boolean toUpdateCep;
+    
+    @Column(columnDefinition = "LONGBLOB")
+    private String error; 
     
 }

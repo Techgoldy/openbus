@@ -56,4 +56,20 @@ privileged aspect StreamCep_Roo_JavaBean {
         this.origenEstructurado = origenEstructurado;
     }
     
+    public Boolean StreamCep.getToUpdateCep() {
+        return this.toUpdateCep;
+    }
+    
+    public void StreamCep.setToUpdateCep(Boolean toUpdateCep) {
+        this.toUpdateCep = toUpdateCep;
+    }
+    
+    public String StreamCep.getError() {
+        return this.error;
+    }
+    
+    public void StreamCep.setError(String error) {
+        this.error = error;
+    }
+    
 }

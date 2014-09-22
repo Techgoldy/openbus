@@ -115,4 +115,12 @@ privileged aspect MetricaOnLine_Roo_JavaBean {
         this.streamCep = streamCep;
     }
     
+    public String MetricaOnLine.getEstado() {
+        return this.estado;
+    }
+    
+    public void MetricaOnLine.setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 }
