@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.produban.openbus.console</groupId>
 	<artifactId>web_console</artifactId>
@@ -18,9 +17,10 @@
 		<thymeleaf.version>2.1.0.RELEASE</thymeleaf.version>
 		<hive.version>0.12.0-cdh5.0.0</hive.version>
 		<dandelion.version>0.10.0</dandelion.version>
-		<jackson.version>1.8.1</jackson.version>
+		<jackson.version>2.4.0</jackson.version>
 		<quartz.version>2.2.1</quartz.version>
 		<json-simple.version>1.1</json-simple.version>
+		<jackson.databind-version>2.2.3</jackson.databind-version>
 	</properties>
 	<profiles>
 		<profile>
@@ -35,7 +35,7 @@
 				<database.driverclassname>com.mysql.jdbc.Driver</database.driverclassname>
 				<database.url>jdbc\:mysql\://localhost\:3306/openbus</database.url>
 				<database.user>root</database.user>
-				<database.password></database.password>
+				<database.password/>
 				<hive.driver.name>org.apache.hive.jdbc.HiveDriver</hive.driver.name>
 				<hive.driver.url>jdbc:hive2://localhost:10000/default</hive.driver.url>
 				<hive.driver.user>cloudera</hive.driver.user>
@@ -60,11 +60,11 @@
 				<database.driverclassname>com.mysql.jdbc.Driver</database.driverclassname>
 				<database.url>jdbc\:mysql\://localhost\:3306/openbus</database.url>
 				<database.user>root</database.user>
-				<database.password></database.password>
+				<database.password/>
 				<hive.driver.name>org.apache.hive.jdbc.HiveDriver</hive.driver.name>
 				<hive.driver.url>jdbc:hive2://localhost:10000/default</hive.driver.url>
 				<hive.driver.user>root</hive.driver.user>
-				<hive.driver.password></hive.driver.password>
+				<hive.driver.password/>
 				<haddop.home>/etc/hadoop</haddop.home>
 				<elastic.url.datanode1>180.133.240.42</elastic.url.datanode1>
 				<elastic.url.datanode2>180.133.240.43</elastic.url.datanode2>
@@ -455,15 +455,20 @@
 			<version>${hive.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.databind-version}</version>
+        </dependency>		
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
