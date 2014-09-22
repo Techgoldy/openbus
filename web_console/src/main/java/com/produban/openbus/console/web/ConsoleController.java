@@ -61,7 +61,7 @@ public class ConsoleController {
     private final static String ESTADO_OK = "Ok";
 
     private final static String ESTADO_ONLINE_EN_CREACION = "En Creaci&oacute;n";
-    private final static String ESTADO_ONLINE_EN_USO = " En Uso";
+    private final static String ESTADO_ONLINE_EN_USO = "En Uso";
     private final static String ESTADO_ONLINE_PARA_BORRAR = "Para Borrar";
     private final static String ESTADO_ONLINE_BORRADA = "Borrada";
     

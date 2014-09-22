@@ -186,7 +186,7 @@ $(document).ready(function() {
 		  		<span th:text="#{show.label.error3}"></span>
 		  	</div>
 			<button id="btModify" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.modify}" th:title="#{show.label.modify}" onclick="modifyMetric();"/>
-			<button id="btDelete" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.delete}" th:title="#{show.label.delete}" onclick="deleteMetric();"/>
+			<button id="btDelete" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.delete}" th:title="#{show.tooltip.delete.online}" onclick="deleteMetric();"/>
 			<a href="#" th:title="#{show.label.refresh}" onclick="refreshTable();"><img id="imgRefresh" th:src="@{/images/refresh.ico}" style="height:30px" ></img></a>
 			<p></p>		
 			<table id="example" class="display" cellspacing="0" width="100%">

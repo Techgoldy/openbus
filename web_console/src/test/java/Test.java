@@ -172,7 +172,6 @@ public class Test {
 		e.printStackTrace();
 	    }
 	}*/
-	/*
 	String xx = "tam.MSGID AS tam,xx as c, ss as s,resp.DSN as dsn,sum(tam.SIZE) as TAMANO";
 	xx = xx.toLowerCase();
 	String [] aa = xx.split(" as ");
@@ -191,7 +190,7 @@ public class Test {
 		}
 	    }
 	}
-	System.out.println(bb);*/
+	System.out.println(bb);
 
 /*	
 	String url = "http://localhost:8080//web_console/online/findAllOnlineMetrics";
@@ -210,6 +209,7 @@ public class Test {
 	    e.printStackTrace();
 	}
 	*/
+	/*
 	    List lstIds = new ArrayList();
 	    lstIds.add("1");
 	    lstIds.add("5");
@@ -220,7 +220,7 @@ public class Test {
 	    Collections.sort(lstIds);
 	    String lastId = (String) lstIds.get(lstIds.size() - 1);
 	    int idQuery = Integer.valueOf(lastId) + 1 ;
-	    System.out.println(idQuery);
+	    System.out.println(idQuery);*/
 
     }
 }
