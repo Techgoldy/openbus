@@ -45,6 +45,31 @@ function deleteMetric(){
 	}
 }
 
+function updateToRemove(){
+	if (idMetric != null){
+		if(rowSelected){
+			$.ajax({ 						
+			    url: "/web_console/console/deleteOnLineMetric", 
+			    type: 'GET', 
+			    data: {idMetric: idMetric},
+			    success: function(data) {
+			    	document.location.reload(true);
+			    },
+			    error:function(error) {
+			    	$("#loadingDiv").hide();
+			    	$("#errorDiv").show();
+			    }			    
+			});			
+		}
+		else{
+			$("#warningDiv").show();
+		}
+	}
+	else{
+		$("#warningDiv").show();
+	}
+}
+
 function modifyMetric(){
 	if (idMetric != null){
 		if(rowSelected){
@@ -186,7 +211,8 @@ $(document).ready(function() {
 		  		<span th:text="#{show.label.error3}"></span>
 		  	</div>
 			<button id="btModify" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.modify}" th:title="#{show.label.modify}" onclick="modifyMetric();"/>
-			<button id="btDelete" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.delete}" th:title="#{show.tooltip.delete.online}" onclick="deleteMetric();"/>
+			<button id="btUpdateToRemove" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.tooltip.delete.online}" th:title="#{show.tooltip.delete.online}" onclick="updateToRemove();"/>
+			<button id="btDelete" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.delete}" th:title="#{show.label.delete}" onclick="deleteMetric();"/>
 			<a href="#" th:title="#{show.label.refresh}" onclick="refreshTable();"><img id="imgRefresh" th:src="@{/images/refresh.ico}" style="height:30px" ></img></a>
 			<p></p>		
 			<table id="example" class="display" cellspacing="0" width="100%">

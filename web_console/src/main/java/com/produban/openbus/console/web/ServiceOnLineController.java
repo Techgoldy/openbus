@@ -63,9 +63,8 @@ public class ServiceOnLineController {
 	return lstMetrics;
     }
     
-    @RequestMapping(value = "/updateOnLineMetric", method = RequestMethod.POST)
-    public @ResponseBody MetricaOnLine updateOnLineMetric(@RequestBody final MetricaOnLine metrica) {
-	MetricaOnLine metricaOnLine = metricaOnLineService.findMetricaOnLine(metrica.getId());
+    @RequestMapping(value = "/updateOnLineMetric", method = RequestMethod.PUT, consumes="application/json")
+    public @ResponseBody MetricaOnLine updateOnLineMetric(@RequestBody final MetricaOnLine metricaOnLine) {
 	metricaOnLineService.updateMetricaOnLine(metricaOnLine);
 	return metricaOnLine;
     }

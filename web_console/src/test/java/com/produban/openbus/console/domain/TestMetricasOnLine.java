@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.client.RestTemplate;
 
 import com.produban.openbus.console.service.MetricaOnLineService;
 import com.produban.openbus.console.service.OrigenEstructuradoService;
@@ -43,7 +44,7 @@ public class TestMetricasOnLine {
 	origen.setTopologyName("ob_src_postfix");
     }
 
-    @Test
+    
     public void testCreate() {
 	String queryFinal = "from streamPostfix[DSN=='2.0.0' or DSN=='2.6.0' or DSN=='2.4.0']#window.time(20000) as resp "+
 				"join "+
@@ -123,6 +124,12 @@ public class TestMetricasOnLine {
 		e.printStackTrace();
 	    }
 	}
+    }
+    
+    public void updateMetricaOnLine(){
+	RestTemplate restTemplate = new RestTemplate();
+	MetricaOnLine metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(3));
+	restTemplate.put("http://localhost:8080//web_console/online/updateOnLineMetric", metricaOnLine, MetricaOnLine.class);
     }
     
 }

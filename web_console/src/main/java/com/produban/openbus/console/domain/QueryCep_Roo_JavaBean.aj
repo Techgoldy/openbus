@@ -103,4 +103,20 @@ privileged aspect QueryCep_Roo_JavaBean {
         this.error = error;
     }
     
+    public String QueryCep.getEsId() {
+        return this.esId;
+    }
+    
+    public void QueryCep.setEsId(String esId) {
+        this.esId = esId;
+    }
+    
+    public String QueryCep.getEsCamposGeo() {
+        return this.esCamposGeo;
+    }
+    
+    public void QueryCep.setEsCamposGeo(String esCamposGeo) {
+        this.esCamposGeo = esCamposGeo;
+    }
+    
 }

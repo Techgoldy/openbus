@@ -13,7 +13,13 @@
 <script th:src="@{/js/bootstrap.min.js}" />
 <script th:inline="javascript">
 //<![CDATA[
-	$(document).ready(function() {		
+	$(document).ready(function() {
+		$('#tableContainer').height($(window).height() - 150);
+		$('#divContainer').css({ "left" : 100 + "px" });
+		$(window).on('resize', function(){
+			$('#divContainer').css({ "left" : newLeft + "px" });
+			$('#tableContainer').height($(window).height() - 150);			
+		});
 		var query = '';
 		var idMetric = /*[[${metricaBatch.id}]]*/ "";
 		var isBatch = /*[[${metricaBatch.isBatch}]]*/ "";
@@ -249,7 +255,7 @@
 												
 			<form id="createForm" action="javascript:return false;" th:object="${metricaBatch}" method="post" >
 				<h2 th:text="#{create.label.title.batch}"></h2>
-				<div id="tableContainer" style="width:800px;height:450px; overflow:auto;">
+				<div id="tableContainer" style="overflow:auto;">
 					<table>
 						<tr>
 							<td><label for="lblMetricName" class="classLabel"  th:text="#{create.label.nombre}"></label>*</td>
@@ -369,7 +375,6 @@
 						<tr height="10"></tr>
 					</table>
 				</div>
-				<br/>
 				<div id="divButton" style="margin-left:4px;">
 					<p th:if="${metricaBatch.id} == null">
 						<input id="btSubmit" type="submit" class="btn btn-primary" th:value="#{create.label.lanzar}"/>

@@ -35,6 +35,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.wso2.siddhi.core.SiddhiManager;
+import org.wso2.siddhi.core.config.SiddhiConfiguration;
+import org.wso2.siddhi.query.compiler.exception.SiddhiPraserException;
 
 import com.produban.openbus.console.domain.CamposOrigen;
 import com.produban.openbus.console.domain.MetricaBatch;
@@ -623,6 +626,8 @@ public class ConsoleController {
 		queryDTOAux.setQueryGroupBy(queryDTO.getQueryGroupBy());
 		queryDTOAux.setQueryInto(queryDTO.getQueryInto());
 		queryDTOAux.setQueryName(queryDTO.getQueryName());
+		queryDTOAux.setQueryId(queryDTO.getQueryId());
+		queryDTOAux.setQueryCamposGeo(queryDTO.getQueryCamposGeo());
 		queryDTOAux.setRdCallback(queryDTO.getRdCallback());
 	    }
 	}
@@ -670,6 +675,9 @@ public class ConsoleController {
     @RequestMapping(value = "/createOnLineMetric", method = RequestMethod.POST)
     public @ResponseBody CreateOnLineForm createOnLineMetric(Model model, HttpServletRequest request, @RequestBody final CreateOnLineForm form) {
 	try {
+	    SiddhiConfiguration configuration = new SiddhiConfiguration();
+	    SiddhiManager siddhiManager = new SiddhiManager(configuration);
+	    
 	    String isModif = form.getHidModif();
 	    MetricaOnLine metricaOnLine = null;
 	    StreamCep streamCep = null;
@@ -690,6 +698,16 @@ public class ConsoleController {
 	    streamCep.setStreamFinal("define stream " + streamCep.getStreamName() + " (" + streamCep.getStreamFields() + ");");
 	    streamCep.setStreamCepId(null);
 	    
+	    try {
+		siddhiManager.defineStream(streamCep.getStreamFinal());
+	    }
+	    catch (SiddhiPraserException  e) {
+		form.setId("ERROR");
+		form.setError(e.toString());
+		LOG.error(e);
+		return form;
+	    }
+	    
 	    QueryCep queryCep = null;
 	    String queryFinal = null;
 	    String outputFieldNames = null;
@@ -703,23 +721,18 @@ public class ConsoleController {
 		outputFieldNames = queryDTO.getQueryAs();		    
 		outputFieldNames = outputFieldNames.toLowerCase();
 		String [] arrOutputFieldNames = outputFieldNames.split(" as ");
-		List lstOutputFieldNames = new ArrayList();
-		for(int i=0;i<arrOutputFieldNames.length;i++){
-		    if (i == arrOutputFieldNames.length -1){
-			break;
+		String strOutputFieldNames = "";
+		for(int i=1;i<arrOutputFieldNames.length;i++){
+		    if (i == arrOutputFieldNames.length){
+			strOutputFieldNames = strOutputFieldNames.concat(arrOutputFieldNames[i]);
 		    }
 		    else{
-			if (i == 0){
-			    lstOutputFieldNames.add(arrOutputFieldNames[i]);
-			}
-			else{
-			    String [] cc = arrOutputFieldNames[i].split(",");
-			    lstOutputFieldNames.add(cc[1]);
-			}
+			String [] cc = arrOutputFieldNames[i].split(",");
+			strOutputFieldNames = strOutputFieldNames.concat(cc[0]) + ",";
 		    }
 		}
-		
-		queryCep.setOutputFieldNames(lstOutputFieldNames.toString());
+		strOutputFieldNames = strOutputFieldNames.trim().substring(0,strOutputFieldNames.length()-1);
+		queryCep.setOutputFieldNames(strOutputFieldNames);
 		
 		if (queryDTO.getRdCallback() == null){
 			queryCep.setHasCallback(false);
@@ -740,9 +753,23 @@ public class ConsoleController {
 		queryCep.setQueryDefinition(queryDTO.getQueryFrom());
 		queryCep.setQueryName(queryDTO.getQueryName());
 		queryCep.setToRemove(false);
+		if (queryDTO.getQueryId() != null){
+		    queryCep.setEsId(queryDTO.getQueryId());
+		}
+		queryCep.setEsCamposGeo(queryDTO.getQueryCamposGeo());
 		
-		queryFinal = queryDTO.getQueryFrom() + " " + queryDTO.getQueryInto() + " " + queryDTO.getQueryAs() + " " + queryDTO.getQueryGroupBy();
+		queryFinal = queryDTO.getQueryFrom() + " insert all-events into " + queryDTO.getQueryInto() + " " + queryDTO.getQueryAs() + " " + queryDTO.getQueryGroupBy();
 		queryCep.setQueryFinal(queryFinal);
+		try {
+		    siddhiManager.addQuery(queryCep.getQueryFinal());
+		}
+		catch (SiddhiPraserException  e) {
+		    form.setId("ERROR");
+		    form.setError(e.toString());
+		    LOG.error(e);
+		    return form;
+		}
+		
 		sQueryCep.add(queryCep);
 	    }
 	    
@@ -822,6 +849,8 @@ public class ConsoleController {
 	    queryDTO.setQueryGroupBy(queryCep.getGroupBy());
 	    queryDTO.setQueryInto(queryCep.getOutputStream());
 	    queryDTO.setQueryName(queryCep.getQueryName());
+	    queryDTO.setQueryId(queryCep.getEsId());
+	    queryDTO.setQueryCamposGeo(queryCep.getEsCamposGeo());
 	    if (queryCep.getHasCallback()){
 		queryDTO.setRdCallback("1");
 	    }
@@ -836,18 +865,27 @@ public class ConsoleController {
 	return "/console/createonline";
     }
 
-    @RequestMapping(value = "/deleteOnLineMetric", method = RequestMethod.GET)
-    public @ResponseBody String deleteOnLineMetric(@RequestParam String idMetric, Model model) throws Exception {
+    @RequestMapping(value = "/updateToRemove", method = RequestMethod.GET)
+    public @ResponseBody String updateToRemove(@RequestParam String idMetric, Model model) throws Exception {
 	MetricaOnLine metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(idMetric));
 	metricaOnLine.setIsUpdated(true) ;
 	metricaOnLine.getStreamCep().setToRemove(true);
 	metricaOnLineService.updateMetricaOnLine(metricaOnLine);
 	for (QueryCep queryCep : metricaOnLine.getHsQueryCep()){
 	    queryCep.setToRemove(true);
+	    LOG.info("UPDATE BBDD running....");
 	    queryCepService.updateQueryCep(queryCep);
+	    LOG.info("UPDATE BBDD done");
 	}
-	LOG.info("UPDATE BBDD running....");
-	LOG.info("UPDATE BBDD done");
+	return "";
+    }
+
+    @RequestMapping(value = "/deleteOnLineMetric", method = RequestMethod.GET)
+    public @ResponseBody String deleteOnLineMetric(@RequestParam String idMetric, Model model) throws Exception {
+	MetricaOnLine metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(idMetric));
+	LOG.info("DELETE BBDD running....");
+	metricaOnLineService.deleteMetricaOnLine(metricaOnLine);
+	LOG.info("DELETE BBDD done");
 	return "";
     }
     

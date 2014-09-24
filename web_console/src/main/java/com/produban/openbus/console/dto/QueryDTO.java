@@ -10,7 +10,21 @@ public class QueryDTO implements Serializable {
     private String queryFrom;
     private String queryInto;
     private String queryAs;
+    private String queryId;
+    private String queryCamposGeo;
     
+    public String getQueryId() {
+        return queryId;
+    }
+    public void setQueryId(String queryId) {
+        this.queryId = queryId;
+    }
+    public String getQueryCamposGeo() {
+        return queryCamposGeo;
+    }
+    public void setQueryCamposGeo(String queryCamposGeo) {
+        this.queryCamposGeo = queryCamposGeo;
+    }
     public String getRdCallback() {
         return rdCallback;
     }

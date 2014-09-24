@@ -175,22 +175,18 @@ public class Test {
 	String xx = "tam.MSGID AS tam,xx as c, ss as s,resp.DSN as dsn,sum(tam.SIZE) as TAMANO";
 	xx = xx.toLowerCase();
 	String [] aa = xx.split(" as ");
-	List bb = new ArrayList();
-	for(int i=0;i<aa.length;i++){
-	    if (i == aa.length -1){
-		break;
+	String strOutputFieldNames = "";
+	for(int i=1;i<aa.length;i++){
+	    if (i == aa.length){
+		strOutputFieldNames = strOutputFieldNames.concat(aa[i]);
 	    }
 	    else{
-		if (i == 0){
-		    bb.add(aa[i]);
-		}
-		else{
-		    String [] cc = aa[i].split(",");
-		    bb.add(cc[1]);
-		}
+		String [] cc = aa[i].split(",");
+		strOutputFieldNames = strOutputFieldNames.concat(cc[0])+",";
 	    }
 	}
-	System.out.println(bb);
+	strOutputFieldNames = strOutputFieldNames.trim().substring(0,strOutputFieldNames.length()-1);
+	System.out.println(strOutputFieldNames);
 
 /*	
 	String url = "http://localhost:8080//web_console/online/findAllOnlineMetrics";

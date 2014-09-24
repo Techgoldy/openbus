@@ -18,6 +18,12 @@
 <script th:inline="javascript">
 //<![CDATA[
 	$(document).ready(function() {
+		$('#tableContainer').height($(window).height() - 150);
+		$('#divContainer').css({ "left" : 100 + "px" });
+		$(window).on('resize', function(){
+			$('#divContainer').css({ "left" : newLeft + "px" });
+			$('#tableContainer').height($(window).height() - 150);			
+		});
 		var query = '';
 		var idMetric = /*[[${metricaOnLine.id}]]*/ "";		
 		if (idMetric != null && idMetric != ''){
@@ -55,10 +61,6 @@
 		
 		$(document).uitooltip({
 		    track:true
-		});
-		
-		$('#queryInto').blur(function() {
-			$('#queryInto').val("insert all-events into  " + $('#queryInto').val());
 		});
 		
 		function CreateForm(){			
@@ -132,6 +134,18 @@
 		        return $("#divQueryGroupBy").html();
 		    }
 		});
+		$('#imgQueryIdHelp').popover({
+		    html: true,
+		    content: function () {
+		        return $("#divQueryId").html();
+		    }
+		});
+		$('#imgQueryCamposGeoHelp').popover({
+		    html: true,
+		    content: function () {
+		        return $("#divQueryCamposGeo").html();
+		    }
+		});
 	});
 	
 	
@@ -149,6 +163,8 @@
 		queryDTO.queryInto = $('#queryInto').val();
 		queryDTO.queryAs = $('#queryAs').val();
 		queryDTO.queryGroupBy = $('#queryGroupBy').val();			
+		queryDTO.queryId = $('#queryId').val();
+		queryDTO.queryCamposGeo = $('#queryCamposGeo').val();
 	}
 	
 	function addQuery(){
@@ -158,6 +174,8 @@
 		$('#queryInto').val(null);
 		$('#queryAs').val(null);
 		$('#queryGroupBy').val(null);		
+		$('#queryId').val(null);
+		$('#queryCamposGeo').val(null);
 		
 		$('#modalQuery').modal({show:true});
 		
@@ -180,6 +198,8 @@
 					$('#queryInto').val(data.queryInto);
 					$('#queryAs').val(data.queryAs);
 					$('#queryGroupBy').val(data.queryGroupBy);
+					$('#queryId').val(data.queryId);
+					$('#queryCamposGeo').val(data.queryCamposGeo);
 					if(data.rdCallback == '1'){
 						$("#rdCallback1").prop("checked", true);
 					}
@@ -262,7 +282,7 @@
 	<div th:replace="header::#header"/>
 	<div th:replace="sidebar::#sidebar"/>
 	<div id='loadingDiv'><img th:attr="src=@{/images/ajax-loader.gif}" /></div>
-	<div class="container" style="left: 100px;"> 
+	<div id='divContainer' class="container"> 
 			<div id="errorDiv" style="width:800px;display:none">
 			    <div class="alert alert-danger alert-error">
 			    	<button type="button" class="close">&times;</button>
@@ -274,7 +294,7 @@
 												
 			<form id="createOnLineForm" action="javascript:return false;" th:object="${metricaOnLine}" method="post" >
 				<h2 th:text="#{create.label.title.online}"></h2>
-				<div id="tableContainer" style="width:800px;height:450px; overflow:auto;">
+				<div id="tableContainer" style="width:800px;overflow:auto;">
 					<table>
 						<tr>
 							<td><label for="lblMetricName" class="classLabel"  th:text="#{create.label.nombre}"></label>*</td>
@@ -414,7 +434,6 @@
 						</tr>
 					</table>
 				</div>
-				<br/>
 				<div id="divButton" style="margin-left:4px;">
 					<p th:if="${metricaOnLine.id} == null">
 						<input id="btSubmit" type="submit" class="btn btn-primary" th:value="#{create.label.save.online}"/>
@@ -522,6 +541,32 @@
 										<textarea class="classQuery" id="queryGroupBy" rows="3" cols="70" name="queryGroupBy" required="required"></textarea>
 									</td>
 								</tr>
+								<tr>
+									<td colspan="3">
+										<label for="lblQueryId" class="classLabel" th:text="#{create.label.query.id}"></label>
+										<a href="#" th:title="#{create.label.help}">
+											<img id="imgQueryIdHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
+										</a> 
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<input id="queryId" name="queryId" type="text" class="classText"/>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<label for="lblQueryGroupBy" class="classLabel" th:text="#{create.label.query.camposgeo}"></label>
+										<a href="#" th:title="#{create.label.help}">
+											<img id="imgQueryCamposGeoHelp" data-toggle="popover" th:attr="src=@{/images/help.ico}" style="height:20px;"></img>
+										</a> 
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<textarea class="classQuery" id="queryCamposGeo" rows="1" cols="70" name="queryCamposGeo"></textarea>
+									</td>
+								</tr>
 							</table>
 						</form>					        
 			        </div>
@@ -543,6 +588,12 @@
 			</div>			
 			<div id="divQueryGroupBy" style="display:none">
 				<span th:text="#{create.tooltip.querygroup}"/>
+			</div>
+			<div id="divQueryId" style="display:none">
+				<span th:text="#{create.tooltip.queryid}"/>
+			</div>
+			<div id="divQueryCamposGeo" style="display:none">
+				<span th:text="#{create.tooltip.querycamposgeo}"/>
 			</div>
 	</div>
 </body>
