@@ -196,6 +196,8 @@ DROP TABLE IF EXISTS `query_cep`;
 CREATE TABLE `query_cep` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `error` longblob,
+  `es_campos_geo` varchar(255) DEFAULT NULL,
+  `es_id` varchar(255) DEFAULT NULL,
   `group_by` longblob,
   `has_callback` bit(1) DEFAULT NULL,
   `output_field_names` longblob,
@@ -263,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-22 12:17:27
+-- Dump completed on 2014-09-24 10:47:43
