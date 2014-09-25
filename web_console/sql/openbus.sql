@@ -182,7 +182,7 @@ CREATE TABLE `origen_estructurado` (
 
 LOCK TABLES `origen_estructurado` WRITE;
 /*!40000 ALTER TABLE `origen_estructurado` DISABLE KEYS */;
-INSERT INTO `origen_estructurado` VALUES (1,'','ob_src_postfix','ob_src_postfix',1),(2,'','ob_src_ironport','ob_src_ironport',1),(3,'','ob_src_amavis','ob_src_amavis',1),(4,'','ob_src_bluecoat','ob_src_bluecoat',1),(5,'','bluecoat_session','bluecoat_session',1);
+INSERT INTO `origen_estructurado` VALUES (1,'','ob_src_postfix','ob_src_postfix',1),(2,'','ob_src_bluecoat','ob_src_bluecoat',1),(3,'','ob_src_amavis','ob_src_amavis',1),(4,'','ob_src_ironport','ob_src_ironport',1),(5,'','bluecoat_session','bluecoat_session',1);
 /*!40000 ALTER TABLE `origen_estructurado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-24 10:47:43
+-- Dump completed on 2014-09-25 10:20:48

@@ -1,7 +1,7 @@
 insert into origen_estructurado (is_kafka_online, kafka_topic, topology_name, version) values (true, 'ob_src_postfix', 'ob_src_postfix', 1);
-insert into origen_estructurado (is_kafka_online, kafka_topic, topology_name, version) values (true, 'ob_src_ironport', 'ob_src_ironport', 1);
-insert into origen_estructurado (is_kafka_online, kafka_topic, topology_name, version) values (true, 'ob_src_amavis', 'ob_src_amavis', 1);
 insert into origen_estructurado (is_kafka_online, kafka_topic, topology_name, version) values (true, 'ob_src_bluecoat', 'ob_src_bluecoat', 1);
+insert into origen_estructurado (is_kafka_online, kafka_topic, topology_name, version) values (true, 'ob_src_amavis', 'ob_src_amavis', 1);
+insert into origen_estructurado (is_kafka_online, kafka_topic, topology_name, version) values (true, 'ob_src_ironport', 'ob_src_ironport', 1);
 insert into origen_estructurado (is_kafka_online, kafka_topic, topology_name, version) values (true, 'bluecoat_session', 'bluecoat_session', 1);
 
 insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('EVENTTIMESTAMP', 'timestamp', 1, 1);
