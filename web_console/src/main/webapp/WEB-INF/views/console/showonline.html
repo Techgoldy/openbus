@@ -49,7 +49,7 @@ function updateToRemove(){
 	if (idMetric != null){
 		if(rowSelected){
 			$.ajax({ 						
-			    url: "/web_console/console/deleteOnLineMetric", 
+			    url: "/web_console/console/updateToRemove", 
 			    type: 'GET', 
 			    data: {idMetric: idMetric},
 			    success: function(data) {
@@ -212,7 +212,7 @@ $(document).ready(function() {
 		  	</div>
 			<button id="btModify" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.modify}" th:title="#{show.label.modify}" onclick="modifyMetric();"/>
 			<button id="btUpdateToRemove" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.tooltip.delete.online}" th:title="#{show.tooltip.delete.online}" onclick="updateToRemove();"/>
-			<button id="btDelete" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.delete}" th:title="#{show.label.delete}" onclick="deleteMetric();"/>
+			<button id="btDelete" class="btn btn-primary btn-sm" sec:authorize="hasRole('ROLE_ADMIN')" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.label.delete}" th:title="#{show.label.delete}" onclick="deleteMetric();"/>
 			<a href="#" th:title="#{show.label.refresh}" onclick="refreshTable();"><img id="imgRefresh" th:src="@{/images/refresh.ico}" style="height:30px" ></img></a>
 			<p></p>		
 			<table id="example" class="display" cellspacing="0" width="100%">
@@ -233,11 +233,11 @@ $(document).ready(function() {
 			        <td th:text="${metric.onLineMetricDesc}"></td>
 			        <td th:text="${metric.esIndex}"></td>
 			        <td th:text="${metric.fechaUltModif}"></td>
-			        <p th:if="${metric.estado} != Error" >
-		        		<td th:text="${metric.estado}" style="color:#3ADF00"></td>
+			        <p th:if="${metric.error} == null" >
+		        		<td th:text="${metric.estado.description}" style="color:#3ADF00"></td>
 			        </p>
-			        <p th:if="${metric.estado} == Error" >
-			        	<td th:text="${metric.estado}" style="color:#FF0000" th:title="${metric.error}"></td>
+			        <p th:if="${metric.error} != null" >
+			        	<td th:text="${metric.estado.description}" style="color:#FF0000" th:title="${metric.error}"></td>
 			        </p>
 				</tr>
 			    </tbody>

@@ -13,7 +13,16 @@ public class CreateOnLineForm {
     private String streamName;
     private String streamFields;
     private List<QueryDTO> queries;
+    private List<TableDTO> tables;
     private String error;
+
+    public List<TableDTO> getTables() {
+        return tables;
+    }
+
+    public void setTables(List<TableDTO> tables) {
+        this.tables = tables;
+    }
 
     public List<QueryDTO> getQueries() {
 	return queries;

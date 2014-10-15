@@ -172,7 +172,7 @@ public class Test {
 		e.printStackTrace();
 	    }
 	}*/
-	String xx = "tam.MSGID AS tam,xx as c, ss as s,resp.DSN as dsn,sum(tam.SIZE) as TAMANO";
+	String xx = "selects tam.MSGID AS tam,xx as c, ss as s,resp.DSN as dsn,sum(tam.SIZE) as TAMANO";
 	xx = xx.toLowerCase();
 	String [] aa = xx.split(" as ");
 	String strOutputFieldNames = "";

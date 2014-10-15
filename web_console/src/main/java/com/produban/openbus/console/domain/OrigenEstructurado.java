@@ -37,10 +37,4 @@ public class OrigenEstructurado implements Serializable {
      */
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "origenEstructurado")
     private Set<CamposOrigen> hsCamposOrigen;
-
-/*    
-    @Transient
-    private Map<String, Integer> posicionCampos; 
-    
-*/    
 }

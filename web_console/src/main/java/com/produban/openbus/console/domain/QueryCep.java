@@ -1,6 +1,9 @@
 package com.produban.openbus.console.domain;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
 import org.springframework.roo.addon.serializable.RooSerializable;
@@ -53,18 +56,7 @@ public class QueryCep implements Serializable {
     /**
      */
     @Column(columnDefinition = "BIT")
-    private Boolean toRemove;
-
-    /**
-     */
-    @Column(columnDefinition = "BIT")
     private Boolean hasCallback;
-
-    @Column(columnDefinition = "BIT")
-    private Boolean toUpdateCep;
-
-    @Column(columnDefinition = "LONGBLOB")
-    private String error;
 
     /**
      */
@@ -72,5 +64,32 @@ public class QueryCep implements Serializable {
 
     /**
      */
-    private String esCamposGeo;
+    private String outputFieldFormat;
+
+    /**
+     */
+    @ManyToOne
+    private Estado estado;
+
+    /**
+     */
+    private Integer versionMetadata;
+
+    /**
+     */
+    @Column(columnDefinition = "LONGBLOB")
+    private String error;
+
+    /**
+     */
+    private String esType;
+
+    /**
+     */
+    private String esTTL;
+
+    /**
+     */
+    private Integer queryOrder;
+
 }

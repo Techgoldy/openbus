@@ -3,6 +3,8 @@
 
 package com.produban.openbus.console.domain;
 
+import com.produban.openbus.console.domain.Estado;
+import com.produban.openbus.console.domain.MetricaOnLine;
 import com.produban.openbus.console.domain.QueryCep;
 
 privileged aspect QueryCep_Roo_JavaBean {
@@ -71,36 +73,12 @@ privileged aspect QueryCep_Roo_JavaBean {
         this.queryName = queryName;
     }
     
-    public Boolean QueryCep.getToRemove() {
-        return this.toRemove;
-    }
-    
-    public void QueryCep.setToRemove(Boolean toRemove) {
-        this.toRemove = toRemove;
-    }
-    
     public Boolean QueryCep.getHasCallback() {
         return this.hasCallback;
     }
     
     public void QueryCep.setHasCallback(Boolean hasCallback) {
         this.hasCallback = hasCallback;
-    }
-    
-    public Boolean QueryCep.getToUpdateCep() {
-        return this.toUpdateCep;
-    }
-    
-    public void QueryCep.setToUpdateCep(Boolean toUpdateCep) {
-        this.toUpdateCep = toUpdateCep;
-    }
-    
-    public String QueryCep.getError() {
-        return this.error;
-    }
-    
-    public void QueryCep.setError(String error) {
-        this.error = error;
     }
     
     public String QueryCep.getEsId() {
@@ -111,12 +89,60 @@ privileged aspect QueryCep_Roo_JavaBean {
         this.esId = esId;
     }
     
-    public String QueryCep.getEsCamposGeo() {
-        return this.esCamposGeo;
+    public String QueryCep.getOutputFieldFormat() {
+        return this.outputFieldFormat;
     }
     
-    public void QueryCep.setEsCamposGeo(String esCamposGeo) {
-        this.esCamposGeo = esCamposGeo;
+    public void QueryCep.setOutputFieldFormat(String outputFieldFormat) {
+        this.outputFieldFormat = outputFieldFormat;
+    }
+    
+    public Estado QueryCep.getEstado() {
+        return this.estado;
+    }
+    
+    public void QueryCep.setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    
+    public Integer QueryCep.getVersionMetadata() {
+        return this.versionMetadata;
+    }
+    
+    public void QueryCep.setVersionMetadata(Integer versionMetadata) {
+        this.versionMetadata = versionMetadata;
+    }
+    
+    public String QueryCep.getError() {
+        return this.error;
+    }
+    
+    public void QueryCep.setError(String error) {
+        this.error = error;
+    }
+    
+    public String QueryCep.getEsType() {
+        return this.esType;
+    }
+    
+    public void QueryCep.setEsType(String esType) {
+        this.esType = esType;
+    }
+    
+    public String QueryCep.getEsTTL() {
+        return this.esTTL;
+    }
+    
+    public void QueryCep.setEsTTL(String esTTL) {
+        this.esTTL = esTTL;
+    }
+    
+    public Integer QueryCep.getQueryOrder() {
+        return this.queryOrder;
+    }
+    
+    public void QueryCep.setQueryOrder(Integer queryOrder) {
+        this.queryOrder = queryOrder;
     }
     
 }

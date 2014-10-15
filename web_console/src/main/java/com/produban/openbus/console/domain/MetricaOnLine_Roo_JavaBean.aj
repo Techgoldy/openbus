@@ -3,9 +3,11 @@
 
 package com.produban.openbus.console.domain;
 
+import com.produban.openbus.console.domain.Estado;
 import com.produban.openbus.console.domain.MetricaOnLine;
 import com.produban.openbus.console.domain.QueryCep;
 import com.produban.openbus.console.domain.StreamCep;
+import com.produban.openbus.console.domain.TableCep;
 import java.util.Date;
 import java.util.Set;
 
@@ -83,22 +85,6 @@ privileged aspect MetricaOnLine_Roo_JavaBean {
         this.usuarioModificacion = usuarioModificacion;
     }
     
-    public Boolean MetricaOnLine.getIsCreated() {
-        return this.isCreated;
-    }
-    
-    public void MetricaOnLine.setIsCreated(Boolean isCreated) {
-        this.isCreated = isCreated;
-    }
-    
-    public Boolean MetricaOnLine.getIsUpdated() {
-        return this.isUpdated;
-    }
-    
-    public void MetricaOnLine.setIsUpdated(Boolean isUpdated) {
-        this.isUpdated = isUpdated;
-    }
-    
     public Set<QueryCep> MetricaOnLine.getHsQueryCep() {
         return this.hsQueryCep;
     }
@@ -115,12 +101,36 @@ privileged aspect MetricaOnLine_Roo_JavaBean {
         this.streamCep = streamCep;
     }
     
-    public String MetricaOnLine.getEstado() {
+    public Estado MetricaOnLine.getEstado() {
         return this.estado;
     }
     
-    public void MetricaOnLine.setEstado(String estado) {
+    public void MetricaOnLine.setEstado(Estado estado) {
         this.estado = estado;
+    }
+    
+    public Integer MetricaOnLine.getVersionMetadata() {
+        return this.versionMetadata;
+    }
+    
+    public void MetricaOnLine.setVersionMetadata(Integer versionMetadata) {
+        this.versionMetadata = versionMetadata;
+    }
+    
+    public Set<TableCep> MetricaOnLine.getHsTableCep() {
+        return this.hsTableCep;
+    }
+    
+    public void MetricaOnLine.setHsTableCep(Set<TableCep> hsTableCep) {
+        this.hsTableCep = hsTableCep;
+    }
+    
+    public String MetricaOnLine.getError() {
+        return this.error;
+    }
+    
+    public void MetricaOnLine.setError(String error) {
+        this.error = error;
     }
     
 }

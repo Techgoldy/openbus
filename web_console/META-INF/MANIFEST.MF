@@ -9,3 +9,4 @@ Export-Package: .,
  com.produban.openbus.console.repository,
  com.produban.openbus.console.service,
  com.produban.openbus.console.web
+Import-Package: com.produban.openbus.console.domain

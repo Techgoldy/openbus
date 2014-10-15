@@ -14,6 +14,7 @@ public class ConsoleInterceptor extends HandlerInterceptorAdapter{
     final static String REMOVE_SESSION_URL_4 = "/console/createbatch";
     final static String REMOVE_SESSION_URL_5 = "/console/createonline";
     final static String QUERIES_SESSION_NAME = "queriesSession";
+    final static String TABLES_SESSION_NAME = "tablesSession";
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -22,7 +23,8 @@ public class ConsoleInterceptor extends HandlerInterceptorAdapter{
 	    request.getServletPath().equalsIgnoreCase(REMOVE_SESSION_URL_3) ||
 	    request.getServletPath().equalsIgnoreCase(REMOVE_SESSION_URL_4) ||
 	    request.getServletPath().equalsIgnoreCase(REMOVE_SESSION_URL_5)){
-	    request.getSession().removeAttribute(QUERIES_SESSION_NAME);	    
+	    request.getSession().removeAttribute(QUERIES_SESSION_NAME);
+	    request.getSession().removeAttribute(TABLES_SESSION_NAME);
 	}
 	return super.preHandle(request, response, handler);
     }

@@ -3,6 +3,7 @@
 
 package com.produban.openbus.console.domain;
 
+import com.produban.openbus.console.domain.Estado;
 import com.produban.openbus.console.domain.OrigenEstructurado;
 import com.produban.openbus.console.domain.StreamCep;
 
@@ -32,14 +33,6 @@ privileged aspect StreamCep_Roo_JavaBean {
         this.streamFinal = streamFinal;
     }
     
-    public Boolean StreamCep.getToRemove() {
-        return this.toRemove;
-    }
-    
-    public void StreamCep.setToRemove(Boolean toRemove) {
-        this.toRemove = toRemove;
-    }
-    
     public String StreamCep.getStreamName() {
         return this.streamName;
     }
@@ -56,12 +49,20 @@ privileged aspect StreamCep_Roo_JavaBean {
         this.origenEstructurado = origenEstructurado;
     }
     
-    public Boolean StreamCep.getToUpdateCep() {
-        return this.toUpdateCep;
+    public Estado StreamCep.getEstado() {
+        return this.estado;
     }
     
-    public void StreamCep.setToUpdateCep(Boolean toUpdateCep) {
-        this.toUpdateCep = toUpdateCep;
+    public void StreamCep.setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    
+    public Integer StreamCep.getVersionMetadata() {
+        return this.versionMetadata;
+    }
+    
+    public void StreamCep.setVersionMetadata(Integer versionMetadata) {
+        this.versionMetadata = versionMetadata;
     }
     
     public String StreamCep.getError() {

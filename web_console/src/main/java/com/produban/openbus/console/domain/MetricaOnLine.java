@@ -3,13 +3,17 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
@@ -64,17 +68,7 @@ public class MetricaOnLine implements Serializable {
 
     /**
      */
-    @Column(columnDefinition = "BIT")
-    private Boolean isCreated;
-
-    /**
-     */
-    @Column(columnDefinition = "BIT")
-    private Boolean isUpdated;
-
-    /**
-     */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
     private Set<QueryCep> hsQueryCep = new HashSet<QueryCep>();
 
     /**
@@ -84,5 +78,20 @@ public class MetricaOnLine implements Serializable {
 
     /**
      */
-    private String estado;
+    @ManyToOne
+    private Estado estado;
+
+    /**
+     */
+    private Integer versionMetadata;
+
+    /**
+     */
+    @OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+    private Set<TableCep> hsTableCep = new HashSet<TableCep>();
+    
+    /**
+     */
+    @Column(columnDefinition = "LONGBLOB")
+    private String error;
 }

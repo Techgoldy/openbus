@@ -42,6 +42,18 @@
     margin: 5px;
 }
 
+.classNumber {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 55px;
+    margin: 5px;
+}
+
 .popover{
     width:350px;
     max-height:350px;   

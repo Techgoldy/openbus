@@ -1,0 +1,228 @@
+Sep 25 10:43:50 vmnxbmailxp01 postfix/qmgr[6830]: D448AA61: removed
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[5794]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[9198]: 4019A9F4: to=<NoRespondaAEsteCorreo@produban.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=2.7, delays=0.69/0/1.9/0.13, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as EF0A89F6)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/qmgr[6830]: 4019A9F4: removed
+Sep 25 10:43:50 vmnxbmailxp02 postfix/smtpd[30402]: 027E5748: client=vmnxbmailxp02.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp02 postfix/smtp[3753]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtp[26460]: AD17A4AA: to=<msanchef@isban.es>, relay=127.0.0.1[127.0.0.1]:10024, delay=2.3, delays=0.01/0/2.1/0.23, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as E94FF7AC)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/qmgr[25998]: AD17A4AA: removed
+Sep 25 10:43:50 vmnxbmailxp02 postfix/cleanup[4692]: 027E5748: message-id=<e6e6ac9393aa4aacba5968dbf9c31ac3@AM3PR01MB179.eurprd01.prod.exchangelabs.com>
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[8418]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[5794]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:50 vmnxbmailxp02 postfix/smtp[2137]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[8361]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtpd[18231]: 1086D778: client=vmnxbmailxp03.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp03 postfix/cleanup[26719]: 1086D778: message-id=<1124745994.67231411634627876.JavaMail.usuwas@CSLARCHP01.sgf.gs.corp>
+Sep 25 10:43:50 vmnxbmailxp03 postfix/qmgr[25998]: 1086D778: from=<Intranet_Verne@gruposantander.com>, size=2020, nrcpt=1 (queue active)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtpd[5117]: 12B829F4: client=vmnxbmailxp01.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp01 postfix/cleanup[9034]: 12B829F4: message-id=<20140925084347.D6B4A607CF@PRLSMTPZ02.produban.corp>
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtpd[7320]: 1358DA6C: client=vmnxbmailxp01.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp01 postfix/cleanup[9460]: 1358DA6C: message-id=<20140925084347.D84FB607D3@PRLSMTPZ02.produban.corp>
+Sep 25 10:43:50 vmnxbmailxp01 postfix/qmgr[6830]: 12B829F4: from=<>, size=5451, nrcpt=1 (queue active)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/qmgr[6830]: 1358DA6C: from=<>, size=5447, nrcpt=1 (queue active)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtpd[6829]: disconnect from PRLSMTPC01.produban.corp[180.103.190.60]
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtpd[8239]: disconnect from PRLSMTPC01.produban.corp[180.103.190.60]
+Sep 25 10:43:50 vmnxbmailxp04 postfix/smtpd[2050]: disconnect from PRLSMTPC01.produban.corp[180.103.190.60]
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtp[26659]: E775C72D: to=<cvaldemoros@gruposantander.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=2.2, delays=0.02/0/2/0.12, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 1086D778)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/qmgr[25998]: E775C72D: removed
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[9020]: EF8A8A73: to=<NoRespondaAEsteCorreo@produban.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=2.1, delays=0.03/1.9/0.05/0.11, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 12B829F4)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/qmgr[6830]: EF8A8A73: removed
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[9323]: EF5FAA64: to=<NoRespondaAEsteCorreo@produban.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=2.1, delays=0.03/2/0.02/0.1, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 1358DA6C)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/qmgr[6830]: EF5FAA64: removed
+Sep 25 10:43:50 vmnxbmailxp02 postfix/smtp[2137]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:50 vmnxbmailxp02 postfix/qmgr[12695]: 027E5748: from=<Charles.Mann@mpltechnologygroup.com>, size=1316504, nrcpt=2 (queue active)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[8366]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtp[25742]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:43:50 vmnxbmailxp02 postfix/smtp[4488]: 23ECE743: to=<alejanalvarez@ext.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, conn_use=6, delay=0.97, delays=0.14/0/0/0.83, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 027E5748)
+Sep 25 10:43:50 vmnxbmailxp02 postfix/smtp[4488]: 23ECE743: to=<irpicazo@ext.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, conn_use=6, delay=0.97, delays=0.14/0/0/0.83, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 027E5748)
+Sep 25 10:43:50 vmnxbmailxp02 postfix/qmgr[12695]: 23ECE743: removed
+Sep 25 10:43:50 vmnxbmailxp04 postfix/smtpd[25372]: disconnect from vmnxbmailxp04.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp04 postfix/smtpd[25377]: disconnect from vmnxbmailxp04.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[8355]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtpd[25312]: 212C24AA: client=vmnxbmailxp03.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp03 postfix/cleanup[26740]: 212C24AA: message-id=<20140925084347.C408E60847@PRLSMTPZ01.produban.corp>
+Sep 25 10:43:50 vmnxbmailxp02 postfix/smtp[3171]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:43:50 vmnxbmailxp03 postfix/qmgr[25998]: 212C24AA: from=<>, size=5451, nrcpt=1 (queue active)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtp[25742]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtp[26741]: E536372B: to=<NoRespondaAEsteCorreo@produban.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=2.2, delays=0.04/2/0.06/0.14, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 212C24AA)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/qmgr[25998]: E536372B: removed
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[8366]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtpd[18231]: 3081972B: client=vmnxbmailxp03.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp03 postfix/cleanup[26719]: 3081972B: message-id=<528074066.3078251411634627903.JavaMail.arsysu@prlges8p11>
+Sep 25 10:43:50 vmnxbmailxp04 postfix/smtpd[30551]: 3295B637: client=vmnxbmailxp04.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp02 postfix/smtp[3171]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:50 vmnxbmailxp04 postfix/cleanup[5112]: 3295B637: message-id=<733753642.3078331411634628363.JavaMail.arsysu@prlges8p11>
+Sep 25 10:43:50 vmnxbmailxp03 postfix/qmgr[25998]: 3081972B: from=<NoRespondaAEsteCorreo@produban.com>, size=2915, nrcpt=1 (queue active)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/qmgr[6830]: 3C769A3D: from=<paulamartinl@gruposantander.com>, size=5189491, nrcpt=1 (queue active)
+Sep 25 10:43:50 vmnxbmailxp04 postfix/qmgr[23591]: 3295B637: from=<NoRespondaAEsteCorreo@produban.com>, size=2912, nrcpt=1 (queue active)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtp[24359]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtp[26460]: EFCE4732: to=<isabelsierra@ext.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=2.2, delays=0.02/2/0.09/0.13, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 3081972B)
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtpd[3102]: 381969F9: client=vmescl100xchp04.cloud.corp[180.205.32.104]
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtp[25902]: E94FF7AC: to=<msanchef@isban.es>, relay=smtp01.scisb.isban.corp[172.31.201.13]:25, delay=0.28, delays=0.01/0/0.07/0.19, dsn=2.6.0, status=sent (250 2.6.0 <278B93E3EC73DB4295DE189892C75C5062C1F3AF@VMESCL100XCMP07.cloud.corp> Queued mail for delivery)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/qmgr[25998]: E94FF7AC: removed
+Sep 25 10:43:50 vmnxbmailxp03 postfix/qmgr[25998]: EFCE4732: removed
+Sep 25 10:43:50 vmnxbmailxp04 postfix/smtp[5107]: 70F492EB: to=<joselu.macia@ext.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=1.8, delays=0.02/0/1.6/0.11, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 3295B637)
+Sep 25 10:43:50 vmnxbmailxp04 postfix/qmgr[23591]: 70F492EB: removed
+Sep 25 10:43:50 vmnxbmailxp03 postfix/qmgr[25998]: CACAB137: from=<ItzbelLaura.RodriguezRodriguez@santandergbm.com>, size=162499, nrcpt=2 (queue active)
+Sep 25 10:43:50 vmnxbmailxp03 postfix/smtp[24504]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:43:50 vmnxbmailxp01 postfix/smtp[8355]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:50 vmnxbmailxp04 postfix/smtpd[25372]: connect from vmnxbmailxp04.gsnet.corp[127.0.0.1]
+Sep 25 10:43:50 vmnxbmailxp04 postfix/smtpd[25372]: 41B0D90E: client=vmnxbmailxp04.gsnet.corp[127.0.0.1]
+Sep 25 10:43:51 vmnxbmailxp03 postfix/smtp[26343]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:51 vmnxbmailxp01 postfix/smtpd[6339]: D2494A02: client=vmnxbmailxp01.gsnet.corp[127.0.0.1]
+Sep 25 10:43:51 vmnxbmailxp01 postfix/cleanup[9460]: D2494A02: message-id=<6C574C69BE98E040890D2017FA2CAEDA5B00AF6C@VMESCL100XCMP02.cloud.corp>
+Sep 25 10:43:51 vmnxbmailxp03 postfix/smtp[26009]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:53 vmnxbmailxp03 postfix/cleanup[26734]: 7D11C4AA: message-id=<72E2D0EB6126054BA7C928B7F5F000310133A66EC2@VMESCL100XCMP01.cloud.corp>
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[2045]: 1611F6DB: client=vmescl100xchp07.cloud.corp[180.205.32.107]
+Sep 25 10:43:54 vmnxbmailxp04 postfix/smtp[4775]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/cleanup[4746]: 1611F6DB: message-id=<B62E678361F2AE43B549592F60E8CE9281A61835@VMESCL100XCMP07.cloud.corp>
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 1611F6DB: from=<crevuelt@gruposantander.com>, size=18374, nrcpt=1 (queue active)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[2045]: disconnect from vmescl100xchp07.cloud.corp[180.205.32.107]
+Sep 25 10:43:54 vmnxbmailxp03 postfix/smtp[26343]: A35AD137: to=<prasconr@isban.es>, relay=smtp01.scisb.isban.corp[172.31.201.13]:25, delay=0.51, delays=0.02/0/0.08/0.4, dsn=2.6.0, status=sent (250 2.6.0 <72E2D0EB6126054BA7C928B7F5F000310133A66EC2@VMESCL100XCMP01.cloud.corp> Queued mail for delivery)
+Sep 25 10:43:54 vmnxbmailxp03 postfix/qmgr[25998]: A35AD137: removed
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[30075]: 37ED5726: client=vmnxbmailxp02.gsnet.corp[127.0.0.1]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/cleanup[4734]: 37ED5726: message-id=<B62E678361F2AE43B549592F60E8CE9281A61835@VMESCL100XCMP07.cloud.corp>
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 37ED5726: from=<crevuelt@gruposantander.com>, size=26622, nrcpt=1 (queue active)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[3109]: setting up TLS connection to conectorsan.santander.corp[172.21.128.12]:25
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[4489]: 11D24638: to=<marcos.martinezcastillo@servexternos.gruposantander.es>, relay=127.0.0.1[127.0.0.1]:10024, delay=0.19, delays=0.01/0/0/0.17, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 37ED5726)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 11D24638: removed
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[23086]: 405D7638: client=vmnxbmailxp02.gsnet.corp[127.0.0.1]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/cleanup[4746]: 405D7638: message-id=<B62E678361F2AE43B549592F60E8CE9281A61835@VMESCL100XCMP07.cloud.corp>
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 405D7638: from=<crevuelt@gruposantander.com>, size=18852, nrcpt=1 (queue active)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[30075]: disconnect from vmnxbmailxp02.gsnet.corp[127.0.0.1]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[4638]: 1611F6DB: to=<lcarballo@santander.com.mx>, relay=127.0.0.1[127.0.0.1]:10024, delay=0.2, delays=0.01/0/0/0.18, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 405D7638)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 1611F6DB: removed
+Sep 25 10:43:54 vmnxbmailxp01 postfix/smtp[7857]: 78561A18: to=<molastra@servexternos.produban.com>, relay=smtp01.cloud.corp[180.205.16.32]:25, delay=6.8, delays=0.01/0/5.1/1.7, dsn=2.6.0, status=sent (250 2.6.0 <1774242686.3077821411634626876.JavaMail.arsysu@prlges8p11> [InternalId=38691586] Queued mail for delivery)
+Sep 25 10:43:54 vmnxbmailxp01 postfix/qmgr[6830]: 78561A18: removed
+Sep 25 10:43:54 vmnxbmailxp01 postfix/smtpd[6465]: warning: network_biopair_interop: error reading 5 bytes from the network: Connection reset by peer
+Sep 25 10:43:54 vmnxbmailxp01 postfix/smtpd[6465]: disconnect from vmescl100xchp16.cloud.corp[180.205.32.116]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[3109]: Trusted TLS connection established to conectorsan.santander.corp[172.21.128.12]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[3573]: connect from bvoblpecsp01.openbank.corp[172.31.132.152]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[3573]: 5D717556: client=bvoblpecsp01.openbank.corp[172.31.132.152]
+Sep 25 10:43:54 vmnxbmailxp03 postfix/smtp[24505]: 3501D728: to=<aldemiguel@gruposantander.com>, relay=smtp01.cloud.corp[180.205.16.32]:25, delay=1.2, delays=0.01/0/0.1/1.1, dsn=2.6.0, status=sent (250 2.6.0 <1276529686.71701411634632043.JavaMail.usuwas@CSLARCHP02.sgf.gs.corp> [InternalId=24351793] Queued mail for delivery)
+Sep 25 10:43:54 vmnxbmailxp03 postfix/qmgr[25998]: 3501D728: removed
+Sep 25 10:43:54 vmnxbmailxp02 postfix/cleanup[4734]: 5D717556: message-id=<0005FaA0G0NFT1R7@openbank.es>
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[3573]: disconnect from bvoblpecsp01.openbank.corp[172.31.132.152]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 5D717556: from=<acuserecibo@openbank.es>, size=5966, nrcpt=1 (queue active)
+Sep 25 10:43:54 vmnxbmailxp04 postfix/smtp[4696]: E1026A97: to=<jose.garrido@ext.produban.com>, relay=smtp01.cloud.corp[180.205.16.32]:25, delay=0.49, delays=0.01/0/0.09/0.39, dsn=2.6.0, status=sent (250 2.6.0 <00a401cfd89c$a1c47ba0$e54d72e0$@munoz@mad.vass.es> [InternalId=17568267] Queued mail for delivery)
+Sep 25 10:43:54 vmnxbmailxp04 postfix/qmgr[23591]: E1026A97: removed
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[1272]: connect from ISWECHAP06.scisb.isban.corp[172.31.92.130]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[1272]: setting up TLS connection from ISWECHAP06.scisb.isban.corp[172.31.92.130]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[30402]: 797A56DB: client=vmnxbmailxp02.gsnet.corp[127.0.0.1]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[1839]: 79D3F936: client=vmnxbmailxp02.gsnet.corp[127.0.0.1]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/cleanup[4746]: 797A56DB: message-id=<0005FaA0G0NFT1R7@openbank.es>
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[3109]: 37ED5726: to=<marcos.martinezcastillo@servexternos.gruposantander.es>, relay=conectorsan.santander.corp[172.21.128.12]:25, delay=0.28, delays=0.01/0/0.09/0.17, dsn=2.6.0, status=sent (250 2.6.0 <B62E678361F2AE43B549592F60E8CE9281A61835@VMESCL100XCMP07.cloud.corp> Queued mail for delivery)
+Sep 25 10:43:54 vmnxbmailxp04 postfix/smtp[4684]: 50394999: to=<p000risouza@prservicos.com.br>, relay=180.128.0.135[180.128.0.135]:25, delay=13, delays=0.01/0/13/0.42, dsn=5.0.0, status=bounced (host 180.128.0.135[180.128.0.135] said: 550 #5.1.0 Address rejected. (in reply to RCPT TO command))
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 37ED5726: removed
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 797A56DB: from=<acuserecibo@openbank.es>, size=6468, nrcpt=1 (queue active)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/cleanup[4734]: 79D3F936: message-id=<922E7C1625AC8E45B7BF859DDF3E83DA58BB09D3@VMESCL100XCMP12.cloud.corp>
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[4488]: 5D717556: to=<activacioncuentas_openbank@geoban.com>, relay=127.0.0.1[127.0.0.1]:10024, conn_use=3, delay=0.14, delays=0.01/0/0/0.13, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 797A56DB)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 5D717556: removed
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[3180]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[1272]: certificate verification failed for iswechap06.scisb.isban.corp[172.31.92.130]: untrusted issuer /DC=corp/DC=isban/DC=scisb/CN=IT-CA
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[1272]: ISWECHAP06.scisb.isban.corp[172.31.92.130]: Untrusted: subject_CN=ISWECHAP06.scisb.isban.corp, issuer=IT-CA, fingerprint=F0:83:6D:FD:68:CF:C5:11:1F:65:4E:92:C4:E3:F3:AE
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[1272]: Untrusted TLS connection established from ISWECHAP06.scisb.isban.corp[172.31.92.130]: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[3180]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:54 vmnxbmailxp04 postfix/smtp[4775]: E0B8570D: to=<petra.jennessen@gesban.com>, relay=smtp01.cloud.corp[180.205.16.32]:25, delay=0.64, delays=0.01/0/0.17/0.46, dsn=2.6.0, status=sent (250 2.6.0 <BBBF4919F150F54E9D970244E94ADE99C74F6E@srvmailprwse03.sandefrp.santanderde.corp> [InternalId=39543435] Queued mail for delivery)
+Sep 25 10:43:54 vmnxbmailxp04 postfix/qmgr[23591]: E0B8570D: removed
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 79D3F936: from=<santanderlearningspain@gruposantander.com>, size=386865, nrcpt=3 (queue active)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[4782]: E88855BF: to=<acruzriv@gruposantander.es>, relay=127.0.0.1[127.0.0.1]:10024, delay=0.64, delays=0.06/0/0/0.58, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 79D3F936)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[4782]: E88855BF: to=<atellolu@gruposantander.es>, relay=127.0.0.1[127.0.0.1]:10024, delay=0.64, delays=0.06/0/0/0.58, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 79D3F936)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[4782]: E88855BF: to=<lcastell@gruposantander.es>, relay=127.0.0.1[127.0.0.1]:10024, delay=0.64, delays=0.06/0/0/0.58, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 79D3F936)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: E88855BF: removed
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[1272]: 90EA3556: client=ISWECHAP06.scisb.isban.corp[172.31.92.130]
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[3809]: setting up TLS connection to conectorsan.santander.corp[172.21.128.12]:25
+Sep 25 10:43:54 vmnxbmailxp02 postfix/cleanup[4746]: 90EA3556: message-id=<9C8D0F8C6348F042AE7578997ED7FB46F3A97939@MBX04.scisb.isban.corp>
+Sep 25 10:43:54 vmnxbmailxp02 postfix/qmgr[12695]: 90EA3556: from=<kkamajka@servexternos.isban.es>, size=10179, nrcpt=1 (queue active)
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[1272]: disconnect from ISWECHAP06.scisb.isban.corp[172.31.92.130]
+Sep 25 10:43:54 vmnxbmailxp04 postfix/cleanup[5147]: AF9BA637: message-id=<20140925084354.AF9BA637@mailx.gsnet.corp>
+Sep 25 10:43:54 vmnxbmailxp04 postfix/bounce[4117]: 50394999: sender non-delivery notification: AF9BA637
+Sep 25 10:43:54 vmnxbmailxp04 postfix/qmgr[23591]: AF9BA637: from=<>, size=4039, nrcpt=1 (queue active)
+Sep 25 10:43:54 vmnxbmailxp04 postfix/qmgr[23591]: 50394999: removed
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtp[3809]: Trusted TLS connection established to conectorsan.santander.corp[172.21.128.12]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:43:54 vmnxbmailxp01 postfix/smtpd[6339]: B494B9CC: client=vmnxbmailxp01.gsnet.corp[127.0.0.1]
+Sep 25 10:43:54 vmnxbmailxp01 postfix/cleanup[9460]: B494B9CC: message-id=<735C5F6B491D9B4890861A099BB71B3ABC34C1E1@VMESCL100XCMP06.cloud.corp>
+Sep 25 10:43:54 vmnxbmailxp02 postfix/smtpd[2045]: connect from bvcllpecsp01.intranetcl.corp[172.31.170.95]
+Sep 25 10:43:54 vmnxbmailxp04 postfix/smtp[5180]: AF9BA637: to=<tbc_cmx@SRVSMTP1.gsnet.corp>, relay=none, delay=0.06, delays=0.01/0.04/0.01/0, dsn=5.4.4, status=bounced (Host or domain name not found. Name service error for name=SRVSMTP1.gsnet.corp type=A: Host not found)
+Sep 25 10:43:56 vmnxbmailxp03 postfix/smtp[26338]: 221B3740: to=<toby.vaughan@santanderam.co.uk>, relay=180.33.1.175[180.33.1.175]:25, delay=0.47, delays=0.01/0/0.29/0.17, dsn=2.6.0, status=sent (250 2.6.0 <C4C8318B95FCA943BFFE29462CB433F0CB77955C@VMESCL100XCMP08.cloud.corp> Queued mail for delivery)
+Sep 25 10:43:56 vmnxbmailxp03 postfix/qmgr[25998]: 221B3740: removed
+Sep 25 10:43:57 vmnxbmailxp02 postfix/smtpd[32016]: connect from cslsmtpc01.aacc.corp[180.93.190.60]
+Sep 25 10:43:59 vmnxbmailxp03 postfix/smtp[26009]: certificate verification failed for 180.33.1.175[180.33.1.175]:25: untrusted issuer /CN=ENTAAP2431P
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtpd[26730]: connect from vmstpibcnlb01.ibad.stp.corp[180.205.78.152]
+Sep 25 10:44:01 vmnxbmailxp03 postfix/cleanup[26719]: B81EE740: message-id=<470887336.44811411634641655.JavaMail.eureka@vmstpbekappp02.stp.corp>
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtp[26695]: 923D8137: to=<anvinuesa@servexternos.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=0.19, delays=0.06/0/0.01/0.13, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as B61F15CE)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtpd[6465]: BC3FAA73: client=vmstpibcnlb01.ibad.stp.corp[180.205.78.152]
+Sep 25 10:44:01 vmnxbmailxp03 postfix/qmgr[25998]: 923D8137: removed
+Sep 25 10:44:01 vmnxbmailxp03 postfix/qmgr[25998]: B81EE740: from=<scc@produban.com>, size=908, nrcpt=1 (queue active)
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtpd[26730]: disconnect from vmstpibcnlb01.ibad.stp.corp[180.205.78.152]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtpd[7320]: C028EACF: client=vmnxbmailxp01.gsnet.corp[127.0.0.1]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/cleanup[7190]: C028EACF: message-id=<503144221.44791411634641551.JavaMail.eureka@vmstpbekappp02.stp.corp>
+Sep 25 10:44:01 vmnxbmailxp01 postfix/qmgr[6830]: C028EACF: from=<scc@produban.com>, size=1408, nrcpt=1 (queue active)
+Sep 25 10:44:01 vmnxbmailxp04 postfix/smtp[2070]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtp[9435]: A43FFAC9: to=<luisfe.gonzalez@ext.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, conn_use=4, delay=0.14, delays=0.06/0/0/0.09, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as C028EACF)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/qmgr[6830]: A43FFAC9: removed
+Sep 25 10:44:01 vmnxbmailxp04 postfix/smtp[2015]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:44:01 vmnxbmailxp01 postfix/cleanup[9133]: BC3FAA73: message-id=<2034432410.44801411634641648.JavaMail.eureka@vmstpbekappp02.stp.corp>
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtp[25744]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/qmgr[6830]: BC3FAA73: from=<scc@produban.com>, size=897, nrcpt=1 (queue active)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtp[8366]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:44:01 vmnxbmailxp02 postfix/smtpd[1268]: certificate verification failed for srvhubpvwse02.sandefrp.santanderde.corp[180.82.41.66]: untrusted issuer /CN=SRVHUBPVWSE02
+Sep 25 10:44:01 vmnxbmailxp02 postfix/smtpd[1268]: srvhubpvwse02.sandefrp.santanderde.corp[180.82.41.66]: Untrusted: subject_CN=SRVHUBPVWSE02, issuer=SRVHUBPVWSE02, fingerprint=89:D6:94:A6:43:FA:AC:E6:3C:F4:92:AE:54:59:B5:E5
+Sep 25 10:44:01 vmnxbmailxp02 postfix/smtpd[1268]: Untrusted TLS connection established from srvhubpvwse02.sandefrp.santanderde.corp[180.82.41.66]: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:44:01 vmnxbmailxp03 postfix/qmgr[25998]: 85B9D732: from=<felipeperez@ext.produban.com>, size=1327891, nrcpt=2 (queue active)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtp[8366]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:44:01 vmnxbmailxp04 postfix/smtp[2015]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtpd[6465]: D3F1EAC9: client=vmstpibcnlb01.ibad.stp.corp[180.205.78.152]
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtpd[26396]: disconnect from vmescl100xchp16.cloud.corp[180.205.32.116]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtpd[7320]: D7787AD1: client=vmnxbmailxp01.gsnet.corp[127.0.0.1]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/cleanup[7190]: D7787AD1: message-id=<2034432410.44801411634641648.JavaMail.eureka@vmstpbekappp02.stp.corp>
+Sep 25 10:44:01 vmnxbmailxp01 postfix/qmgr[6830]: D7787AD1: from=<scc@produban.com>, size=1387, nrcpt=1 (queue active)
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtpd[25312]: D9EA6137: client=vmnxbmailxp03.gsnet.corp[127.0.0.1]
+Sep 25 10:44:01 vmnxbmailxp03 postfix/cleanup[26734]: D9EA6137: message-id=<470887336.44811411634641655.JavaMail.eureka@vmstpbekappp02.stp.corp>
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtp[9198]: BC3FAA73: to=<luisfe.gonzalez@ext.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, conn_use=5, delay=0.15, delays=0.06/0/0/0.09, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as D7787AD1)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/qmgr[6830]: BC3FAA73: removed
+Sep 25 10:44:01 vmnxbmailxp03 postfix/qmgr[25998]: D9EA6137: from=<scc@produban.com>, size=1404, nrcpt=1 (queue active)
+Sep 25 10:44:01 vmnxbmailxp02 postfix/smtpd[1268]: DDBE34B2: client=srvhubpvwse02.sandefrp.santanderde.corp[180.82.41.66]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/cleanup[9460]: D3F1EAC9: message-id=<726216957.44821411634641684.JavaMail.eureka@vmstpbekappp02.stp.corp>
+Sep 25 10:44:01 vmnxbmailxp01 postfix/qmgr[6830]: D3F1EAC9: from=<scc@produban.com>, size=908, nrcpt=1 (queue active)
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtpd[26230]: connect from unknown[172.19.193.143]
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtp[26659]: B81EE740: to=<anvinuesa@servexternos.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=0.18, delays=0.04/0/0.01/0.14, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as D9EA6137)
+Sep 25 10:44:01 vmnxbmailxp03 postfix/qmgr[25998]: B81EE740: removed
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtpd[26802]: connect from unknown[180.205.134.2]
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtpd[26802]: disconnect from unknown[180.205.134.2]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtpd[6465]: disconnect from vmstpibcnlb01.ibad.stp.corp[180.205.78.152]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtp[7699]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:44:01 vmnxbmailxp02 postfix/smtp[3180]: 73F37936: to=<anvinuesa@servexternos.produban.com>, relay=smtp01.cloud.corp[180.205.16.32]:25, delay=0.48, delays=0.02/0/0.08/0.39, dsn=2.6.0, status=sent (250 2.6.0 <1948218787.44751411634641239.JavaMail.eureka@vmstpbekappp02.stp.corp> [InternalId=45934941] Queued mail for delivery)
+Sep 25 10:44:01 vmnxbmailxp02 postfix/qmgr[12695]: 73F37936: removed
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtp[25896]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:44:01 vmnxbmailxp02 postfix/smtpd[3573]: connect from cslsmtpc01.aacc.corp[180.93.190.60]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtpd[7320]: EFDE2AF6: client=vmnxbmailxp01.gsnet.corp[127.0.0.1]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/cleanup[9133]: EFDE2AF6: message-id=<726216957.44821411634641684.JavaMail.eureka@vmstpbekappp02.stp.corp>
+Sep 25 10:44:01 vmnxbmailxp01 postfix/qmgr[6830]: EFDE2AF6: from=<scc@produban.com>, size=1388, nrcpt=1 (queue active)
+Sep 25 10:44:01 vmnxbmailxp03 postfix/smtpd[26230]: setting up TLS connection from unknown[172.19.193.143]
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtp[7699]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/smtp[9323]: D3F1EAC9: to=<anvalverde@ext.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, conn_use=6, delay=0.15, delays=0.06/0/0/0.08, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as EFDE2AF6)
+Sep 25 10:44:01 vmnxbmailxp01 postfix/qmgr[6830]: D3F1EAC9: removed
+Sep 25 10:44:02 vmnxbmailxp03 postfix/smtp[25896]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:44:02 vmnxbmailxp02 postfix/smtpd[3573]: 0228C936: client=cslsmtpc01.aacc.corp[180.93.190.60]
+Sep 25 10:44:02 vmnxbmailxp01 postfix/smtp[8361]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:44:02 vmnxbmailxp01 postfix/smtpd[3521]: connect from vmstpibcnlb01.ibad.stp.corp[180.205.78.152]
+Sep 25 10:44:02 vmnxbmailxp02 postfix/cleanup[4734]: 0228C936: message-id=<20140925084401.D9FAAE0164@CSLFEDOP01.test.aacc.corp>
+Sep 25 10:44:02 vmnxbmailxp02 postfix/smtpd[3573]: disconnect from cslsmtpc01.aacc.corp[180.93.190.60]
+Sep 25 10:44:02 vmnxbmailxp02 postfix/qmgr[12695]: 0228C936: from=<root@CSLFEDOP01.test.aacc.corp>, size=919, nrcpt=1 (queue active)
+Sep 25 10:44:02 vmnxbmailxp01 postfix/smtp[8361]: Trusted TLS connection established to smtp01.cloud.corp[180.205.16.32]:25: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:44:02 vmnxbmailxp02 postfix/smtpd[1914]: connect from vmstpibcnlb01.ibad.stp.corp[180.205.78.152]
+Sep 25 10:44:02 vmnxbmailxp02 postfix/cleanup[4906]: DDBE34B2: message-id=<BDC641B1DEDA854C8F63CDF753B5F3470B5BB2@srvmailprwse03.sandefrp.santanderde.corp>
+Sep 25 10:44:02 vmnxbmailxp03 postfix/smtpd[26230]: certificate verification failed for unknown[172.19.193.143]: untrusted issuer /CN=ENTAAP2433P
+Sep 25 10:44:02 vmnxbmailxp03 postfix/smtpd[26230]: unknown[172.19.193.143]: Untrusted: subject_CN=ENTAAP2433P, issuer=ENTAAP2433P, fingerprint=76:B3:20:AB:90:79:6F:70:CB:A5:E3:D0:ED:AD:34:8E
+Sep 25 10:44:02 vmnxbmailxp03 postfix/smtpd[26230]: Untrusted TLS connection established from unknown[172.19.193.143]: TLSv1 with cipher AES128-SHA (128/128 bits)
+Sep 25 10:44:02 vmnxbmailxp02 postfix/smtpd[1914]: 169B9971: client=vmstpibcnlb01.ibad.stp.corp[180.205.78.152]
+Sep 25 10:44:02 vmnxbmailxp02 postfix/smtp[3117]: 5D80C748: to=<anvinuesa@servexternos.produban.com>, relay=smtp01.cloud.corp[180.205.16.32]:25, delay=0.71, delays=0.02/0/0.15/0.54, dsn=2.6.0, status=sent (250 2.6.0 <1986988691.44741411634641157.JavaMail.eureka@vmstpbekappp02.stp.corp> [InternalId=39543449] Queued mail for delivery)
+Sep 25 10:44:02 vmnxbmailxp02 postfix/qmgr[12695]: 5D80C748: removed
+Sep 25 10:44:02 vmnxbmailxp01 postfix/cleanup[7190]: 71502ACF: message-id=<217CF614B85E1C4295627E313631F3778269EDA0@VMESCL100XCMP03.cloud.corp>
+Sep 25 10:44:03 vmnxbmailxp02 postfix/smtp[3753]: setting up TLS connection to smtp01.cloud.corp[180.205.16.32]:25
+Sep 25 10:44:03 vmnxbmailxp03 postfix/smtp[24505]: 7C31D728: to=<luisfe.gonzalez@ext.produban.com>, relay=smtp01.cloud.corp[180.205.16.32]:25, delay=0.55, delays=0.01/0/0.13/0.41, dsn=2.6.0, status=sent (250 2.6.0 <5114826.44861411634642249.JavaMail.eureka@vmstpbekappp02.stp.corp> [InternalId=38691614] Queued mail for delivery)
+Sep 25 10:44:03 vmnxbmailxp02 postfix/smtp[4489]: E3ED499A: to=<joseluisjimenezg@ext.produban.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=0.13, delays=0.01/0/0/0.12, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 09E59973)
+Sep 25 10:44:03 vmnxbmailxp03 postfix/qmgr[25998]: F3266778: removed
+[2014-09-25 10:44:08,724] WARN Reconnect due to socket error: null (kafka.consumer.SimpleConsumer)
+[2014-09-25 10:44:08,776] WARN Reconnect due to socket error: null (kafka.consumer.SimpleConsumer)

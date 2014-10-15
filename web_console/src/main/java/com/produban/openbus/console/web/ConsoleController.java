@@ -17,7 +17,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.apache.http.HttpEntity;
 import org.apache.log4j.Logger;
@@ -29,7 +28,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,22 +35,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.config.SiddhiConfiguration;
-import org.wso2.siddhi.query.compiler.exception.SiddhiPraserException;
 
 import com.produban.openbus.console.domain.CamposOrigen;
+import com.produban.openbus.console.domain.Estado;
 import com.produban.openbus.console.domain.MetricaBatch;
 import com.produban.openbus.console.domain.MetricaOnLine;
 import com.produban.openbus.console.domain.OrigenEstructurado;
 import com.produban.openbus.console.domain.QueryCep;
 import com.produban.openbus.console.domain.StreamCep;
+import com.produban.openbus.console.domain.TableCep;
 import com.produban.openbus.console.dto.CreateOnLineForm;
 import com.produban.openbus.console.dto.QueryDTO;
+import com.produban.openbus.console.dto.TableDTO;
 import com.produban.openbus.console.hive.HiveConnector;
+import com.produban.openbus.console.repository.EstadoRepository;
+import com.produban.openbus.console.service.EstadoService;
 import com.produban.openbus.console.service.MetricaBatchService;
 import com.produban.openbus.console.service.MetricaOnLineService;
 import com.produban.openbus.console.service.OrigenEstructuradoService;
 import com.produban.openbus.console.service.QueryCepService;
+import com.produban.openbus.console.service.StreamCepService;
+import com.produban.openbus.console.service.TableCepService;
 import com.produban.openbus.console.util.HttpConnector;
+import com.produban.openbus.siddhiCep.MediaCondicionadaAggregatorFactory;
+import com.produban.openbus.siddhiCep.SumadorCondicionalConReinicioAggregatorFactory;
 
 @RequestMapping("/console/**")
 @Controller
@@ -63,10 +69,19 @@ public class ConsoleController {
     private final static String ESTADO_ERROR = "Error";
     private final static String ESTADO_OK = "Ok";
 
-    private final static String ESTADO_ONLINE_EN_CREACION = "En Creaci&oacute;n";
-    private final static String ESTADO_ONLINE_EN_USO = "En Uso";
-    private final static String ESTADO_ONLINE_PARA_BORRAR = "Para Borrar";
-    private final static String ESTADO_ONLINE_BORRADA = "Borrada";
+    private final static String ESTADO_ONLINE_METRICA_EN_CREACION = "201";
+    private final static String ESTADO_ONLINE_STREAM_EN_CREACION = "1";
+    private final static String ESTADO_ONLINE_QUERY_EN_CREACION = "101";
+    private final static String ESTADO_ONLINE_METRICA_EN_ACTUALIZACION = "210";
+    private final static String ESTADO_ONLINE_STREAM_EN_ACTUALIZACION = "4";
+    private final static String ESTADO_ONLINE_QUERY_EN_ACTUALIZACION = "105";
+    private final static String ESTADO_ONLINE_METRICA_EN_BORRADO = "211";
+    private final static String ESTADO_ONLINE_STREAM_EN_BORRADO = "5";
+    private final static String ESTADO_ONLINE_QUERY_EN_BORRADO = "106";
+    private final static String ESTADO_ONLINE_TABLE_EN_CREACION = "301";
+    private final static String ESTADO_ONLINE_TABLE_EN_ACTUALIZACION = "304";
+    private final static String ESTADO_ONLINE_TABLE_EN_BORRADO = "305";
+
     
     private static Logger LOG = Logger.getLogger(ConsoleController.class);
 
@@ -81,6 +96,19 @@ public class ConsoleController {
 
     @Autowired
     private QueryCepService queryCepService;
+
+    @Autowired
+    private StreamCepService streamCepService;
+    
+    @Autowired
+    private EstadoService estadoService;
+
+    @Autowired
+    private EstadoRepository estadoRepository;
+    
+    @Autowired
+    private TableCepService tableCepService;
+    
     
     // ***************** CREATE BATCH *****************
 
@@ -357,7 +385,7 @@ public class ConsoleController {
 	    String url = "http://" + prop.getProperty("elastic.url.datanode1") + ":" + prop.getProperty("elastic.port.datanodes") + "/" + metricaBatch.getEsIndex() + "/"
 			+ metricaBatch.getEsType();	    
 	    try {
-		httpConnector.launchHttp(url, "DELETE", null);
+		//httpConnector.launchHttp(url, "DELETE", null);
 	    }
 	    catch (Exception e) {
 		LOG.warn("Index not found in elasticsearch");
@@ -366,7 +394,7 @@ public class ConsoleController {
 	    try {
 		url = "http://" + prop.getProperty("elastic.url.datanode1") + ":" + prop.getProperty("elastic.port.datanodes") + "/" + metricaBatch.getEsIndex() + "/"
 				+ form.getBatchMetricName();	    
-		httpConnector.launchHttp(url, "DELETE", null);
+		//httpConnector.launchHttp(url, "DELETE", null);
 	    }
 	    catch (Exception e) {
 		LOG.warn("Index not found in elasticsearch");
@@ -390,17 +418,21 @@ public class ConsoleController {
 	    externalQuery.append(") ");
 	    externalQuery.append("STORED BY 'org.elasticsearch.hadoop.hive.EsStorageHandler' TBLPROPERTIES('es.resource' = '");
 	    externalQuery.append(metricaBatch.getEsIndex() + "/" + form.getBatchMetricName());
-	    if (form.getSelectQuery().indexOf(" as ID") != -1) {
+	    boolean esID = false;
+	    if (form.getEsId() != null && (!form.getEsId().equals(""))){
 		externalQuery.append("', 'es.mapping.id' = '");
-		externalQuery.append(metricaBatch.getEsCamposId());
+		externalQuery.append(form.getEsId());
 		externalQuery.append("', 'es.id.field' = '");
-		externalQuery.append(metricaBatch.getEsCamposId());
+		externalQuery.append(form.getEsId());
+		esID = true;
 	    }
-	    if (form.getEsId() != null){
-		externalQuery.append("', 'es.mapping.id' = '");
-		externalQuery.append(form.getEsId());
-		externalQuery.append("', 'es.id.field' = '");
-		externalQuery.append(form.getEsId());
+	    if (! esID){
+        	    if (form.getSelectQuery().indexOf(" as ID") != -1) {
+        		externalQuery.append("', 'es.mapping.id' = '");
+        		externalQuery.append(metricaBatch.getEsCamposId());
+        		externalQuery.append("', 'es.id.field' = '");
+        		externalQuery.append(metricaBatch.getEsCamposId());
+        	    }
 	    }
 	    
 	    externalQuery.append("', 'es.index.auto.create' = 'true','es.nodes' = '");
@@ -591,7 +623,93 @@ public class ConsoleController {
 	});
 	model.addAttribute("lstFields", lstFields);
 	return "/console/createonline :: #selFields";
-    }    
+    }
+    
+    @RequestMapping(value = "/saveTable", method = RequestMethod.POST)
+    public @ResponseBody TableDTO saveTable(HttpServletRequest request, @RequestBody final TableDTO tableDTO, Model model) {
+	List<TableDTO> tablesSession = (List<TableDTO>) request.getSession().getAttribute("tablesSession");
+	int idTable = 1;
+	if (tablesSession == null){
+	    tablesSession = new ArrayList<TableDTO>();
+	}
+	else if(tablesSession.size() > 0){
+	    List lstIds = new ArrayList();
+	    for (TableDTO tableDTOAux : tablesSession){
+		lstIds.add(tableDTOAux.getId());
+	    }
+	    Collections.sort(lstIds);
+	    String lastId = (String) lstIds.get(lstIds.size() - 1);
+	    idTable = Integer.valueOf(lastId) + 1 ;	    
+	}
+	tableDTO.setId(new Integer(idTable).toString());
+	try {
+	    tableDTO.setEstado(getEstadoByCode(tableDTO.getEstado().getCode()));
+	}
+	catch (Exception e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	tablesSession.add(tableDTO);
+	request.getSession().setAttribute("tablesSession", tablesSession);
+	model.addAttribute("tablesSession", request.getSession().getAttribute("tablesSession"));
+	return tableDTO;
+    }
+    
+    @RequestMapping(value = "/updateTable", method = RequestMethod.POST)
+    public @ResponseBody TableDTO updateTable(HttpServletRequest request, @RequestBody final TableDTO tableDTO, Model model) {
+	List<TableDTO> tablesSession = (List<TableDTO>) request.getSession().getAttribute("tablesSession");
+	for (TableDTO tableDTOAux : tablesSession){
+	    if(tableDTOAux.getId().equals(tableDTO.getId())){
+		tableDTOAux.setTableFields(tableDTO.getTableFields());
+		tableDTOAux.setTableName(tableDTO.getTableName());
+		tableDTOAux.setVersionMetadata(tableDTO.getVersionMetadata());
+		try {
+		    tableDTOAux.setEstado(getEstadoByCode(tableDTO.getEstado().getCode()));
+		}
+		catch (Exception e) {
+		    e.printStackTrace();
+		}
+	    }
+	}
+	request.getSession().setAttribute("tablesSession", tablesSession);
+	model.addAttribute("tablesSession", request.getSession().getAttribute("tablesSession"));
+	return tableDTO;
+    }
+
+    @RequestMapping(value = "/findTableById", method = RequestMethod.POST)
+    public @ResponseBody TableDTO findTableById(@RequestParam String idTable, HttpServletRequest request) {
+	TableDTO tableDTO = null;
+	List<TableDTO> tablesSession = (List<TableDTO>) request.getSession().getAttribute("tablesSession");
+	for (TableDTO tableDTOAux : tablesSession){
+	    if(tableDTOAux.getId().equals(idTable)){
+		tableDTO = tableDTOAux;
+		break;
+	    }
+	}
+	return tableDTO;
+    }
+    
+    @RequestMapping(value= "/deleteTable")
+    public String deleteTable(@RequestParam String idTable, HttpServletRequest request, Model model) {
+	List<TableDTO> tablesSession = (List<TableDTO>) request.getSession().getAttribute("tablesSession");
+	int index = 0;
+	for (TableDTO tableDTOAux : tablesSession){
+	    if(tableDTOAux.getId().equals(idTable)){
+		break;
+	    }
+	    index++;
+	}
+	tablesSession.remove(index);
+	request.getSession().setAttribute("tablesSession", tablesSession);
+	model.addAttribute("tablesSession", request.getSession().getAttribute("tablesSession"));
+	return "/console/createonline :: #divTableTable";
+    }
+
+    @RequestMapping("/getTables")
+    public String getTables(Model model, HttpServletRequest request) {
+	model.addAttribute("tablesSession", request.getSession().getAttribute("tablesSession"));
+	return "/console/createonline :: #divTableTable";
+    }
     
     @RequestMapping(value = "/saveQuery", method = RequestMethod.POST)
     public @ResponseBody QueryDTO saveQuery(HttpServletRequest request, @RequestBody final QueryDTO queryDTO, Model model) {
@@ -609,6 +727,14 @@ public class ConsoleController {
 	    String lastId = (String) lstIds.get(lstIds.size() - 1);
 	    idQuery = Integer.valueOf(lastId) + 1 ;	    
 	}
+	try {
+	    queryDTO.setEstado(getEstadoByCode(queryDTO.getEstado().getCode()));
+	}
+	catch (Exception e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	
 	queryDTO.setId(new Integer(idQuery).toString());
 	queriesSession.add(queryDTO);
 	request.getSession().setAttribute("queriesSession", queriesSession);
@@ -627,8 +753,18 @@ public class ConsoleController {
 		queryDTOAux.setQueryInto(queryDTO.getQueryInto());
 		queryDTOAux.setQueryName(queryDTO.getQueryName());
 		queryDTOAux.setQueryId(queryDTO.getQueryId());
-		queryDTOAux.setQueryCamposGeo(queryDTO.getQueryCamposGeo());
+		queryDTOAux.setOutputFieldFormat(queryDTO.getOutputFieldFormat());
 		queryDTOAux.setRdCallback(queryDTO.getRdCallback());
+		queryDTOAux.setEsTTL(queryDTO.getEsTTL());
+		queryDTOAux.setEsType(queryDTO.getEsType());
+		queryDTOAux.setQueryOrder(queryDTO.getQueryOrder());
+		queryDTOAux.setEstado(queryDTO.getEstado());
+		try {
+		    queryDTOAux.setEstado(getEstadoByCode(queryDTO.getEstado().getCode()));
+		}
+		catch (Exception e) {
+		    e.printStackTrace();
+		}
 	    }
 	}
 	request.getSession().setAttribute("queriesSession", queriesSession);
@@ -671,109 +807,329 @@ public class ConsoleController {
 	return "/console/createonline :: #divTable";
     }
     
+    @RequestMapping(value = "/updateQueryToRemove")
+    public String updateQueryToRemove(@RequestParam String idMetric, @RequestParam String idQuery, HttpServletRequest request, Model model) throws Exception {
+	QueryCep queryCep = queryCepService.findQueryCep(new Long(idQuery));
+	List<QueryDTO> queriesSession = (List<QueryDTO>) request.getSession().getAttribute("queriesSession");
+	for (QueryDTO queryDTOAux : queriesSession){
+	    if(queryDTOAux.getId().equals(queryCep.getId().toString())){
+		try {
+		    int versionMetaData = queryCep.getVersionMetadata().intValue();
+		    queryDTOAux.setVersionMetadata(new Integer(versionMetaData) + 1);
+		    queryDTOAux.setEstado(getEstadoByCode(ESTADO_ONLINE_QUERY_EN_BORRADO));
+		}
+		catch (Exception e) {
+		    e.printStackTrace();
+		}
+	    }
+	}
+	request.getSession().setAttribute("queriesSession", queriesSession);
+	model.addAttribute("queriesSession", request.getSession().getAttribute("queriesSession"));
+	
+	return "/console/createonline :: #divTable";
+    }
+    
+    @RequestMapping(value = "/updateTableToRemove")
+    public String updateTableToRemove(@RequestParam String idMetric, @RequestParam String idTable, HttpServletRequest request, Model model) throws Exception {
+	TableCep tableCep = tableCepService.findTableCep(new Long(idTable));	
+	List<TableDTO> tablesSession = (List<TableDTO>) request.getSession().getAttribute("tablesSession");
+	for (TableDTO tableDTOAux : tablesSession){
+	    if(tableDTOAux.getId().equals(tableCep.getId().toString())){
+		try {
+		    int versionMetaData = tableCep.getVersionMetadata().intValue();
+		    tableDTOAux.setVersionMetadata(new Integer(versionMetaData) + 1);
+		    tableDTOAux.setEstado(getEstadoByCode(ESTADO_ONLINE_TABLE_EN_BORRADO));
+		}
+		catch (Exception e) {
+		    e.printStackTrace();
+		}
+	    }
+	}
+	request.getSession().setAttribute("tablesSession", tablesSession);
+	model.addAttribute("tablesSession", request.getSession().getAttribute("tablesSession"));
+	
+	return "/console/createonline :: #divTableTable";
+    }
+    
+    
     
     @RequestMapping(value = "/createOnLineMetric", method = RequestMethod.POST)
     public @ResponseBody CreateOnLineForm createOnLineMetric(Model model, HttpServletRequest request, @RequestBody final CreateOnLineForm form) {
 	try {
+	    boolean enCreacionStream = true;
+	    boolean enCreacionQuery = true;
+	    boolean enCreacionTable = true;
+	    boolean enCreacionMetrica = true;
 	    SiddhiConfiguration configuration = new SiddhiConfiguration();
+	    List<Class> ext = new ArrayList<Class>();
+	    ext.add(SumadorCondicionalConReinicioAggregatorFactory.class);
+	    ext.add(MediaCondicionadaAggregatorFactory.class);
+	    configuration.setSiddhiExtensions(ext);
 	    SiddhiManager siddhiManager = new SiddhiManager(configuration);
-	    
 	    String isModif = form.getHidModif();
+	    
+	    // STREAMCEP
 	    MetricaOnLine metricaOnLine = null;
 	    StreamCep streamCep = null;
+	    int versionMetaData = 0;
 	    if (isModif.equals("0")) {
 		metricaOnLine = new MetricaOnLine();
 		streamCep = new StreamCep();
+		streamCep.setEstado(getEstadoByCode(ESTADO_ONLINE_STREAM_EN_CREACION));
+		streamCep.setVersionMetadata(new Integer(0));
+		streamCep.setStreamCepId(null);		
 	    }
 	    else{
 		metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(isModif));
 		streamCep = metricaOnLine.getStreamCep();
+		if (! form.getStreamName().equalsIgnoreCase(streamCep.getStreamName())){
+		    enCreacionStream = false;
+		}
+		else if (! form.getStreamFields().equalsIgnoreCase(streamCep.getStreamFields())){
+		    enCreacionStream = false;
+		}
+		
+		if (! enCreacionStream){
+		    streamCep.setEstado(getEstadoByCode(ESTADO_ONLINE_STREAM_EN_ACTUALIZACION));
+		    versionMetaData = streamCep.getVersionMetadata().intValue();
+		    streamCep.setVersionMetadata(new Integer(versionMetaData) + 1);
+		    enCreacionMetrica = false;
+		}
 	    }
-	    
-
 	    OrigenEstructurado origen = origenEstructuradoService.findOrigenEstructurado(new Long(form.getSourceId()));
 	    streamCep.setOrigenEstructurado(origen);
 	    streamCep.setStreamName(form.getStreamName());
 	    streamCep.setStreamFields(form.getStreamFields());
 	    streamCep.setStreamFinal("define stream " + streamCep.getStreamName() + " (" + streamCep.getStreamFields() + ");");
-	    streamCep.setStreamCepId(null);
 	    
 	    try {
 		siddhiManager.defineStream(streamCep.getStreamFinal());
 	    }
-	    catch (SiddhiPraserException  e) {
+	    catch (Exception e) {
 		form.setId("ERROR");
-		form.setError(e.toString());
-		LOG.error(e);
+		form.setError("<b>Stream Cep</b>: " +e.toString());
+		e.printStackTrace();
 		return form;
 	    }
+
+	    // TABLECEP	    
+	    TableCep tableCep = null;
+	    Set<TableCep> sTableCep = new HashSet<TableCep>();
+
+	    List<TableDTO> tablesSession = (List<TableDTO>) request.getSession().getAttribute("tablesSession");
+	    Map<String,TableCep> hmTablesBBDD = new HashMap<String, TableCep>();
+	    if (tablesSession != null){
+		Map<String,TableDTO> hmTablesDTO = new HashMap<String, TableDTO>();
+		
+		for (TableCep table :metricaOnLine.getHsTableCep()){ 
+		    hmTablesBBDD.put(table.getId().toString(), table); // Map with database values
+		}
+		
+		for (TableDTO tableDTO : tablesSession) {
+		    enCreacionTable = true;
+		    hmTablesDTO.put(tableDTO.getId(), tableDTO); // Map with form values
+		    tableCep = new TableCep();
+		    tableCep.setTableCepName(tableDTO.getTableName());
+		    tableCep.setTableCepFields(tableDTO.getTableFields());
+		    tableCep.setTableCepFinal("define table " + tableCep.getTableCepName() + " (" + tableCep.getTableCepFields() + ");");
+		    if (hmTablesBBDD.containsKey(tableDTO.getId())){ // Check if it changed
+			TableCep tableBBDD = hmTablesBBDD.get(tableDTO.getId());
+			if (isModif.equals("0")) {		    
+			    tableCep.setTableCepId(null);
+			}
+			else{
+			    tableCep.setTableCepId(tableBBDD.getTableCepId());
+			}
+			
+			if (! tableDTO.getTableName().equalsIgnoreCase(tableBBDD.getTableCepName())){
+			    enCreacionTable = false;
+			}
+			else if (! tableDTO.getTableFields().equalsIgnoreCase(tableBBDD.getTableCepFields())){
+			    enCreacionTable = false;
+			}
+			else if (! tableDTO.getEstado().getId().toString().equals(tableBBDD.getId().toString())){
+			    tableCep.setEstado(tableDTO.getEstado());
+			    tableCep.setVersionMetadata(tableDTO.getVersionMetadata());
+			    enCreacionMetrica = false;
+			}
+			else{
+			    tableCep.setVersionMetadata(tableBBDD.getVersionMetadata());
+			    tableCep.setEstado(tableBBDD.getEstado());
+			}
+			if (! enCreacionTable){
+			    tableCep.setEstado(getEstadoByCode(ESTADO_ONLINE_TABLE_EN_ACTUALIZACION));
+			    versionMetaData = tableBBDD.getVersionMetadata().intValue();
+			    tableCep.setVersionMetadata(new Integer(versionMetaData) + 1);
+			    enCreacionMetrica = false;
+			}
+		    }
+		    else{
+			enCreacionTable = false;
+			tableCep.setVersionMetadata(new Integer(0));
+			tableCep.setEstado(getEstadoByCode(ESTADO_ONLINE_TABLE_EN_CREACION));
+		    }
+		    
+		    try {
+			if (! tableCep.getEstado().getCode().equals(ESTADO_ONLINE_TABLE_EN_BORRADO)){
+			    siddhiManager.defineTable(tableCep.getTableCepFinal());
+			}
+		    }
+		    catch (Exception  e) {
+			form.setId("ERROR");
+			form.setError("<b>Table Cep</b>: " + e.toString());
+			e.printStackTrace();
+			return form;
+		    }
+		    sTableCep.add(tableCep);
+		}
+		if (hmTablesBBDD.size() != hmTablesDTO.size()){
+		    enCreacionMetrica = false;
+		}
+	    }
 	    
+	    
+	    // QUERYCEP	    
 	    QueryCep queryCep = null;
 	    String queryFinal = null;
 	    String outputFieldNames = null;
 	    Set<QueryCep> sQueryCep = new HashSet<QueryCep>();
 
 	    List<QueryDTO> queriesSession = (List<QueryDTO>) request.getSession().getAttribute("queriesSession");
+	    Collections.sort(queriesSession);
 	    form.setQueries(queriesSession);
-	    for(QueryDTO queryDTO : form.getQueries()){
-		queryCep = new QueryCep();
-		
-		outputFieldNames = queryDTO.getQueryAs();		    
-		outputFieldNames = outputFieldNames.toLowerCase();
-		String [] arrOutputFieldNames = outputFieldNames.split(" as ");
-		String strOutputFieldNames = "";
-		for(int i=1;i<arrOutputFieldNames.length;i++){
-		    if (i == arrOutputFieldNames.length){
-			strOutputFieldNames = strOutputFieldNames.concat(arrOutputFieldNames[i]);
-		    }
-		    else{
-			String [] cc = arrOutputFieldNames[i].split(",");
-			strOutputFieldNames = strOutputFieldNames.concat(cc[0]) + ",";
-		    }
-		}
-		strOutputFieldNames = strOutputFieldNames.trim().substring(0,strOutputFieldNames.length()-1);
-		queryCep.setOutputFieldNames(strOutputFieldNames);
-		
-		if (queryDTO.getRdCallback() == null){
-			queryCep.setHasCallback(false);
-		}
-		else{
-		    if (queryDTO.getRdCallback().equals("") || queryDTO.getRdCallback().equals("0")){
-			queryCep.setHasCallback(false);
-		    }
-		    else{
-			queryCep.setHasCallback(true);
-		    }
-		}
-		
-		queryCep.setGroupBy(queryDTO.getQueryGroupBy());
-		queryCep.setOutputFieldUser(queryDTO.getQueryAs());
-		queryCep.setOutputStream(queryDTO.getQueryInto());
-		queryCep.setQueryCepId(null);
-		queryCep.setQueryDefinition(queryDTO.getQueryFrom());
-		queryCep.setQueryName(queryDTO.getQueryName());
-		queryCep.setToRemove(false);
-		if (queryDTO.getQueryId() != null){
-		    queryCep.setEsId(queryDTO.getQueryId());
-		}
-		queryCep.setEsCamposGeo(queryDTO.getQueryCamposGeo());
-		
-		queryFinal = queryDTO.getQueryFrom() + " insert all-events into " + queryDTO.getQueryInto() + " " + queryDTO.getQueryAs() + " " + queryDTO.getQueryGroupBy();
-		queryCep.setQueryFinal(queryFinal);
-		try {
-		    siddhiManager.addQuery(queryCep.getQueryFinal());
-		}
-		catch (SiddhiPraserException  e) {
-		    form.setId("ERROR");
-		    form.setError(e.toString());
-		    LOG.error(e);
-		    return form;
-		}
-		
-		sQueryCep.add(queryCep);
-	    }
 	    
+	    Map<String,QueryCep> hmQueriesBBDD = new HashMap<String, QueryCep>();
+	    if (queriesSession != null){
+		Map<String,QueryDTO> hmQueriesDTO = new HashMap<String, QueryDTO>();
+		
+		for (QueryCep query :metricaOnLine.getHsQueryCep()){ 
+		    hmQueriesBBDD.put(query.getId().toString(), query); // Map with database values
+		}
+		
+		for (QueryDTO queryDTO : queriesSession) {
+		    enCreacionQuery = true;
+		    hmQueriesDTO.put(queryDTO.getId(), queryDTO); // Map with form values
+		    queryCep = new QueryCep();
+		    outputFieldNames = queryDTO.getQueryAs();		    
+		    outputFieldNames = outputFieldNames.toLowerCase();
+		    String [] arrOutputFieldNames = outputFieldNames.split(" as ");
+		    String strOutputFieldNames = "";
+		    for(int i=1;i<arrOutputFieldNames.length;i++){
+			if (i == arrOutputFieldNames.length){
+			    strOutputFieldNames = strOutputFieldNames.concat(arrOutputFieldNames[i]);
+			}
+			else{
+			    String [] cc = arrOutputFieldNames[i].split(",");
+			    strOutputFieldNames = strOutputFieldNames.concat(cc[0]) + ",";
+			}
+		    }
+		    strOutputFieldNames = strOutputFieldNames.trim().substring(0,strOutputFieldNames.length()-1);
+		    queryCep.setOutputFieldNames(strOutputFieldNames);
 
+		    if (queryDTO.getRdCallback() == null){
+			queryCep.setHasCallback(false);
+		    }
+		    else{
+			if (queryDTO.getRdCallback().equals("") || queryDTO.getRdCallback().equals("0")){
+			    queryCep.setHasCallback(false);
+			}
+			else{
+			    queryCep.setHasCallback(true);
+			}
+		    }
+
+		    queryCep.setGroupBy(queryDTO.getQueryGroupBy());
+		    queryCep.setOutputFieldUser(queryDTO.getQueryAs());
+		    queryCep.setOutputStream(queryDTO.getQueryInto());
+		    queryCep.setQueryDefinition(queryDTO.getQueryFrom());
+		    queryCep.setQueryName(queryDTO.getQueryName());
+		    if (queryDTO.getQueryId() != null){
+			queryCep.setEsId(queryDTO.getQueryId());
+		    }
+		    queryCep.setOutputFieldFormat(queryDTO.getOutputFieldFormat());
+		    queryCep.setEsTTL(queryDTO.getEsTTL());
+		    queryCep.setEsType(queryDTO.getEsType());
+		    queryFinal = queryDTO.getQueryFrom() + " " + queryDTO.getQueryAs() + " " + queryDTO.getQueryGroupBy() + " " + queryDTO.getQueryInto() ;
+		    queryCep.setQueryFinal(queryFinal);
+		    queryCep.setQueryOrder(queryDTO.getQueryOrder());
+		    
+		    if (hmQueriesBBDD.containsKey(queryDTO.getId())){ // Check if it changed
+			QueryCep queryBBDD = hmQueriesBBDD.get(queryDTO.getId());
+			if (isModif.equals("0")) {		    
+			    queryCep.setQueryCepId(null);
+			}
+			else{
+			    queryCep.setQueryCepId(queryBBDD.getQueryCepId());
+			}
+			
+			if (! queryDTO.getQueryGroupBy().equalsIgnoreCase(queryBBDD.getGroupBy())){
+			    enCreacionQuery = false;
+			}
+			else if (! queryDTO.getQueryAs().equalsIgnoreCase(queryBBDD.getOutputFieldUser())){
+			    enCreacionQuery = false;
+			}
+			else if (! queryDTO.getQueryInto().equalsIgnoreCase(queryBBDD.getOutputStream())){
+			    enCreacionQuery = false;
+			}
+			else if (! queryDTO.getQueryFrom().equalsIgnoreCase(queryBBDD.getQueryDefinition())){
+			    enCreacionQuery = false;
+			}			
+			else if (! queryDTO.getQueryName().equalsIgnoreCase(queryBBDD.getQueryName())){
+			    enCreacionQuery = false;			    
+			}
+			else if (! queryDTO.getOutputFieldFormat().equalsIgnoreCase(queryBBDD.getOutputFieldFormat())){
+			    enCreacionQuery = false;			    
+			}
+			else if (! queryDTO.getEsTTL().equalsIgnoreCase(queryBBDD.getEsTTL())){
+			    enCreacionQuery = false;			    
+			}			
+			else if (queryBBDD.getHasCallback() && queryDTO.getRdCallback().equals("0")){
+			    enCreacionQuery = false;			    
+			}			
+			else if ((! queryBBDD.getHasCallback()) && queryDTO.getRdCallback().equals("1")){
+			    enCreacionQuery = false;			    
+			}
+			else if (! queryDTO.getEstado().getId().toString().equals(queryBBDD.getId().toString())){
+			    queryCep.setEstado(queryDTO.getEstado());
+			    queryCep.setVersionMetadata(queryDTO.getVersionMetadata());
+			}
+			else{
+			    queryCep.setVersionMetadata(queryBBDD.getVersionMetadata());
+			    queryCep.setEstado(queryBBDD.getEstado());
+			    enCreacionMetrica = false;
+			}
+			if(! enCreacionQuery){
+			    queryCep.setEstado(getEstadoByCode(ESTADO_ONLINE_QUERY_EN_ACTUALIZACION));
+			    versionMetaData = queryBBDD.getVersionMetadata().intValue();
+			    queryCep.setVersionMetadata(new Integer(versionMetaData) + 1);
+			    enCreacionMetrica = false;
+			}
+		    }
+		    else{
+			enCreacionQuery = false;
+			queryCep.setVersionMetadata(new Integer(0));
+			queryCep.setEstado(getEstadoByCode(ESTADO_ONLINE_QUERY_EN_CREACION));
+		    }
+		    
+		    try {
+			if (! queryCep.getEstado().getCode().equals(ESTADO_ONLINE_QUERY_EN_BORRADO)){
+			    siddhiManager.addQuery(queryCep.getQueryFinal());
+			}
+		    }
+		    catch (Exception  e) {
+			form.setId("ERROR");
+			form.setError("<b>Query Cep -> " + queryDTO.getQueryName() + "</b>: " + e.toString());
+			e.printStackTrace();
+			return form;
+		    }
+		    sQueryCep.add(queryCep);
+		}
+		if (hmQueriesBBDD.size() != hmQueriesDTO.size()){
+		    enCreacionMetrica = false;
+		}
+	    }	    
+	    
+	    metricaOnLine.setHsTableCep(sTableCep);
 	    metricaOnLine.setHsQueryCep(sQueryCep);
 	    metricaOnLine.setStreamCep(streamCep);
 	    metricaOnLine.setOnLineMetricDesc(form.getOnLineMetricDesc());
@@ -783,43 +1139,51 @@ public class ConsoleController {
 	    metricaOnLine.setEsIndex(form.getSelSourceName());
 	    metricaOnLine.setEsType(form.getOnLineMetricName());
 	    metricaOnLine.setFechaUltModif(new Date());
-	    metricaOnLine.setEstado(ESTADO_ONLINE_EN_CREACION);
+	    metricaOnLine.setError(null);
 	    
 	    if (isModif.equals("0")) {
-		metricaOnLine.setIsCreated(true);
 		metricaOnLine.setFechaCreacion(new Date());
+		metricaOnLine.setVersionMetadata(new Integer(0));
+		metricaOnLine.setEstado(getEstadoByCode(ESTADO_ONLINE_METRICA_EN_CREACION));
 		LOG.info("SAVE BBDD running....");
 		metricaOnLineService.saveMetricaOnLine(metricaOnLine);
 		LOG.info("SAVE BBDD done");
 	    }
 	    else {
-		metricaOnLine.setIsUpdated(true);
+		if (! enCreacionMetrica){
+		    metricaOnLine.setEstado(getEstadoByCode(ESTADO_ONLINE_METRICA_EN_ACTUALIZACION));
+		    versionMetaData = metricaOnLine.getVersionMetadata().intValue();
+		    metricaOnLine.setVersionMetadata(new Integer(versionMetaData) + 1);
+		}
 		LOG.info("UPDATE BBDD running....");
 		metricaOnLineService.updateMetricaOnLine(metricaOnLine);
 		LOG.info("UPDATE BBDD done");
 	    }
 	    form.setId(metricaOnLine.getId().toString());
+	    
+	    for (TableCep tableBBDD : hmTablesBBDD.values()){
+		tableCepService.deleteTableCep(tableBBDD);
+	    }
+	    for (QueryCep queryBBDD : hmQueriesBBDD.values()){
+		queryCepService.deleteQueryCep(queryBBDD);
+	    }
 	}
 	catch (Exception e) {
 	    form.setId("ERROR");
-	    form.setError(e.toString());
-	    LOG.error(e);
+	    form.setError("<b>General</b>: " + e.toString());
+	    e.printStackTrace();
 	}
 	return form;
     }    
     
+    private Estado getEstadoByCode(String code) throws Exception{
+	List<Estado> lstEstado = estadoRepository.findEstadoByCode(code);
+	return lstEstado.get(0);
+    }
     
     @RequestMapping("/showonline")
     public String showOnLine(Model model, HttpServletRequest request) {
-	List<MetricaOnLine> lstMetrics = new ArrayList<MetricaOnLine>();
-	for (MetricaOnLine metricaOnLine : metricaOnLineService.findAllMetricaOnLines()){
-	    if(metricaOnLine.getStreamCep().getToRemove() == null){
-		lstMetrics.add(metricaOnLine);
-	    }
-	    else if(! metricaOnLine.getStreamCep().getToRemove()){
-		lstMetrics.add(metricaOnLine);
-	    }
-	}
+	List<MetricaOnLine> lstMetrics = metricaOnLineService.findAllMetricaOnLines();
 	model.addAttribute("lstMetrics", lstMetrics);
 	model.addAttribute("search", request.getParameter("hidSearch"));
 	return "/console/showonline";
@@ -835,48 +1199,100 @@ public class ConsoleController {
 
     @RequestMapping("/updateOnLineMetric")
     public String updateOnLineMetric(@RequestParam String idMetric, Model model, HttpServletRequest request) {
-	List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();
-	model.addAttribute("lstSources", lstSources);
-	MetricaOnLine metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(idMetric));
-	model.addAttribute("metricaOnLine", metricaOnLine);
-	List<QueryDTO> queriesBBDD = new ArrayList<QueryDTO>();
-	QueryDTO queryDTO = null;
-	for (QueryCep queryCep : metricaOnLine.getHsQueryCep()){
-	    queryDTO = new QueryDTO();
-	    queryDTO.setId(queryCep.getId().toString());
-	    queryDTO.setQueryAs(queryCep.getOutputFieldUser());
-	    queryDTO.setQueryFrom(queryCep.getQueryDefinition());
-	    queryDTO.setQueryGroupBy(queryCep.getGroupBy());
-	    queryDTO.setQueryInto(queryCep.getOutputStream());
-	    queryDTO.setQueryName(queryCep.getQueryName());
-	    queryDTO.setQueryId(queryCep.getEsId());
-	    queryDTO.setQueryCamposGeo(queryCep.getEsCamposGeo());
-	    if (queryCep.getHasCallback()){
-		queryDTO.setRdCallback("1");
+	List<TableDTO> tablesBBDD;
+	List<QueryDTO> queriesBBDD;
+	try {
+	    List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();
+	    model.addAttribute("lstSources", lstSources);
+	    MetricaOnLine metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(idMetric));
+	    model.addAttribute("metricaOnLine", metricaOnLine);
+
+	    tablesBBDD = new ArrayList<TableDTO>();
+	    TableDTO tableDTO = null;
+	    if (metricaOnLine.getHsTableCep() != null){
+		for (TableCep tableCep : metricaOnLine.getHsTableCep()){
+		    tableDTO = new TableDTO();
+		    tableDTO.setId(tableCep.getId().toString());
+		    tableDTO.setTableFields(tableCep.getTableCepFields());
+		    tableDTO.setTableName(tableCep.getTableCepName());
+		    tableDTO.setEstado(tableCep.getEstado());
+		    tableDTO.setVersionMetadata(tableCep.getVersionMetadata());
+		    tablesBBDD.add(tableDTO);
+		}
 	    }
-	    else{
-		queryDTO.setRdCallback("0");
+
+	    queriesBBDD = new ArrayList<QueryDTO>();
+	    QueryDTO queryDTO = null;
+	    if (metricaOnLine.getHsQueryCep() != null){
+		for (QueryCep queryCep : metricaOnLine.getHsQueryCep()){
+		    queryDTO = new QueryDTO();
+		    queryDTO.setId(queryCep.getId().toString());
+		    queryDTO.setQueryAs(queryCep.getOutputFieldUser());
+		    queryDTO.setQueryFrom(queryCep.getQueryDefinition());
+		    queryDTO.setQueryGroupBy(queryCep.getGroupBy());
+		    queryDTO.setQueryInto(queryCep.getOutputStream());
+		    queryDTO.setQueryName(queryCep.getQueryName());
+		    queryDTO.setQueryId(queryCep.getEsId());
+		    queryDTO.setOutputFieldFormat(queryCep.getOutputFieldFormat());
+		    queryDTO.setEsTTL(queryCep.getEsTTL());
+		    queryDTO.setEsType(queryCep.getEsType());
+		    queryDTO.setQueryOrder(queryCep.getQueryOrder());
+		    queryDTO.setEstado(queryCep.getEstado());
+		    queryDTO.setVersionMetadata(queryCep.getVersionMetadata());
+		    if (queryCep.getHasCallback()){
+			queryDTO.setRdCallback("1");
+		    }
+		    else{
+			queryDTO.setRdCallback("0");
+		    }
+		    queriesBBDD.add(queryDTO);
+		}
 	    }
-	    
-	    queriesBBDD.add(queryDTO);
+	    model.addAttribute("tablesSession", tablesBBDD);
+	    request.getSession().setAttribute("tablesSession", tablesBBDD);
+	    model.addAttribute("queriesSession", queriesBBDD);
+	    request.getSession().setAttribute("queriesSession", queriesBBDD);
 	}
-	model.addAttribute("queriesSession", queriesBBDD);
-	request.getSession().setAttribute("queriesSession", queriesBBDD);
+	catch (Exception e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	
 	return "/console/createonline";
     }
 
     @RequestMapping(value = "/updateToRemove", method = RequestMethod.GET)
     public @ResponseBody String updateToRemove(@RequestParam String idMetric, Model model) throws Exception {
 	MetricaOnLine metricaOnLine = metricaOnLineService.findMetricaOnLine(new Long(idMetric));
-	metricaOnLine.setIsUpdated(true) ;
-	metricaOnLine.getStreamCep().setToRemove(true);
+	metricaOnLine.setEstado(getEstadoByCode(ESTADO_ONLINE_METRICA_EN_BORRADO));
+	int versionMetaData = metricaOnLine.getVersionMetadata().intValue();
+	metricaOnLine.setVersionMetadata(new Integer(versionMetaData) + 1);
+	
 	metricaOnLineService.updateMetricaOnLine(metricaOnLine);
-	for (QueryCep queryCep : metricaOnLine.getHsQueryCep()){
-	    queryCep.setToRemove(true);
+	StreamCep streamCep = metricaOnLine.getStreamCep();
+	streamCep.setEstado(getEstadoByCode(ESTADO_ONLINE_STREAM_EN_BORRADO));
+	versionMetaData = streamCep.getVersionMetadata().intValue();
+	streamCep.setVersionMetadata(new Integer(versionMetaData) + 1);
+	streamCepService.updateStreamCep(streamCep);
+	
+	for (TableCep tableCep : metricaOnLine.getHsTableCep()){
 	    LOG.info("UPDATE BBDD running....");
+	    tableCep.setEstado(getEstadoByCode(ESTADO_ONLINE_TABLE_EN_BORRADO));
+	    versionMetaData = tableCep.getVersionMetadata().intValue();
+	    tableCep.setVersionMetadata(new Integer(versionMetaData) + 1);
+	    tableCepService.updateTableCep(tableCep);
+	    LOG.info("UPDATE BBDD done");
+	}
+	
+	for (QueryCep queryCep : metricaOnLine.getHsQueryCep()){
+	    LOG.info("UPDATE BBDD running....");
+	    queryCep.setEstado(getEstadoByCode(ESTADO_ONLINE_QUERY_EN_BORRADO));
+	    versionMetaData = queryCep.getVersionMetadata().intValue();
+	    queryCep.setVersionMetadata(new Integer(versionMetaData) + 1);
 	    queryCepService.updateQueryCep(queryCep);
 	    LOG.info("UPDATE BBDD done");
 	}
+	
 	return "";
     }
 
@@ -952,171 +1368,5 @@ public class ConsoleController {
 	    e.printStackTrace();
 	}
 	return lstMetricaOnLine;
-    }
-
-    
-    
-    
-    
-    
-    
-    // METODOS ANTIGUOS
-    @RequestMapping(value = "/createBatchMetric")
-    public String createBatchMetric(@Valid MetricaBatch metricaBatch, BindingResult bindingResult, Model model, HttpServletRequest request, HttpSession session) {
-	if (!bindingResult.hasErrors()) {
-	    try {
-		String isModif = request.getParameter("hidModif");
-		String isBatch = request.getParameter("rdMetricType");
-		metricaBatch.setCreateCode("");
-		metricaBatch.setEsCamposId(ES_MAPPING_ID);
-		metricaBatch.setEsIndex(request.getParameter("selSourceName"));
-		metricaBatch.setEsType(metricaBatch.getBatchMetricName());
-		metricaBatch.setFechaUltModif(new Date());
-		metricaBatch.setUsuarioCreacion((String) session.getAttribute("username"));
-		if (isBatch.equals("1")) {
-		    metricaBatch.setIsBatch(true);
-		    metricaBatch.setPlanificacion("");
-		}
-		else {
-		    metricaBatch.setIsBatch(false);
-		    metricaBatch.setPlanificacion("");
-		}
-		if (isModif.equals("0")) {
-		    metricaBatch.setFechaCreacion(new Date());
-		    metricaBatch.setIsCreated(true); // Esto ira cuando se lance
-						     // la metrica
-		    metricaBatch.setIsUpdated(false);
-		    runMetricAtHive(metricaBatch, request);
-		    metricaBatchService.saveMetricaBatch(metricaBatch);
-		}
-		else {
-		    metricaBatch.setIsCreated(false);
-		    metricaBatch.setIsUpdated(true); // Esto ira cuando se lance
-						     // la metrica
-		    runMetricAtHive(metricaBatch, request);
-		    metricaBatchService.updateMetricaBatch(metricaBatch);
-		}
-		model.addAttribute("errorCreateBatchMetric", false);
-	    }
-	    catch (Exception e) {
-		model.addAttribute("messageError", e.getMessage());
-		model.addAttribute("errorCreateBatchMetric", true);
-	    }
-	}
-	else {
-	    model.addAttribute("messageError", "Error de bind: " + bindingResult);
-	    model.addAttribute("errorCreateBatchMetric", true);
-	}
-	return "/menu";
-    }
-
-    private void runMetricAtHive(MetricaBatch metricaBatch, HttpServletRequest request) throws Exception {
-	try {
-	    String externalQuery = null;
-	    String insertQuery = null;
-	    if (metricaBatch.getIsCreated()) {
-		externalQuery = buildCreateExternal(metricaBatch, request);
-		insertQuery = buildInsert(metricaBatch, request);
-		metricaBatch.setCreateCode(externalQuery);
-		metricaBatch.setQueryCode(insertQuery);
-	    }
-	    else {
-		externalQuery = metricaBatch.getCreateCode();
-		insertQuery = metricaBatch.getQueryCode();
-	    }
-	    String dropQuery = "DROP TABLE " + metricaBatch.getEsType();
-
-	    HiveConnector hiveConnector = new HiveConnector();
-	    hiveConnector.executeQuery(dropQuery);
-	    hiveConnector.executeQuery(externalQuery);
-	    hiveConnector.executeQuery(insertQuery);
-	}
-	catch (Exception e) {
-	    e.printStackTrace();
-	    throw e;
-	}
-    }
-
-    private String buildCreateExternal(MetricaBatch metricaBatch, HttpServletRequest request) throws Exception {
-	Properties prop = new Properties();
-	ClassLoader loader = Thread.currentThread().getContextClassLoader();
-	InputStream resourceStream = loader.getResourceAsStream("META-INF/spring/environment.properties");
-	prop.load(resourceStream);
-
-	/*
-	 * String strQuerySelect = (String) request.getParameter("selectQuery");
-	 * Map<String, String> hmSelectFields = new LinkedHashMap<String,
-	 * String>(); Map<String, String> hmSelectFieldsModif = new
-	 * LinkedHashMap<String, String>(); strQuerySelect =
-	 * strQuerySelect.substring(strQuerySelect.indexOf("ID,") + 3,
-	 * strQuerySelect.length()); String key = null; String value = null; for
-	 * (String firstCharacter : strQuerySelect.split(",")) { for (String
-	 * secondCharacter : firstCharacter.split(" as ")) { if (key != null &&
-	 * value != null) { hmSelectFields.put(key, value); key = null; value =
-	 * null; } if (key == null) { key = secondCharacter; } else if (value ==
-	 * null) { value = secondCharacter; } } } hmSelectFields.put(key,
-	 * value); for (Map.Entry entry : hmSelectFields.entrySet()) { String
-	 * keyModif = entry.getKey().toString(); String valueModif =
-	 * entry.getValue().toString(); if (keyModif.indexOf("(") != -1) {
-	 * keyModif = keyModif.substring(0, keyModif.indexOf("(")); }
-	 * hmSelectFieldsModif.put(keyModif, valueModif); }
-	 * 
-	 * StringBuilder externalQuery = new StringBuilder();
-	 * externalQuery.append("CREATE EXTERNAL TABLE ");
-	 * externalQuery.append(metricaBatch.getEsType());
-	 * externalQuery.append("(");
-	 * externalQuery.append(metricaBatch.getEsCamposId() + " STRING,");
-	 * String type = null; int cont = 0; for (Map.Entry entry :
-	 * hmSelectFieldsModif.entrySet()) { cont++; String keyModif =
-	 * entry.getKey().toString().trim(); switch (keyModif) { case "MAX":
-	 * type = "STRING"; break; case "MIN": type = "STRING"; break; case
-	 * "YEAR": type = "BIGINT"; break; case "MONTH": type = "BIGINT"; break;
-	 * case "SUM": type = "BIGINT"; break; case "COUNT": type = "BIGINT";
-	 * break; default: type = "STRING"; break; } if
-	 * (hmSelectFieldsModif.size() != cont) {
-	 * externalQuery.append(entry.getValue().toString() + " " + type + ",");
-	 * } else { externalQuery.append(entry.getValue().toString() + " " +
-	 * type); } }
-	 */
-	String strQueryType = (String) request.getParameter("typeQuery");
-	String strTimestamp = (String) request.getParameter("esTimestamp");
-	String strQuerySelect = (String) request.getParameter("selectQuery");
-	StringBuilder externalQuery = new StringBuilder();
-	externalQuery.append("CREATE EXTERNAL TABLE ");
-	externalQuery.append(metricaBatch.getEsType());
-	externalQuery.append("(");
-	externalQuery.append(strQueryType);
-	externalQuery.append(") ");
-	externalQuery.append("STORED BY 'org.elasticsearch.hadoop.hive.EsStorageHandler' TBLPROPERTIES('es.resource' = '");
-	externalQuery.append(metricaBatch.getEsIndex() + "/" + metricaBatch.getEsType());
-	if (strQuerySelect.indexOf(" as ID") != -1) {
-	    externalQuery.append("', 'es.mapping.id' = '");
-	    externalQuery.append(metricaBatch.getEsCamposId());
-	    externalQuery.append("', 'es.id.field' = '");
-	    externalQuery.append(metricaBatch.getEsCamposId());
-	}
-	externalQuery.append("', 'es.index.auto.create' = 'true','es.nodes' = '");
-	externalQuery.append(prop.getProperty("elastic.url.datanode1") + "," + prop.getProperty("elastic.url.datanode2") + "," + prop.getProperty("elastic.url.datanode3"));
-	externalQuery.append("', 'es.port' = '" + prop.getProperty("elastic.port.datanodes"));
-	if (strTimestamp != null && (!strTimestamp.equals(""))) {
-	    externalQuery.append("', 'es.mapping.names' = '" + request.getParameter("txtTimestamp") + ":@timestamp");
-	}
-	externalQuery.append("')");
-
-	return externalQuery.toString();
-    }
-
-    private String buildInsert(MetricaBatch metricaBatch, HttpServletRequest request) throws Exception {
-	String strQuerySelect = (String) request.getParameter("selectQuery");
-	String strQueryFrom = (String) request.getParameter("fromQuery");
-	String strQueryWhere = (String) request.getParameter("whereQuery");
-
-	StringBuilder insertQuery = new StringBuilder();
-	insertQuery.append("INSERT OVERWRITE TABLE " + metricaBatch.getEsType() + " ");
-	insertQuery.append(strQuerySelect + " ");
-	insertQuery.append(strQueryFrom + " ");
-	insertQuery.append(strQueryWhere);
-
-	return insertQuery.toString();
     }
 }

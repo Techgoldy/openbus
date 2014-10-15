@@ -2,7 +2,9 @@ package com.produban.openbus.console.dto;
 
 import java.io.Serializable;
 
-public class QueryDTO implements Serializable {
+import com.produban.openbus.console.domain.Estado;
+
+public class QueryDTO implements Serializable, Comparable<QueryDTO> {
 
     private String id;
     private String rdCallback;
@@ -11,19 +13,54 @@ public class QueryDTO implements Serializable {
     private String queryInto;
     private String queryAs;
     private String queryId;
-    private String queryCamposGeo;
+    private String outputFieldFormat;
+    private String esTTL;
+    private String esType;
+    private Integer queryOrder;
+    private Estado estado;
+    private Integer versionMetadata;    
     
+    public Integer getVersionMetadata() {
+        return versionMetadata;
+    }
+    public void setVersionMetadata(Integer versionMetadata) {
+        this.versionMetadata = versionMetadata;
+    }
+    public Estado getEstado() {
+        return estado;
+    }
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    public Integer getQueryOrder() {
+        return queryOrder;
+    }
+    public void setQueryOrder(Integer queryOrder) {
+        this.queryOrder = queryOrder;
+    }
+    public String getEsTTL() {
+        return esTTL;
+    }
+    public void setEsTTL(String esTTL) {
+        this.esTTL = esTTL;
+    }
+    public String getEsType() {
+        return esType;
+    }
+    public void setEsType(String esType) {
+        this.esType = esType;
+    }
+    public String getOutputFieldFormat() {
+        return outputFieldFormat;
+    }
+    public void setOutputFieldFormat(String outputFieldFormat) {
+        this.outputFieldFormat = outputFieldFormat;
+    }
     public String getQueryId() {
         return queryId;
     }
     public void setQueryId(String queryId) {
         this.queryId = queryId;
-    }
-    public String getQueryCamposGeo() {
-        return queryCamposGeo;
-    }
-    public void setQueryCamposGeo(String queryCamposGeo) {
-        this.queryCamposGeo = queryCamposGeo;
     }
     public String getRdCallback() {
         return rdCallback;
@@ -68,5 +105,12 @@ public class QueryDTO implements Serializable {
     }
     public void setQueryGroupBy(String queryGroupBy) {
         this.queryGroupBy = queryGroupBy;
+    }
+    
+    @Override
+    public int compareTo(QueryDTO o) {
+	int comp=this.getQueryOrder().compareTo(o.getQueryOrder());
+        if (comp==0) comp=1;
+        return comp;
     }
 }
