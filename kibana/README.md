@@ -24,6 +24,8 @@ Los datos son los siguientes:
   Índices | Listado de los `index` definidos en la instancia que se use de ElasticSearch.
   Métricas | Listado de los `_type` definidos en la instancia que se use de ElasticSearch.
 
+![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/1%20-%20Inicio/1.png)
+
 ##2. Envío entre servidores
 
 Dashboard creado para ver el tráfico de correos entre los servidores de envío y recepción de los mismos.
@@ -49,6 +51,12 @@ Los datos son los siguientes:
   Detalle | Tabla editable en la que se pueden ver todos los registros del periodo temporal seleccionado.
   Top Emisores | Lista de los 10 servidores que más correos han emitido.
   Top Receptores | Lista de los 10 servidores que más correos han recibido.
+  
+  ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/2%20-%20Envio%20entre%20servidores%20georef/1.png)
+  ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/2%20-%20Envio%20entre%20servidores%20georef/2.png)
+  ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/2%20-%20Envio%20entre%20servidores%20georef/3.png)
+  ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/2%20-%20Envio%20entre%20servidores%20georef/4.png)
+  ![5](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/2%20-%20Envio%20entre%20servidores%20georef/5.png)
   
 ##3. Métricas Ironport
 
@@ -87,6 +95,11 @@ Los datos son los siguientes:
   Correo Entrante | Histograma y tabla en los que, para el correo ENTRANTE, se muestra la división en función del filtro de descarte o si ha sido correo aceptado.
   Correo Saliente | Histograma y tabla en los que, para el correo SALIENTE, se muestra la división en función del filtro de descarte o si ha sido correo aceptado.
   
+ ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/3%20-%20M%C3%A9tricas%20Ironport/1.png)
+ ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/3%20-%20M%C3%A9tricas%20Ironport/2.png)
+ ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/3%20-%20M%C3%A9tricas%20Ironport/3.png)
+ ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/3%20-%20M%C3%A9tricas%20Ironport/4.png)
+  
 ##4. Métricas ironport AWSTATS
 
 Dashboard con la información mostrada para AWSTATS de IronPort.
@@ -124,6 +137,12 @@ Los datos son los siguientes:
   TOP RECEPTORES - CORREOS / TOP RECEPTORES - BYTES | Lista de los 10 receptores que más correos han recibido por cantidad y tamaño en sus correos del mes.
   Correos erróneos o rechazados | Cantidad de correos erroneos o rechazados clasificados por DSN para el mes seleccionado.
   
+  ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/4%20-%20M%C3%A9tricas%20Ironport%20AWSTATS/1.png)
+  ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/4%20-%20M%C3%A9tricas%20Ironport%20AWSTATS/2.png)
+  ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/4%20-%20M%C3%A9tricas%20Ironport%20AWSTATS/3.png)
+  ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/4%20-%20M%C3%A9tricas%20Ironport%20AWSTATS/4.png)
+  ![5](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/4%20-%20M%C3%A9tricas%20Ironport%20AWSTATS/5.png)
+  
 ##5. Métricas Postfix
 
 Dashboard con la información del informe AWSTATS para Postfix Mailing.
@@ -159,6 +178,12 @@ Los datos son los siguientes:
   Top Receptores | Lista de los 20 receptores que más correos han recibido por cantidad y tamaño en sus correos del mes.
   Errores de envío | Cantidad,tamaño y porcentaje de correos erroneos o rechazados clasificados por DSN para el mes seleccionado.
   
+ ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/5%20-%20M%C3%A9tricas%20Postfix/1.png)
+ ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/5%20-%20M%C3%A9tricas%20Postfix/2.png)
+ ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/5%20-%20M%C3%A9tricas%20Postfix/3.png)
+ ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/5%20-%20M%C3%A9tricas%20Postfix/4.png)
+ 
+  
 ##6. Proxy - Peticiones por user, Agent y response
 
 Dashboard con las peticiones proxy por usuario, navegador, respuesta y clasificado por hora/minuto para diferenciar si han sido realizadas dentro o fuera de horario laboral.
@@ -186,6 +211,11 @@ Los datos son los siguientes:
   Usuario con mayor cantidad de peticiones |  Ranking con los 10 usuarios que más peticiones han realizado en el periodo seleccionado.
   Por extensión | Ranking de las 20 extensiones más repetidas en las descargas de los usuarios para el periodo seleccionado.
   Detalle de la selección | Todos los registros de descargas para la selección realizada.
+  
+  ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/6%20-%20Proxy%20-%20Peticiones%20por%20user%2C%20Agent%20y%20response%20GEO/1.png)
+  ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/6%20-%20Proxy%20-%20Peticiones%20por%20user%2C%20Agent%20y%20response%20GEO/2.png)
+  ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/6%20-%20Proxy%20-%20Peticiones%20por%20user%2C%20Agent%20y%20response%20GEO/3.png)
+  ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/6%20-%20Proxy%20-%20Peticiones%20por%20user%2C%20Agent%20y%20response%20GEO/4.png)
   
 ##7. Proxy Bluecoat
 
@@ -223,6 +253,12 @@ Los datos son los siguientes:
   Top descargas comprimidos / Detalles | Gráfico con el top 5 de descargas de comprimidos por usuario. En la tabla de detalle se podrán ver todos los registros asociados a dichas descargas.
   Top descargas videos / Detalles | Gráfico con el top 5 de descargas de vídeo por usuario. En la tabla de detalle se podrán ver todos los registros asociados a dichas descargas.
 
+ ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/7%20-%20Proxy%20Bluecoat/1.png)
+ ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/7%20-%20Proxy%20Bluecoat/2.png)
+ ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/7%20-%20Proxy%20Bluecoat/3.png)
+ ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/7%20-%20Proxy%20Bluecoat/4.png)
+ ![5](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/7%20-%20Proxy%20Bluecoat/5.png)
+
 ##8. Rangos Proxy
 
 Dashboard para analizar la cantidad de descargas de ejecutables en función del tamaño de los ficheros descargados. Se hacen 3 rangos:
@@ -254,6 +290,11 @@ Los datos son los siguientes:
   Ejecutables entre 1Mb y 10 Mb  por usuario y recurso | Total de registros de descargas superiores a 10Mb para la selección.
   Top usuario descargas | Top 10 con los usuarias que más descargas han realizado.
   
+  ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/8%20-%20Rangos%20Proxy/1.png)
+  ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/8%20-%20Rangos%20Proxy/2.png)
+  ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/8%20-%20Rangos%20Proxy/3.png)
+  ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/8%20-%20Rangos%20Proxy/4.png)
+  
 ##9. Sesiones proxy
 
 Dashboard para analizar las peticiones recibidas clasificadas según sesiones de duración de 30 minutos de inactividad.
@@ -279,6 +320,10 @@ Los datos son los siguientes:
   Top 10 peticiones por usuario | Los 10 usuarios con más peticiones.
   Detalle de las sesiones | Muesta el total de peticiones al detalle por cada sesión.
   
+  ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/1.png)
+  ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/2.png)
+  ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/3.png)
+  ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/4.png)
   
 ##10. Radius Online
 
@@ -313,3 +358,10 @@ Los datos son los siguientes:
   Media de errore | Histograma que muestra la fluctuación de la media de accesos con error recibidos.
   Tendencia de la media | Tendencia de la media (a futuro) para un periodo de tiempo estimado.
   Login en las máquinas | Gráfico que muestra para cada usuario, en cuentas máquinas se ha logado (conexión)
+
+ ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/1.png)
+ ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/2.png)
+ ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/3.png)
+ ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/4.png)
+ 
+ 
