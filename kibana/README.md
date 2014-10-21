@@ -223,35 +223,7 @@ Los datos son los siguientes:
   Top descargas comprimidos / Detalles | Gráfico con el top 5 de descargas de comprimidos por usuario. En la tabla de detalle se podrán ver todos los registros asociados a dichas descargas.
   Top descargas videos / Detalles | Gráfico con el top 5 de descargas de vídeo por usuario. En la tabla de detalle se podrán ver todos los registros asociados a dichas descargas.
 
-##8. Registros diarios
-
-Dashboard que muestra el total de correos enviados, recibidos y erróneos, así como donde se han generado.
-
-Los datos son los siguientes:
-
-**index:** `prueba_orig`
-
-**query:** 
-
-  QUERY | DESCRIPCIÓN
-  :--------|:-----------
-  _type:"total" | Los registros del LOG original parseados
-  _type:"total" AND dsn:(2.0.0 2.4.0 2.6.0) AND -amavisid:"null" | Registros referentes a correos enviados correctamente
-  _type:"total" AND -dsn:(2.0.0 2.4.0 2.6.0 null) AND -amavisid:"null" | Registros referidos a correos enviados con error
-  _type:"emisores" | Cantidad de correos enviados por usuario
-  _type:"receptores" | Cantidad de correos recibidos por usuario
-
-**Paneles:**
-
-  PANELES | CONTENIDO
-  :--------|:-----------
-  Registros de log | Histograma que refleja la cantidad de registros llegados en el log, los correos emitidos OK y los correos con error.
-  Estadísticas | Muestra la cantidad de emisores y receptores de correos
-  Emisores | Top 10 de los usuarios que más correos han emitido.
-  Receptores | Top 10 de los usuarios que más correos han recibido.
-  Localización | Geolocalización de la emisión de los mensajes.
-
-##9. Rangos Proxy
+##8. Rangos Proxy
 
 Dashboard para analizar la cantidad de descargas de ejecutables en función del tamaño de los ficheros descargados. Se hacen 3 rangos:
 - Inferiores a 1Mb
@@ -282,7 +254,7 @@ Los datos son los siguientes:
   Ejecutables entre 1Mb y 10 Mb  por usuario y recurso | Total de registros de descargas superiores a 10Mb para la selección.
   Top usuario descargas | Top 10 con los usuarias que más descargas han realizado.
   
-##10. Sesiones proxy
+##9. Sesiones proxy
 
 Dashboard para analizar las peticiones recibidas clasificadas según sesiones de duración de 30 minutos de inactividad.
 
@@ -307,3 +279,37 @@ Los datos son los siguientes:
   Top 10 peticiones por usuario | Los 10 usuarios con más peticiones.
   Detalle de las sesiones | Muesta el total de peticiones al detalle por cada sesión.
   
+  
+##10. Radius Online
+
+Dashboard para analizar las peticiones de autenticación, accesos erróneos y bloqueos de cuentas de usuario.
+  
+Los datos son los siguientes:
+
+**index:** `ob_src_radius`
+
+**query:** 
+
+  QUERY | DESCRIPCIÓN
+  :--------|:-----------
+  _type:"radius_peticionesusuario" AND status:"Passed" | Peticiones con status "Passed"
+  _type:"radius_peticionesusuario" AND status:"Failed"  Peticiones con status "Failed"
+  _type:"radius_peticionconmaquina" | Total de peticiones de usuario para 802.1x junto con la máquina de acceso
+  _type:"radius_masdetresfallos" | Registros de error que generan un bloqueo (3 o más errores consecutivos)
+  _type:"media_errores_mediafallos" | Media de registros "Failed" a lo largo del tiempo (ventana temporal)
+
+
+**Paneles:**
+
+  PANELES | CONTENIDO
+  :--------|:----------- 
+  Peticiones | Histograma donde se muestra en distintas líneas las peticiones de usuarios de 802.1x correctas y erróneas.
+  Bloqueos | Cantidad de peticiones que generan un bloqueo de cuenta de usuario.
+  Estado | Cantidad de peticiones en los distintos STATUS ("Passed" o "Failed").
+  Usuarios con  bloqueo. Nº de errores consecutivos | Top 10 de los usuarios conmás bloqueos.
+  Usuarios con más peticiones | Top 10 de los usuarios con mayor cantidad de peticiones de acceso.
+  Máquinas con más peticiones | Top 10 de las máquinas con mayor cantidad de peticiones de acceso.
+  Total registros | Totalidad de las peticiones de usuario recibidas.
+  Media de errore | Histograma que muestra la fluctuación de la media de accesos con error recibidos.
+  Tendencia de la media | Tendencia de la media (a futuro) para un periodo de tiempo estimado.
+  Login en las máquinas | Gráfico que muestra para cada usuario, en cuentas máquinas se ha logado (conexión)
