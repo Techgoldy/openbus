@@ -364,4 +364,4 @@ Los datos son los siguientes:
  ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/3.png)
  ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/4.png)
  
- 
+  
