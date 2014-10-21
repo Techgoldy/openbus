@@ -359,9 +359,9 @@ Los datos son los siguientes:
   Tendencia de la media | Tendencia de la media (a futuro) para un periodo de tiempo estimado.
   Login en las máquinas | Gráfico que muestra para cada usuario, en cuentas máquinas se ha logado (conexión)
 
- ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/1.png)
- ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/2.png)
- ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/3.png)
- ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/9%20-%20Sesiones%20Proxy/4.png)
+ ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/1.png)
+ ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/2.png)
+ ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/3.png)
+ ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/4.png)
  
   
