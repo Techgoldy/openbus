@@ -126,7 +126,18 @@ $(document).ready(function() {
 		e = $.Event('keyup');
 		e.keyCode= 13;
 		$('input[type=search]').trigger(e);		
-	}, 150);	
+	}, 150);
+	var lang = /*[[${lang}]]*/ "";
+	var urlLang;
+	if (lang == 'es'){
+		urlLang = "/web_console/styles/es_es.lang";
+	}
+	else if (lang == 'us'){
+		urlLang = "/web_console/styles/en_us.lang";
+	}
+	else{
+		urlLang = "/web_console/styles/es_es.lang";
+	}
 	table = $('#example').DataTable({
 		"columnDefs": [{ "visible": false, "targets": 0 }],	
         "scrollY": "300px",
@@ -134,7 +145,7 @@ $(document).ready(function() {
         "jQueryUI":       true,
         "order": [[ 4, "desc" ]],
         "language": {
-            "url": "/web_console/styles/es_es.lang"
+            "url": urlLang
         }
 	});
 	

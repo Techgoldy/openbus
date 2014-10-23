@@ -113,10 +113,18 @@ public class ConsoleController {
     // ***************** CREATE BATCH *****************
 
     @RequestMapping("/createbatch")
-    public String getSources(Model model) {
+    public String getSources(Model model, HttpServletRequest request) {
 	List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();
 	model.addAttribute("lstSources", lstSources);
 	model.addAttribute("metricaBatch", new MetricaBatch());
+	if (request.getParameter("lang") != null){
+	    model.addAttribute("lang", request.getParameter("lang"));
+	    request.getSession().setAttribute("lang", request.getParameter("lang"));
+	}
+	else if (request.getSession().getAttribute("lang") != null){
+	    model.addAttribute("lang", request.getSession().getAttribute("lang"));
+	}
+	
 	return "/console/createbatch";
     }
 
@@ -542,6 +550,13 @@ public class ConsoleController {
 	List<MetricaBatch> lstMetrics = metricaBatchService.findAllMetricaBatches();
 	model.addAttribute("lstMetrics", lstMetrics);
 	model.addAttribute("search", request.getParameter("hidSearch"));
+	if (request.getParameter("lang") != null){
+	    model.addAttribute("lang", request.getParameter("lang"));
+	    request.getSession().setAttribute("lang", request.getParameter("lang"));
+	}
+	else if (request.getSession().getAttribute("lang") != null){
+	    model.addAttribute("lang", request.getSession().getAttribute("lang"));
+	}
 	return "/console/showbatch";
     }
 
@@ -598,10 +613,17 @@ public class ConsoleController {
 
  // ***************** CREATE ONLINE *****************    
     @RequestMapping("/createonline")
-    public String getSourcesOnLine(Model model, HttpSession session) {
+    public String getSourcesOnLine(Model model, HttpServletRequest request) {
 	List<OrigenEstructurado> lstSources = origenEstructuradoService.findAllOrigenEstructuradoes();
 	model.addAttribute("lstSources", lstSources);
 	model.addAttribute("metricaOnLine", new MetricaOnLine());
+	if (request.getParameter("lang") != null){
+	    model.addAttribute("lang", request.getParameter("lang"));
+	    request.getSession().setAttribute("lang", request.getParameter("lang"));
+	}
+	else if (request.getSession().getAttribute("lang") != null){
+	    model.addAttribute("lang", request.getSession().getAttribute("lang"));
+	}
 	
 	return "/console/createonline";
     }
@@ -1186,6 +1208,14 @@ public class ConsoleController {
 	List<MetricaOnLine> lstMetrics = metricaOnLineService.findAllMetricaOnLines();
 	model.addAttribute("lstMetrics", lstMetrics);
 	model.addAttribute("search", request.getParameter("hidSearch"));
+	model.addAttribute("lang", request.getParameter("lang"));
+	if (request.getParameter("lang") != null){
+	    model.addAttribute("lang", request.getParameter("lang"));
+	    request.getSession().setAttribute("lang", request.getParameter("lang"));
+	}
+	else if (request.getSession().getAttribute("lang") != null){
+	    model.addAttribute("lang", request.getSession().getAttribute("lang"));
+	}
 	return "/console/showonline";
     }
 
@@ -1252,6 +1282,13 @@ public class ConsoleController {
 	    request.getSession().setAttribute("tablesSession", tablesBBDD);
 	    model.addAttribute("queriesSession", queriesBBDD);
 	    request.getSession().setAttribute("queriesSession", queriesBBDD);
+	    if (request.getParameter("lang") != null){
+		model.addAttribute("lang", request.getParameter("lang"));
+		request.getSession().setAttribute("lang", request.getParameter("lang"));
+	    }
+	    else if (request.getSession().getAttribute("lang") != null){
+		model.addAttribute("lang", request.getSession().getAttribute("lang"));
+	    }
 	}
 	catch (Exception e) {
 	    // TODO Auto-generated catch block

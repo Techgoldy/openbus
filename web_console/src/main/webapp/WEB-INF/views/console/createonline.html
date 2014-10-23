@@ -611,7 +611,7 @@
 									<button onclick="addTable();" class="btn btn-primary btn-sm" th:text="#{show.label.new}" th:title="#{show.label.new}"/>
 									<button onclick="modifyTable();" class="btn btn-primary btn-sm" th:text="#{show.label.modify}" th:title="#{show.label.modify}" />
 									<button th:if="${metricaOnLine.id} != null" onclick="updateTableToRemove();" id="btUpdateTableToRemove" class="btn btn-primary btn-sm" data-toggle="modal" data-dismiss="modal" data-target="#myModal" th:text="#{show.tooltip.delete.online}" th:title="#{show.tooltip.delete.online}"/>
-									<button onclick="deleteTable();" class="btn btn-primary btn-sm" th:text="#{show.label.delete}" th:title="#{show.label.delete}" />
+									<button onclick="deleteTable();" sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary btn-sm" th:text="#{show.label.delete}" th:title="#{show.label.delete}" />
 									<p></p>
 							  		<div id="warningDivTable" class="alert alert-warning" style="display:none">
 								  		<button type="button" class="close">&times;</button>
@@ -621,10 +621,21 @@
 								  	</script>
 								  	<div id="divTableTable">
 										<table id="exampleTable" class="display" cellspacing="0" width="100%" height="50%">
-				    						<script>
+				    						<script th:inline="javascript">
+				    						//<![CDATA[
 				    						$(document).ready(function() {				    							
 					    						var table = null;
-			    						
+					    						var lang = /*[[${lang}]]*/ "";
+					    						var urlLang;
+					    						if (lang == 'es'){
+					    							urlLang = "/web_console/styles/es_es.lang";
+					    						}
+					    						else if (lang == 'us'){
+					    							urlLang = "/web_console/styles/en_us.lang";
+					    						}
+					    						else{
+					    							urlLang = "/web_console/styles/es_es.lang";
+					    						}
 					    						table = $('#exampleTable').DataTable({
 					    							"columnDefs": [{ "visible": false, "targets": 0 }],
 					    					        "scrollY": "300px",
@@ -634,7 +645,7 @@
 					    					        "searching": false,
 					    					        "info": false,
 					    					        "language": {
-					    					            "url": "/web_console/styles/es_es.lang"
+					    					            "url": urlLang
 					    					        }
 					    						});
 					    						
@@ -652,6 +663,7 @@
 						    					    }
 					    						});
 				    						});
+				    						//]]>
 				    						</script>									
 										    <thead>
 										    	<tr>
@@ -690,10 +702,21 @@
 								  	</script>
 								  	<div id="divTable">
 										<table id="example" class="display" cellspacing="0" width="100%" height="50%">
-				    						<script>
+				    						<script th:inline="javascript">
+				    						//<![CDATA[
 				    						$(document).ready(function() {				    							
 					    						var table = null;
-			    						
+					    						var lang = /*[[${lang}]]*/ "";
+					    						var urlLang;
+					    						if (lang == 'es'){
+					    							urlLang = "/web_console/styles/es_es.lang";
+					    						}
+					    						else if (lang == 'us'){
+					    							urlLang = "/web_console/styles/en_us.lang";
+					    						}
+					    						else{
+					    							urlLang = "/web_console/styles/es_es.lang";
+					    						}
 					    						table = $('#example').DataTable({
 					    							"columnDefs": [{ "visible": false, "targets": 0 }],
 					    					        "scrollY": "300px",
@@ -703,7 +726,7 @@
 					    					        "searching": false,
 					    					        "info": false,
 					    					        "language": {
-					    					            "url": "/web_console/styles/es_es.lang"
+					    					            "url": urlLang
 					    					        }
 					    						});
 					    						
@@ -721,6 +744,7 @@
 						    					    }
 					    						});
 				    						});
+				    						//]]>
 				    						</script>									
 										    <thead>
 										    	<tr>

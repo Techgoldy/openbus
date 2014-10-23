@@ -104,7 +104,6 @@ public class TestMetricasOnLine {
 	
     }
 
-    @Test
     public void testDelete() {/*
 	QueryCep queryCep = queryCepService.findQueryCep(new Long(7));
 	queryCepService.deleteQueryCep(queryCep);*/
