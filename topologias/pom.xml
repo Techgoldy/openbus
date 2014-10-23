@@ -82,6 +82,23 @@
   		<artifactId>storm-core</artifactId>
   		<version>0.9.1-incubating</version>
   		<scope>provided</scope>
+  		<exclusions>
+	        <exclusion>
+				<groupId>org.slf4j</groupId>
+				<artifactId>log4j-over-slf4j</artifactId>
+				<version>1.6.6</version>
+	        </exclusion>
+	        <exclusion>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.0.6</version>
+			</exclusion>
+	        <exclusion>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-core</artifactId>
+				<version>1.0.6</version>
+			</exclusion>
+	    </exclusions>
   	</dependency>
   		<dependency>
 			<groupId>org.wso2.siddhi</groupId>
