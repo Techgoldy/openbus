@@ -37,7 +37,7 @@ public class OpenbusPostfixLocationTopology {
 	    BrokerSpout openbusBrokerSpout = new BrokerSpout(propiedades.getProperty("KAFKA_TOPIC"), 
 	    	propiedades.getProperty("KAFKA_ZOOKEEPER_LIST"), 
 	    	propiedades.getProperty("KAFAKA_BROKER_ID"), 
-	    	Boolean.getBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING")));
+	    	Boolean.parseBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING")));
 	    
 	    Fields hdfsFields = new Fields("EVENTTIMESTAMP", "SMTPDID", "MSGID", "CLEANUPID", "QMGRID", "SMTPID", "ERRORID", "CLIENTE", "CLIENTEIP", "ACCION", "SERVER", "SERVERIP",
 	    	"MESSAGEID", "FROM", "SIZE", "NRCPT", "TO", "TOSERVERNAME", "TOSERVERIP", "TOSERVERPORT", "DELAY", "DSN", "STATUS", "STATUSDESC", "AMAVISID",

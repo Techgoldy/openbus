@@ -86,7 +86,7 @@ public class PostfixLocationParser extends BaseFunction {
 		    amavisId, location.getCoordsString(), location.getCity(), location.getPostalCode(),location.getAreaCode(), location.getMetroCode(), 
 		    location.getRegion(), location.getCountry() 
 	    ));
-	    LOG.info(location.getCoordsString()+location.getCity()+location.getPostalCode()+location.getAreaCode()+location.getMetroCode()+location.getRegion()+location.getCountry());
+	    //LOG.info(location.getCoordsString()+location.getCity()+location.getPostalCode()+location.getAreaCode()+location.getMetroCode()+location.getRegion()+location.getCountry());
 	}
     }
 

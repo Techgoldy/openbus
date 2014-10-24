@@ -47,7 +47,7 @@ public class OpenbusPostfixTopology {
 		propiedades.getProperty("KAFAKA_BROKER_ID"), // Client ID -
 							     // Configuración
 							     // del broker
-		Boolean.getBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING"))); // si
+		Boolean.parseBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING"))); // si
 										      // es
 										      // desde
 										      // el

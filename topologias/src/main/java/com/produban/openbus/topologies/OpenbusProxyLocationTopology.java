@@ -39,7 +39,7 @@ public class OpenbusProxyLocationTopology {
             	propiedades.getProperty("KAFKA_TOPIC"),
             	propiedades.getProperty("KAFKA_ZOOKEEPER_LIST"),
             	propiedades.getProperty("KAFAKA_BROKER_ID"),
-            	Boolean.getBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING")));
+            	Boolean.parseBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING")));
             
             Fields hdfsFields = new Fields("eventTimeStamp", "timeTaken", "clientIP", "User", "Group", "Exception", "filterResult", "category", "referer", "responseCode", "action",
             	"method", "contentType", "protocol", "requestDomain", "requestPort", "requestPath", "requestQuery", "requestURIExtension", "userAgent", "serverIP", "scBytes",

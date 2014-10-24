@@ -35,7 +35,7 @@ public class OpenbusIronportLocationTopology {
 	    Config conf = new Config();
 
 	    BrokerSpout openbusBrokerSpout = new BrokerSpout(propiedades.getProperty("KAFKA_TOPIC"),propiedades.getProperty("KAFKA_ZOOKEEPER_LIST"),
-	    	propiedades.getProperty("KAFAKA_BROKER_ID"),Boolean.getBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING"))); 
+	    	propiedades.getProperty("KAFAKA_BROKER_ID"),Boolean.parseBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING"))); 
 
 	    // Campos que detectaremos desde el parseador.
 	    Fields hdfsFields = new Fields("eventTimeStamp", "ICID", "MID", "RID", "DCID", "SUBJECT", "FROM", "TO", "RESPONSE", "BYTES", "INTERFACE", "PORT", "INTERFACEIP", "HOSTIP",
