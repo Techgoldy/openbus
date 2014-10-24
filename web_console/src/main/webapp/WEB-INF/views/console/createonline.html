@@ -146,6 +146,8 @@
 	        	$('#txtEsFormats').show();
 	        	$('#txtEsType').show();
 	        	$('#txtEsTTL').show();
+	        	$('#lblEsId').show();
+	        	$('#txtEsId').show();
 	        }
 	        else{
 	        	$('#lblEsFormats').hide();
@@ -154,6 +156,8 @@
 	        	$('#txtEsFormats').hide();
 	        	$('#txtEsType').hide();
 	        	$('#txtEsTTL').hide();
+	        	$('#lblEsId').hide();
+	        	$('#txtEsId').hide();
 	        }
 	    });
 		
@@ -289,6 +293,8 @@
 			        	$('#txtEsFormats').show();
 			        	$('#txtEsType').show();
 			        	$('#txtEsTTL').show();
+			        	$('#lblEsId').show();
+			        	$('#txtEsId').show();
 					}
 					else if(data.rdCallback == '0'){
 						$("#rdCallback0").prop("checked", true);
@@ -298,6 +304,8 @@
 			        	$('#txtEsFormats').hide();
 			        	$('#txtEsType').hide();
 			        	$('#txtEsTTL').hide();
+			        	$('#lblEsId').hide();
+			        	$('#txtEsId').hide();
 					}
 					$('#modalQuery').modal({show:true});
 			    }
@@ -931,7 +939,7 @@
 										</a> 
 									</td>
 								</tr>
-								<tr id="lblEsId" style="display:none">
+								<tr id="txtEsId" style="display:none">
 									<td colspan="3">
 										<input id="queryId" name="queryId" type="text" class="classText"/>
 									</td>
