@@ -100,7 +100,7 @@ public class OpenbusPostfixLocationTopology {
 	    String tipo = propiedades.getProperty("INPUT_ORIGIN");
 
 	    if (tipo.equals("kafka")) { // Si leemos desde Kafka
-	        parseaLogs = topology.newStream("spout1", openbusBrokerSpout.getPartitionedTridentSpout()).each(new Fields("bytes"), 
+	        parseaLogs = topology.newStream("spoutPostfix", openbusBrokerSpout.getPartitionedTridentSpout()).each(new Fields("bytes"), 
 	        	new PostfixLocationParser(propiedades.getProperty("ELASTICSEARCH_HOST"), Integer.parseInt(propiedades.getProperty("ELASTICSEARCH_PORT")), 
 	        	propiedades.getProperty("ELASTICSEARCH_NAME"), Boolean.parseBoolean(propiedades.getProperty("ELASTICSEARCH_CACHE_SEARCH"))), hdfsFields);
 	        parseaLogs.partitionPersist(factory, hdfsFields, new OpenbusHdfsUpdater(), new Fields());
@@ -112,7 +112,7 @@ public class OpenbusPostfixLocationTopology {
 	    
 	    if (tipo.equals("disco")) { // Si leemos desde un fichero de disco local
 	        SimpleFileStringSpout spout1 = new SimpleFileStringSpout(propiedades.getProperty("INPUT_FILE"), "bytes");
-	        parseaLogs = topology.newStream("spout1", spout1).each(new Fields("bytes"), new PostfixLocationParser(propiedades.getProperty("ELASTICSEARCH_HOST"), 
+	        parseaLogs = topology.newStream("spoutPostfix", spout1).each(new Fields("bytes"), new PostfixLocationParser(propiedades.getProperty("ELASTICSEARCH_HOST"), 
         	Integer.parseInt(propiedades.getProperty("ELASTICSEARCH_PORT")), propiedades.getProperty("ELASTICSEARCH_NAME"), 
         	Boolean.parseBoolean(propiedades.getProperty("ELASTICSEARCH_CACHE_SEARCH"))), hdfsFields);
 	        parseaLogs.partitionPersist(factory, hdfsFields, new OpenbusHdfsUpdater(), new Fields());

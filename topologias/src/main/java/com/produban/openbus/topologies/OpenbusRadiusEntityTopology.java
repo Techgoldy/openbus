@@ -123,7 +123,7 @@ public class OpenbusRadiusEntityTopology {
 		//Definición de la topología
 		
 		if(tipo.equals("kafka")){ //Si leemos desde Kafka
-			parseaLogs	= topology.newStream("spout1", openbusBrokerSpout.getPartitionedTridentSpout())
+			parseaLogs	= topology.newStream("spoutRadius", openbusBrokerSpout.getPartitionedTridentSpout())
 		       .each(new Fields("bytes"),
 		    		 new RadiusEntityParser(),
 		    		 hdfsFields);
@@ -141,7 +141,7 @@ public class OpenbusRadiusEntityTopology {
 		}
 		if (tipo.equals("disco")){ //Si leemos desde un fichero de disco local
 		    SimpleFileStringSpout spout1 = new SimpleFileStringSpout(propiedades.getProperty("INPUT_FILE"), "bytes");
-		    parseaLogs	= topology.newStream("spout1", spout1)
+		    parseaLogs	= topology.newStream("spoutRadius", spout1)
 			    .each(new Fields("bytes"),
 				    new RadiusEntityParser(),
 				    hdfsFields);

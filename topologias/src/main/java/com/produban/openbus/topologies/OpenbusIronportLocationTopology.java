@@ -98,7 +98,7 @@ public class OpenbusIronportLocationTopology {
 	    String tipo = propiedades.getProperty("INPUT_ORIGIN");
 
 	    if (tipo.equals("kafka")) { // Si leemos desde Kafka
-	        parseaLogs = topology.newStream("spout1", openbusBrokerSpout.getPartitionedTridentSpout()).each(new Fields("bytes"),
+	        parseaLogs = topology.newStream("spoutIronport", openbusBrokerSpout.getPartitionedTridentSpout()).each(new Fields("bytes"),
         	new IronportLocationParser(propiedades.getProperty("ELASTICSEARCH_HOST"), Integer.parseInt(propiedades.getProperty("ELASTICSEARCH_PORT")), 
        		propiedades.getProperty("ELASTICSEARCH_NAME"), Boolean.parseBoolean(propiedades.getProperty("ELASTICSEARCH_CACHE_SEARCH"))), hdfsFields);
 	        parseaLogs.partitionPersist(factory, hdfsFields, new OpenbusHdfsUpdater(), new Fields());
@@ -109,7 +109,7 @@ public class OpenbusIronportLocationTopology {
 	    }
 	    if (tipo.equals("disco")) { // Si leemos desde un fichero de disco local
 	        SimpleFileStringSpout spout1 = new SimpleFileStringSpout(propiedades.getProperty("INPUT_FILE"), "bytes");
-	        parseaLogs = topology.newStream("spout1", spout1).each(new Fields("bytes"),new IronportLocationParser(propiedades.getProperty("ELASTICSEARCH_HOST"), Integer.parseInt(propiedades.getProperty("ELASTICSEARCH_PORT")), 
+	        parseaLogs = topology.newStream("spoutIronport", spout1).each(new Fields("bytes"),new IronportLocationParser(propiedades.getProperty("ELASTICSEARCH_HOST"), Integer.parseInt(propiedades.getProperty("ELASTICSEARCH_PORT")), 
 	        	propiedades.getProperty("ELASTICSEARCH_NAME"), Boolean.parseBoolean(propiedades.getProperty("ELASTICSEARCH_CACHE_SEARCH"))), hdfsFields);
 	        parseaLogs.partitionPersist(factory, hdfsFields, new OpenbusHdfsUpdater(), new Fields());
 	        if (propiedades.getProperty("KAFKA_OUTPUT_TOPIC") != null && propiedades.getProperty("KAFKA_OUTPUT_TOPIC") != "") {

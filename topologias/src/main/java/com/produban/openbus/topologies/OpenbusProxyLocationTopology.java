@@ -103,7 +103,7 @@ public class OpenbusProxyLocationTopology {
             
             
             if (tipo.equals("kafka")) { // Si leemos desde Kafka
-                parseaLogs = topology.newStream("spout1", openbusBrokerSpout.getPartitionedTridentSpout()).each(
+                parseaLogs = topology.newStream("spoutBluecoat", openbusBrokerSpout.getPartitionedTridentSpout()).each(
             	    new Fields("bytes"),
             	    new ProxyLocationParser(propiedades.getProperty("ELASTICSEARCH_HOST"), Integer.parseInt(propiedades.getProperty("ELASTICSEARCH_PORT")), propiedades
             		    .getProperty("ELASTICSEARCH_NAME"), Boolean.parseBoolean(propiedades.getProperty("ELASTICSEARCH_CACHE_SEARCH"))), hdfsFields);
@@ -117,7 +117,7 @@ public class OpenbusProxyLocationTopology {
             
             if (tipo.equals("disco")) { // Si leemos desde un fichero de disco local
                 SimpleFileStringSpout spout1 = new SimpleFileStringSpout(propiedades.getProperty("INPUT_FILE"), "bytes");
-                parseaLogs = topology.newStream("spout1", spout1).each(
+                parseaLogs = topology.newStream("spoutBluecoat", spout1).each(
             	    new Fields("bytes"),
             	    new ProxyLocationParser(propiedades.getProperty("ELASTICSEARCH_HOST"), Integer.parseInt(propiedades.getProperty("ELASTICSEARCH_PORT")), 
             		    propiedades.getProperty("ELASTICSEARCH_NAME"), Boolean.parseBoolean(propiedades.getProperty("ELASTICSEARCH_CACHE_SEARCH"))), hdfsFields);
