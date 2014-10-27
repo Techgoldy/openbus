@@ -64,6 +64,7 @@ public class QueryCep implements Serializable {
 
     /**
      */
+    @Column(columnDefinition = "LONGBLOB")
     private String outputFieldFormat;
 
     /**

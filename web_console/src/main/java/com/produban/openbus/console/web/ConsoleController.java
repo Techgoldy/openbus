@@ -232,6 +232,7 @@ public class ConsoleController {
 	// Se crea el indice en elasticsearch
 	createESIndex(metricaBatch.getEsIndex(), metricaBatch.getEsType(), strTypeQuery, prop, strTimestamp);
 
+	LOG.debug("ES Index created");
 	String dropQuery = "DROP TABLE IF EXISTS " + metricaBatch.getEsType();
 
 	StringBuilder externalQuery = new StringBuilder();
