@@ -219,7 +219,7 @@ métrica, tiene sólo carácter informativo.
 
 - Campos del stream: **ACS\_Timestamp string,TIMESTAMP\_MILLIS
 long,Access\_Service string, User\_Name string,Calling\_Station\_ID
-string,Authentication\_Status string,Failure\_Reason string **
+string,Authentication\_Status string,Failure\_Reason string**
 
 -*Table1*:
 
