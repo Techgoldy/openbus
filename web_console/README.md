@@ -221,7 +221,7 @@ métrica, tiene sólo carácter informativo.
 long,Access\_Service string, User\_Name string,Calling\_Station\_ID
 string,Authentication\_Status string,Failure\_Reason string**
 
--*Table1*:
+-*Tabla1*:
 
 - Nombre: **hosts**
 
