@@ -1,7 +1,7 @@
-# Consola Web - Manual de usuario                                                        |
-## Proyecto: Análisis de logs Big Data                                  
-### PLATAFORMA DE ANÁLISIS Y EXPLOTACIÓN DE LOGS.                            
-#### La Finca - Planta 2
+# Consola Web - Manual de usuario
+
+La consola es una aplicación web que sirve para la administración de métricas tanto batch como online para su posterior explotación en los entornos de servidor de Hive, elasticsearch o Kibana. En las siguientes líneas se adjunta el manual de uso de la misma. Si se quisiera realizar cambios, compilar y desplegar nuevamente en el servidor se recomienda seguir esta [guía](README_deploy.md).
+
 
 # Índice
 
@@ -17,7 +17,7 @@
 La consola web es una herramienta para poder gestionar las métricas
 tanto batch como online del sistema.
 
-Para las <span class="text_3">métricas batch </span>la consola permite
+Para las métricas batch la consola permite
 su creación en su base de datos relacional **MySql** así como su
 lanzamiento en el servidor contra **Hive**. Previamente el sistema de
 ficheros distribuido, **Hadoop**, debe de estar cargado con los datos
@@ -25,7 +25,7 @@ que se vayan a procesar por las métricas. Una vez generados esos datos
 en **Hive** se almacenarán también en **Elasticsearch** para
 posteriormente poder ser explotados por **Kibana**.
 
-Para las <span class="text_3">métricas online</span>, la consola permite
+Para las métricas online, la consola permite
 su definición y creación en la su base de datos relacional **MySql** y
 proporcionará una serie de servicios externos que servirán para poder
 gestionar las topologías **Storm** y posteriormente poder explotar los
@@ -106,7 +106,7 @@ ID,MONTH(eventTimeStamp) as MES,YEAR(eventTimeStamp) as
 ANO,MAX(eventTimeStamp) as ULTIMO,MIN(eventTimeStamp) as PRIMERO**
 
 - Query From: **FROM ob\_src\_postfix** (Campo no editable, se construye a
-través<span class="calibre11"> del campo Orígenes de datos)
+través del campo Orígenes de datos)
 
 - Query Where: **WHERE MSGID is not NULL and QMGRID is not NULL and
 USERFROM !='null' GROUP BY MONTH(eventTimeStamp),
@@ -219,10 +219,9 @@ métrica, tiene sólo carácter informativo.
 
 - Campos del stream: **ACS\_Timestamp string,TIMESTAMP\_MILLIS
 long,Access\_Service string, User\_Name string,Calling\_Station\_ID
-string,Authentication\_Status string,Failure\_Reason<span
-class="calibre11"> string **
+string,Authentication\_Status string,Failure\_Reason string**
 
--*Table1*:
+-*Tabla1*:
 
 - Nombre: **hosts**
 
@@ -253,12 +252,12 @@ ID,User\_Name as usuario, Calling\_Station\_ID as mac,
 Authentication\_Status as status, Failure\_Reason as motivo**
 
 - Formato ES: **timestamp date, ID long,usuario string, mac string, status
-string,motivo string**
+string,motivo string** (Formato de los campos en elasticsearch)
 
-- TTL ES: **180s**
+- TTL ES: **180s** (Unidad de tiempo en la que permanecen los datos en elasticsearch, el formato es cantidad + letra que puede ser s->segundos, m->minutos, h->horas, d->día, w->semana)
 
 - Type ES: **radius\_peticionesusuario** (Campo no editable, se construye
-con el <span class="calibre11">campo nombre de la métrica + parte
+con el campo nombre de la métrica + parte
 del campo Query Into)
 
 # 7.Consultar métrica online
