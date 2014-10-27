@@ -46,8 +46,9 @@ public class BrokerSpout {
 	config = new TridentKafkaConfig(zhost, kafkaTopic); // 3er parametro
 							    // idClient
 	config.forceFromStart = forceFromStart;
-	//config.startOffsetTime = -1;
-
+	if (! forceFromStart){
+	    config.startOffsetTime = -1;
+	}
 	LOG.info("BrokerSpout. zookeperHosts: " + zookeeperHosts + " topic: " + kafkaTopic + " idClient: " + idClient);
     }
 
