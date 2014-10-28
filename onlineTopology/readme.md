@@ -163,7 +163,6 @@ CÓDIGO | DESCRIPCIÓN
 
 CÓDIGO | DESCRIPCIÓN
 :--------|:-----------
-
 200	|Métrica creada correctamente
 201	|Métrica a la espera de ser creada en Siddhi
 202	|Error en la creación del Stream origen
