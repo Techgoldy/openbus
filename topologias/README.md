@@ -1,6 +1,18 @@
-# Topologías
+# Topologías estructuradas
 
-Los pasos son los siguientes:
+El presente documento mostrará la generación de nuevas topologías estructuradas, así como sus funciones dentro del sistema.
+En ellas se preprocesarán los datos de origen para darles un formato más adecuado al enfoque del cálculo de métricas.
+A la hora de trabajar con logs de diversas fuentes el primer problema encontrado es la estructuración del contenido de los datos.
+
+Habitualmente no resulta sencillo trabajar con el formato de registros de logs que nos llega directamente desde origen o es necesario enriquecer la información. Este es el motivo por el cual se van a definir topologías de estructuración en Storm. Se desplegará una topología por cada origen distinto.
+
+Las topologías se desarrollarán en Storm Trident y constarán de 3 bloques principales: Parseo, enriquecimiento o filtrado de información y volcado de datos.
+
+Para generarar una nueva topología son necesarias unas configraciones previas:
+
+
+
+Una vez realizadas las configuraciones previas se detalla los pasos para poder generar nuevas topologías:
 
 * Descargar el proyecto de topologías que contiene todo el paquete necesario para poder lanzar topologías a storm.
   Pinchar en este [enlace](https://github.com/Produban/openbus/tree/topologias) para ir al repositorio donde se encuentra el proyecto, una vez ahí existe un botón a la derecha para poder descargar el mismo.
@@ -56,5 +68,4 @@ Por ejemplo
 `./bin/storm jar topologies-0.0.1-SNAPSHOT.jar com.produban.openbus.topologies.OpenbusRadiusEntityTopology radius.properties`
 
 
-[Configuración de la topología de los otros orígenes]
-(https://github.com/mmesa/readmes_openbus/blob/master/README_topologia_conf.md)
+[Configuración de la topología de los otros orígenes](doc/README_topologia_conf.md)
