@@ -10,9 +10,9 @@ Las topologías se desarrollarán en Storm Trident y constarán de 3 bloques pri
 
 Para generarar una nueva topología son necesarias unas configraciones previas:
 
-- [Configuración metadata](docs/README_metadata.md)
-- [Configuración hive](docs/README_hive.md)
-- [Configuración logstash](docs/README_logstash.md)
+- [Configuración metadata](doc/README_metadata.md)
+- [Configuración hive](doc/README_hive.md)
+- [Configuración logstash](doc/README_logstash.md)
 
 Una vez realizadas las configuraciones previas se detalla los pasos para poder generar nuevas topologías:
 
