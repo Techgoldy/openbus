@@ -1,0 +1,117 @@
+body{
+    height: 100%;
+    margin: 0;
+    overflow:hidden;
+    font-family: helvetica;
+    font-weight: 100;
+    background-color: #eee;
+}
+.container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.header {
+    position: relative;
+	width:100%;
+	height:45px;
+	background-position:center top ;
+	margin:0 auto;
+	background-repeat:no-repeat;
+	background-color:#6E6E6E;	    
+}
+ 
+#sidebar {
+    position: absolute;
+    background: #2290c9;
+    width: 240px;
+    height: 100%;
+    box-sizing: border-box;
+   -moz-box-sizing: border-box;
+}
+#sidebar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#sidebar ul li {
+    margin: 0;
+}
+#sidebar ul li a {
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: 100;
+    color: white;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #196c96;
+    -webkit-transition:  background 0.3s ease-in-out;
+    -moz-transition:  background 0.3s ease-in-out;
+    -ms-transition:  background 0.3s ease-in-out;
+    -o-transition:  background 0.3s ease-in-out;
+    transition:  background 0.3s ease-in-out;
+}
+#sidebar ul li:hover a {
+    background: #196c96;
+}
+
+.main-content {
+    width: 40%;
+    height: 100%;
+    padding: 10px;
+    position: relative;
+    left: 300px;
+}
+
+.main-content .form-signin{
+    margin-top: -20px;
+}
+
+.form-signin .form-login {
+  max-width: 300px;
+  margin-left: 150px;
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+  width: 250px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+div#loadingDiv{
+    display: none;
+    width:100px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    text-align:center;
+    padding:10px;
+    font:normal 16px Tahoma, Geneva, sans-serif;
+    border:1px solid #666;
+    margin-left: -50px;
+    margin-top: -50px;
+    z-index:2;
+    overflow: auto;
+}
+
+:disabled {
+    border: 1px solid #999;
+	background-color: graytext;
+}
