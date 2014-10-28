@@ -1,6 +1,6 @@
 #Openbus
 
-Aplicación Big data fara la ingestión y análisis de cantidades masivas de eventos generados por una infraestructura IT de banca.
+Aplicación Big data para la ingestión y análisis de cantidades masivas de eventos generados por una infraestructura IT de banca.
 
 El objetivo de la topología Online de Openbus es poder procesar en tiempo real todos los registros de los orígenes parseados por la topología de parseo.
 
@@ -55,7 +55,7 @@ Todos los objetos será accesibles mediante una serie de servición REST para su
 	- onLineMetricDesc: Texto descriptivo de la métrica
 	- esIndex: Índice de ElasticSearch donde se almacenará el resultado.
 	- esType: Obsoleto
-	- esCamposId: Obsoleto??
+	- esCamposId: Obsoleto
 	- fechaCreacion: Fecha de creación de la Mérica en la metadata
 	- fechaUltModif: Fecha de última modificación de la Mérica en la metadata
 	- usuarioCreacion: Usuario creador de la Métrica
@@ -144,41 +144,41 @@ CÓDIGO | DESCRIPCIÓN
 
 CÓDIGO | DESCRIPCIÓN
 :--------|:-----------
-100	Query creada correctamente
-101	Query a la espera de ser creada en Siddhi
-102	Query con sintaxis incorrecta
-103	Error en la creación de la query en Siddhi
-104	Error en la creación del CALLBACK en Siddhi
-105	Query a la espera de ser actualizado
-106	Query a la espera de ser borrado
-107	Query actualizada correctamente
-108	Query borrada correctamente
-109	Mapping de la query no ha podido ser definido tras la creación. 
-112	Query con sintaxis incorrecta en la actualización
-113	Error en la actualización de la query en Siddhi
-114	Error en la actualización del CALLBACK en Siddhi
-119	Mapping de la query no ha podido ser definido tras la actualización.
+100	|Query creada correctamente
+101	|Query a la espera de ser creada en Siddhi
+102	|Query con sintaxis incorrecta
+103	|Error en la creación de la query en Siddhi
+104	|Error en la creación del CALLBACK en Siddhi
+105	|Query a la espera de ser actualizado
+106	|Query a la espera de ser borrado
+107	|Query actualizada correctamente
+108	|Query borrada correctamente
+109	|Mapping de la query no ha podido ser definido tras la creación. 
+112	|Query con sintaxis incorrecta en la actualización
+113	|Error en la actualización de la query en Siddhi
+114	|Error en la actualización del CALLBACK en Siddhi
+119	|Mapping de la query no ha podido ser definido tras la actualización.
 
 ##Métricas
 
 CÓDIGO | DESCRIPCIÓN
 :--------|:-----------
 
-200	Métrica creada correctamente
-201	Métrica a la espera de ser creada en Siddhi
-202	Error en la creación del Stream origen
-203	Error en la creación de las queries
-204	Error en la actualización de un Stream
-205	Error en la actualización de una query
-206	Error en el borrado de un Stream
-207	Error en el borrado de una Query
-208	Métrica actualizada con éxito
-209	Métrica borrada con éxito
-210	Métrica a la espera de ser actualizada
-211	Métrica a la espera de ser borrada
-212	Error en la creación de una tabla
-213	Error en la actualización de una tabla
-214	Error en el borrado de una tabla
+200	|Métrica creada correctamente
+201	|Métrica a la espera de ser creada en Siddhi
+202	|Error en la creación del Stream origen
+203	|Error en la creación de las queries
+204	|Error en la actualización de un Stream
+205	|Error en la actualización de una query
+206	|Error en el borrado de un Stream
+207	|Error en el borrado de una Query
+208	|Métrica actualizada con éxito
+209	|Métrica borrada con éxito
+210	|Métrica a la espera de ser actualizada
+211	|Métrica a la espera de ser borrada
+212	|Error en la creación de una tabla
+213	|Error en la actualización de una tabla
+214	|Error en el borrado de una tabla
 
 
 #Elementos de la topología(Bolts)
