@@ -43,9 +43,6 @@ datos.
  
 # 2.Autenticación
 
-La dirección para accede a la consola es
-<http://180.133.240.175:8080/web_console>
-
 El sistema requiere un usuario y contraseña para poder acceder. Por el
 momento existe el usuario admin, que tendrá todos los permisos, con la
 contraseña admin.
