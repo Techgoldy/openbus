@@ -6,7 +6,13 @@ Del mismo modo se requiere haber configurado una serie de pasos previos para su 
 - [Generación de la metadata](doc/README_metadata.md)
 - [Generación de las tablas Hive](doc/README_hive.md)
 
-
+Estas son las métricas generadas hasta el momento:
+- [Postfix](doc/README_postfix.md)
+- [Bluecoat](doc/README_bluecoat.md)
+- [Ironport](doc/README_ironport.md)
+- [Ironport Awstats](doc/README_awstats.md)
+- [Radius](doc/README_radius.md)
+- 
 # Índice
 
 1. Introducción
