@@ -47,13 +47,12 @@ public class Tuple2Stream extends BaseRichBolt {
 	public String metadataJson ;
 	private boolean firstMetadataSinc;
 	private OutputCollector collector;
-	Logger LOG;
+	private static Logger LOG =Logger.getLogger(Tuple2Stream.class);
 	
 	public Tuple2Stream(int metadataSincroSecs,String urlServicioGetMetadata,String metadataJson){
 		tickFrequencyInSecs=metadataSincroSecs;
 		this.urlServicioGetMetadata=urlServicioGetMetadata;
 		this.metadataJson=metadataJson;
-		LOG = Logger.getLogger(Tuple2Stream.class);
 		init();
 	}
 	
@@ -86,7 +85,7 @@ public class Tuple2Stream extends BaseRichBolt {
 			actualizaMetadata();
 			sendMetricTuples();
 		}else{
-
+			LOG.debug("Registro de datos");
 			//Es un registro de datos
 			if(this.metricasPorOrigen !=null && !this.metricasPorOrigen.isEmpty()){
 				//obtenemos el origen de la tupla
@@ -105,11 +104,13 @@ public class Tuple2Stream extends BaseRichBolt {
 					MetricaOnLine metrica = null;
 					List<MetricaOnLine> metricList = this.metricasPorOrigen.get(origen);
 					if(metricList!=null){
+						LOG.debug("Hay una o más de una métrica para el origen");
 						Iterator<MetricaOnLine> it = metricList.iterator();
 						//por cada métrica asociada al origen, generamos un a tupla con la estructura necesaria
 						while(it.hasNext()){
 							metrica=it.next();
 							String streamID=metrica.getStreamCep().getStreamName();
+							LOG.debug("Salida al stream: "+streamID);
 							String[] camposMetrica = metrica.getStreamCep().getStreamFields().split(",");
 							//Tamaño para el stream + todos los campos
 					 		List valoresEnvio = new ArrayList();

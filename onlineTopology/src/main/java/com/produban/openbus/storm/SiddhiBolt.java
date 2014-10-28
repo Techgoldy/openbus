@@ -115,7 +115,7 @@ public class SiddhiBolt extends BaseRichBolt {
 				StreamCep stream = metrica.getStreamCep();
 				//if that STREAM version has not been processed before
 				if(streamsVersionHistory.get(metrica.getOnLineMetricName()+"-"+stream.getStreamName())==null || streamsVersionHistory.get(metrica.getOnLineMetricName()+"-"+stream.getStreamName())<stream.getVersionMetadata()){
-					LOG.info("Recibimos el Stream "+stream.getStreamName());
+					LOG.debug("Recibimos el Stream "+stream.getStreamName());
 					//Test if EXISTS
 					Integer estadoStream=stream.getEstado().getCode();
 					
@@ -291,7 +291,7 @@ public class SiddhiBolt extends BaseRichBolt {
 								                if(inEvents!=null){
 									                for(Event e:inEvents){
 									                	try {
-									                											                		
+									                		valorIdEs="";									                		
 									                		dataBuilder=jsonBuilder().startObject();
 															
 															for(int i =0;i<campos.length;i++){
@@ -307,7 +307,7 @@ public class SiddhiBolt extends BaseRichBolt {
 															}
 															dataBuilder.endObject();
 															String docum=dataBuilder.string();
-															LOG.info("gg+ indice: "+valorIdEs+ " doc: "+docum);
+															LOG.debug("gg+ indice: "+valorIdEs+ " doc: "+docum);
 										                	collector.emit(new Values(metrica.getEsIndex(),query.getEsType(),valorIdEs,docum));
 										                	collector.emit("echo", new Values(metrica.getEsIndex(),query.getEsType(),valorIdEs,docum));
 														} catch (IOException e1) {
@@ -321,7 +321,7 @@ public class SiddhiBolt extends BaseRichBolt {
 									                for(Event e:removeEvents){
 
 									                	try {
-									                		
+									                		valorIdEs="";
 									                		dataBuilder=jsonBuilder().startObject();
 															
 															for(int i =0;i<campos.length;i++){
@@ -337,7 +337,7 @@ public class SiddhiBolt extends BaseRichBolt {
 															}
 															dataBuilder.endObject();
 															String docum=dataBuilder.string();
-															LOG.info("gg- indice: "+valorIdEs+ " doc: "+docum);
+															LOG.debug("gg- indice: "+valorIdEs+ " doc: "+docum);
 										                	collector.emit(new Values(metrica.getEsIndex(),query.getEsType(),valorIdEs,docum));
 										                	collector.emit("echo", new Values(metrica.getEsIndex(),query.getEsType(),valorIdEs,docum));
 									                	} catch (IOException e1) {
@@ -358,7 +358,7 @@ public class SiddhiBolt extends BaseRichBolt {
 									query.getEstado().setCode(100);
 								} catch (Exception e2) {
 									// TODO Auto-generated catch block
-									LOG.info("Error al crear el mapping definido");
+									LOG.warn("Error al crear el mapping definido");
 									query.setError(e2.getMessage());
 									query.getEstado().setCode(109);
 									metrica.getEstado().setCode(203);
@@ -424,7 +424,7 @@ public class SiddhiBolt extends BaseRichBolt {
 								                if(inEvents!=null){
 									                for(Event e:inEvents){
 									                	try {
-									                											                		
+									                		valorIdEs="";									                		
 									                		dataBuilder=jsonBuilder().startObject();
 															
 															for(int i =0;i<campos.length;i++){
@@ -440,7 +440,7 @@ public class SiddhiBolt extends BaseRichBolt {
 															}
 															dataBuilder.endObject();
 															String docum=dataBuilder.string();
-															LOG.info("gg+ indice: "+valorIdEs+ " doc: "+docum);
+															LOG.debug("gg+ indice: "+valorIdEs+ " doc: "+docum);
 										                	collector.emit(new Values(metrica.getEsIndex(),query.getEsType(),valorIdEs,docum));
 										                	collector.emit("echo", new Values(metrica.getEsIndex(),query.getEsType(),valorIdEs,docum));
 														} catch (IOException e1) {
@@ -454,7 +454,7 @@ public class SiddhiBolt extends BaseRichBolt {
 									                for(Event e:removeEvents){
 	
 									                	try {
-									                		
+									                		valorIdEs="";
 									                		dataBuilder=jsonBuilder().startObject();
 															
 															for(int i =0;i<campos.length;i++){
@@ -470,7 +470,7 @@ public class SiddhiBolt extends BaseRichBolt {
 															}
 															dataBuilder.endObject();
 															String docum=dataBuilder.string();
-															LOG.info("gg- indice: "+valorIdEs+ " doc: "+docum);
+															LOG.debug("gg- indice: "+valorIdEs+ " doc: "+docum);
 										                	collector.emit(new Values(metrica.getEsIndex(),query.getEsType(),valorIdEs,docum));
 										                	collector.emit("echo", new Values(metrica.getEsIndex(),query.getEsType(),valorIdEs,docum));
 									                	} catch (IOException e1) {
@@ -491,7 +491,7 @@ public class SiddhiBolt extends BaseRichBolt {
 									query.getEstado().setCode(107);
 								} catch (Exception e2) {
 									// TODO Auto-generated catch block
-									LOG.info("Error al crear el mapping definido");
+									LOG.warn("Error al crear el mapping definido");
 									query.setError(e2.getMessage());
 									query.getEstado().setCode(119);
 									metrica.getEstado().setCode(205);
@@ -570,7 +570,7 @@ public class SiddhiBolt extends BaseRichBolt {
 			String streamID=(String) datos.get(0);
 
 			List valores = (List) datos.get(1);
-
+			LOG.debug("SIDDHIBOLT - Sacamos la tupla por el stream: "+streamID);
 			InputHandler inputHandler = siddhiManager.getInputHandler(streamID);
 
 			if (inputHandler != null) {
@@ -628,7 +628,7 @@ public class SiddhiBolt extends BaseRichBolt {
 			//Lanzar excepcion (Creaarla)
 			throw new Exception("ERROR en QUERY: "+query.getQueryName()+"\\nLa cantidad de Campos de la query y de la salida a ElasticSearch no coinciden");
 		}
-		LOG.info("Formatos Obtenidos");
+		LOG.debug("Formatos Obtenidos");
 		//Generamos el JSON del Mapping
 		 XContentBuilder mappingBuilder;
 
@@ -648,7 +648,7 @@ public class SiddhiBolt extends BaseRichBolt {
         		  mappingBuilder.field("index", "not_analyzed");
         	  }
         	  if(mapCamposFormato.get(camposNombre[i].trim().toUpperCase()).toLowerCase().equals("date")){
-        		  mappingBuilder.field("format","yyyy-MM-dd hh:mm:ss");
+        		  mappingBuilder.field("format","yyyy-MM-dd HH:mm:ss");
         	  }
         	  mappingBuilder.endObject();
          }

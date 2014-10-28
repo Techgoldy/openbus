@@ -2,11 +2,12 @@ package com.produban.openbus.storm;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
+import kafka.javaapi.consumer.SimpleConsumer;
 import storm.kafka.KafkaSpout;
+import storm.kafka.KafkaUtils;
 import storm.kafka.SpoutConfig;
 import storm.kafka.ZkHosts;
 import backtype.storm.Config;
@@ -24,10 +25,9 @@ import com.produban.openbus.trident.EchoBolt;
 
 public class OnlineSiddhiTopology {
 	 public static void main(String[] args) {
-		  Logger LOG = Logger.getLogger(SiddhiBolt.class);
 
 		 if(args.length!=1){
-			 LOG.error("USO: <fichero de parámetros>");
+			 System.out.println("USO: <fichero de parámetros>");
 		 }
 		
 		 /**Creamos un Objeto de tipo Properties*/
@@ -38,7 +38,7 @@ public class OnlineSiddhiTopology {
 			 .load(new FileInputStream(args[0]));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			LOG.error("Error a la hora de abrir el fichero de PROPERTIES");
+			System.out.println("Error a la hora de abrir el fichero de PROPERTIES");
 			e1.printStackTrace();
 		}
 		IRichSpout spout=null;
@@ -48,15 +48,19 @@ public class OnlineSiddhiTopology {
 			//Configuramos el KafkaSpout
 			ZkHosts zooHosts = new ZkHosts(propiedades.getProperty("KAFKA_ZOOKEEPER_LIST"));
 		    SpoutConfig spoutConfig = new SpoutConfig(zooHosts, propiedades.getProperty("KAFKA_TOPIC"), "", "STORM-ID");
-		    boolean fromBeginning=true;
+		    boolean fromBeginning=false;
 		    if(propiedades.getProperty("KAFKA_FROM_BEGINNING")!=null){
 		    	fromBeginning=Boolean.parseBoolean(propiedades.getProperty("KAFKA_FROM_BEGINNING"));
 		    }else{
-		    	fromBeginning=true;
+		    	fromBeginning=false;
 		    }
-		    	
-		    spoutConfig.forceFromStart = fromBeginning;
+		    //spoutConfig.startOffsetTime=-1;
+		   spoutConfig.forceFromStart = fromBeginning;
+		    if(!fromBeginning){
+		    	spoutConfig.startOffsetTime=-1;
+		    }
 			spout =  new KafkaSpout(spoutConfig);
+			
 		}
 		if (tipo.equals("disco")){
 			spout = new SimpleFileStringSpout(propiedades.getProperty("INPUT_FILE"), "linea");
