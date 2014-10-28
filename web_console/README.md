@@ -2,6 +2,9 @@
 
 La consola es una aplicación web que sirve para la administración de métricas tanto batch como online para su posterior explotación en los entornos de servidor de Hive, elasticsearch o Kibana. En las siguientes líneas se adjunta el manual de uso de la misma. Si se quisiera realizar cambios, compilar y desplegar nuevamente en el servidor se recomienda seguir esta [guía](README_deploy.md).
 
+Del mismo modo se requiere haber configurado una serie de pasos previos para su correcto funcionamiento enumerados aquí:
+- 
+
 
 # Índice
 
