@@ -211,9 +211,6 @@ $(document).ready(function() {
 			    	<th th:text="#{show.label.nombre}"></th>
 			        <th th:text="#{show.label.nombre}"></th>
 			        <th th:text="#{show.label.descripcion}"></th>
-			        <!-- 
-			        <th th:text="#{show.label.planificacion}"></th>
-			         -->
 			        <th th:text="#{show.label.origen}"></th>
 			        <th th:text="#{show.label.fechaultlanz}"></th>
 			        <th th:text="#{show.label.estado}"></th>
@@ -225,28 +222,13 @@ $(document).ready(function() {
 			    	<td th:text="${metric.id}"></td>
 			        <td th:text="${metric.batchMetricName}"></td>
 			        <td th:text="${metric.batchMetricDesc}"></td>
-			        <!-- 
-			        <td th:text="${metric.planificacion}"></td>
-			         -->
 			        <td th:text="${metric.esIndex}"></td>
 			        <td th:text="${metric.fechaUltModif}"></td>
-			        <p th:if="${metric.estado} != Error" >
-			        	<p th:if="${metric.estado} == Ok" >
-			        		<td th:text="${metric.estado}" style="color:#3ADF00"></td>
-			        	</p>
-			        	<p th:if="${metric.estado} != Ok" >
-			        		<td th:text="${metric.estado}" style="color:#FFBF00"></td>
-			        	</p>
-			        </p>
-			        <p th:if="${metric.estado} == Error" >
-			        	<td th:text="${metric.estado}" style="color:#FF0000" th:title="${metric.error}"></td>
-			        </p>
-			        <p th:if="${metric.estado} == Ok" >
-			        	<td><input type="button" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
-			        </p>
-			        <p th:if="${metric.estado} != Ok" >
-			        	<td><input type="button" disabled="disabled" class="classButton" value="Relanzar m&eacute;trica" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
-			        </p>
+	        		<td th:if="${metric.estado} != Error and ${metric.estado} == Ok" th:text="${metric.estado}" style="color:#3ADF00"></td>
+	        		<td th:if="${metric.estado} != Error and ${metric.estado} != Ok" th:text="${metric.estado}" style="color:#FFBF00"></td>
+		        	<td th:if="${metric.estado} == Error" th:text="${metric.estado}" style="color:#FF0000" th:title="${metric.error}"></td>
+		        	<td th:if="${metric.estado} == Ok"><input type="button" class="classButton" th:value="#{show.button.relaunch}" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
+		        	<td th:if="${metric.estado} != Ok"><input type="button" disabled="disabled" class="classButton" th:value="#{show.button.relaunch}" value="Relanzar m&eacute;trica" th:onclick="'javascript:reLaunchMetric(\'' + ${metric.id} + '\');'"/></td>
 			    </tr>
 			    </tbody>
 			</table>

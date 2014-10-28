@@ -106,7 +106,7 @@ CREATE TABLE `metrica_batch` (
   `usuario_modificacion` varchar(255) DEFAULT NULL,
   `version` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -145,9 +145,9 @@ CREATE TABLE `metrica_on_line` (
   PRIMARY KEY (`id`),
   KEY `FK_9du3p5ebtiy61m5ju7kvlkarh` (`estado`),
   KEY `FK_abql4japs9as575xq249m13y3` (`stream_cep`),
-  CONSTRAINT `FK_abql4japs9as575xq249m13y3` FOREIGN KEY (`stream_cep`) REFERENCES `stream_cep` (`id`),
-  CONSTRAINT `FK_9du3p5ebtiy61m5ju7kvlkarh` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  CONSTRAINT `FK_9du3p5ebtiy61m5ju7kvlkarh` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`),
+  CONSTRAINT `FK_abql4japs9as575xq249m13y3` FOREIGN KEY (`stream_cep`) REFERENCES `stream_cep` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +156,7 @@ CREATE TABLE `metrica_on_line` (
 
 LOCK TABLES `metrica_on_line` WRITE;
 /*!40000 ALTER TABLE `metrica_on_line` DISABLE KEYS */;
-INSERT INTO `metrica_on_line` VALUES (1,NULL,'ID','ob_src_radius','radius','2014-10-15 10:56:56','2014-10-15 12:13:53','','radius','admin',NULL,30,29,32,1);
+INSERT INTO `metrica_on_line` VALUES (1,NULL,'ID','ob_src_radius','radius','2014-10-15 10:56:56','2014-10-21 13:00:32','','radius',NULL,NULL,42,41,24,1),(2,NULL,'ID','ob_src_radius','media_errores','2014-10-21 08:41:11','2014-10-21 09:12:46','Media de errores en las peticiones','media_errores',NULL,NULL,5,5,24,2);
 /*!40000 ALTER TABLE `metrica_on_line` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,8 +174,8 @@ CREATE TABLE `metrica_on_line_hs_query_cep` (
   UNIQUE KEY `UK_a5urtbxsq8euac1t2x9787lfn` (`hs_query_cep`),
   KEY `FK_a5urtbxsq8euac1t2x9787lfn` (`hs_query_cep`),
   KEY `FK_tawt96yluqapnjmowqwxl31m6` (`metrica_on_line`),
-  CONSTRAINT `FK_tawt96yluqapnjmowqwxl31m6` FOREIGN KEY (`metrica_on_line`) REFERENCES `metrica_on_line` (`id`),
-  CONSTRAINT `FK_a5urtbxsq8euac1t2x9787lfn` FOREIGN KEY (`hs_query_cep`) REFERENCES `query_cep` (`id`)
+  CONSTRAINT `FK_a5urtbxsq8euac1t2x9787lfn` FOREIGN KEY (`hs_query_cep`) REFERENCES `query_cep` (`id`),
+  CONSTRAINT `FK_tawt96yluqapnjmowqwxl31m6` FOREIGN KEY (`metrica_on_line`) REFERENCES `metrica_on_line` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -185,7 +185,7 @@ CREATE TABLE `metrica_on_line_hs_query_cep` (
 
 LOCK TABLES `metrica_on_line_hs_query_cep` WRITE;
 /*!40000 ALTER TABLE `metrica_on_line_hs_query_cep` DISABLE KEYS */;
-INSERT INTO `metrica_on_line_hs_query_cep` VALUES (1,54),(1,55),(1,56),(1,57),(1,58),(1,59);
+INSERT INTO `metrica_on_line_hs_query_cep` VALUES (2,73),(1,87),(1,88),(1,89),(1,90),(1,91),(1,92),(1,93);
 /*!40000 ALTER TABLE `metrica_on_line_hs_query_cep` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,11 +214,10 @@ CREATE TABLE `metrica_on_line_hs_table_cep` (
 
 LOCK TABLES `metrica_on_line_hs_table_cep` WRITE;
 /*!40000 ALTER TABLE `metrica_on_line_hs_table_cep` DISABLE KEYS */;
-INSERT INTO `metrica_on_line_hs_table_cep` VALUES (1,19);
+INSERT INTO `metrica_on_line_hs_table_cep` VALUES (1,24);
 /*!40000 ALTER TABLE `metrica_on_line_hs_table_cep` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
 -- Table structure for table `origen_estructurado`
 --
 
@@ -260,7 +259,7 @@ CREATE TABLE `query_cep` (
   `es_type` varchar(255) DEFAULT NULL,
   `group_by` longblob,
   `has_callback` bit(1) DEFAULT NULL,
-  `output_field_format` varchar(255) DEFAULT NULL,
+  `output_field_format` longblob,
   `output_field_names` longblob,
   `output_field_user` longblob,
   `output_stream` longblob,
@@ -275,7 +274,7 @@ CREATE TABLE `query_cep` (
   PRIMARY KEY (`id`),
   KEY `FK_8c92asx4m50ksyj8ke6iwweur` (`estado`),
   CONSTRAINT `FK_8c92asx4m50ksyj8ke6iwweur` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +283,7 @@ CREATE TABLE `query_cep` (
 
 LOCK TABLES `query_cep` WRITE;
 /*!40000 ALTER TABLE `query_cep` DISABLE KEYS */;
-INSERT INTO `query_cep` VALUES (15,NULL,'','','radius_hosts','','\0','','id,maquina,mac,cuenta','select radius.TIMESTAMP_MILLIS as ID,radius.User_Name as maquina, radius.Calling_Station_ID as mac, count(1) as cuenta','delete hosts for current-events ','hosts-1a81a2ec-0be3-4c92-a33a-49884f12d95b','\nfrom radius[(User_Name contains \'host/\')]\njoin hosts as hosts \non radius.Calling_Station_ID == hosts.mac and hosts.ID<radius.TIMESTAMP_MILLIS','\nfrom radius[(User_Name contains \'host/\')]\njoin hosts as hosts \non radius.Calling_Station_ID == hosts.mac and hosts.ID<radius.TIMESTAMP_MILLIS select radius.TIMESTAMP_MILLIS as ID,radius.User_Name as maquina, radius.Calling_Station_ID as mac, count(1) as cuenta  delete hosts for current-events ','q2',2,0,5,16),(45,NULL,'','180s','radius_peticionconmaquina\n','','','timestamp date, idHost long,ID long,usuario string, maquina string, mac string,status string, motivo string','timestamp,idhost,id,usuario,maquina,mac,status,motivo\n','select timestamp as timestamp,0L as idHost, ID as ID, usuario as usuario, \"not defined\" as maquina, mac as mac, status as status, motivo as motivo\n','insert into peticionConMaquina\n ','peticionConMaquina-e0d37ae0-d8c4-495e-a748-7991a98a104e','from peticionesUsuario[not(peticionesUsuario.mac==hosts.mac in hosts)]  ','from peticionesUsuario[not(peticionesUsuario.mac==hosts.mac in hosts)]   select timestamp as timestamp,0L as idHost, ID as ID, usuario as usuario, \"not defined\" as maquina, mac as mac, status as status, motivo as motivo\n  insert into peticionConMaquina\n ','q5',5,0,5,16),(53,NULL,'','180s','radius_masdetresfallos','','','timestamp date, idHost long,ID long, usuario string, maquina string, mac string, status string, motivo string, errorsConsecutivos long\n','timestamp,idhost,id,usuario,maquina,mac,status,motivo,errorsconsecutivos\n','select timestamp as timestamp,idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, errorsConsecutivos as errorsConsecutivos\n','insert into masDeTresFallos for current-events \n','masDeTresFallos-2e0e3b3c-fdbe-42ec-9597-92c9898611a4','from fallosConsecutivos[errorsConsecutivos>=2]#window.time(20000) \n','from fallosConsecutivos[errorsConsecutivos>=2]#window.time(20000) \n select timestamp as timestamp,idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, errorsConsecutivos as errorsConsecutivos\n  insert into masDeTresFallos for current-events \n','q7',7,0,2,16),(54,NULL,'','180s','radius_peticionconmaquina','','','timestamp date, idHost long,ID long,usuario string, maquina string, mac string,status string, motivo string\n','timestamp,idhost,id ,usuario,maquina,mac,status,motivo\n','select timestamp as timestamp, hosts.ID as idHost, peticionesUsuario.ID as ID , usuario as usuario, maquina as maquina, peticionesUsuario.mac as mac, status as status, motivo as motivo\n','insert into peticionConMaquina  ','peticionConMaquina-22626b00-91f0-422e-999c-5a5817ddb4fc','from peticionesUsuario as peticionesUsuario unidirectional\njoin \nhosts as hosts\non hosts.mac==peticionesUsuario.mac','from peticionesUsuario as peticionesUsuario unidirectional\njoin \nhosts as hosts\non hosts.mac==peticionesUsuario.mac select timestamp as timestamp, hosts.ID as idHost, peticionesUsuario.ID as ID , usuario as usuario, maquina as maquina, peticionesUsuario.mac as mac, status as status, motivo as motivo\n  insert into peticionConMaquina  ','q4',4,0,5,17),(55,NULL,'','','radius_hosts','','\0','','id,maquina,mac,cuenta   ','select TIMESTAMP_MILLIS as ID,User_Name as maquina, Calling_Station_ID as mac, count(1) as cuenta   ','insert into hosts  ','hosts-7a36ac41-fc2b-40c6-8561-2013993ce1c3','from radius[(User_Name contains \'host/\')] ','from radius[(User_Name contains \'host/\')]  select TIMESTAMP_MILLIS as ID,User_Name as maquina, Calling_Station_ID as mac, count(1) as cuenta     insert into hosts  ','q1',1,0,11,10),(56,NULL,'','180s','radius_fallosconsecutivos','group by usuario \n','','timestamp date, idHost long,ID long, usuario string, maquina string, mac string, status string, motivo string, errorsConsecutivos long,tamano long\n','timestamp,idhost,id,usuario,maquina,mac,status,motivo,errorsconsecutivos,tamano \n','select timestamp as timestamp, idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, agregacion:sumConReset(1L,status,\'Passed\') as errorsConsecutivos,1 as tamano \n','insert into fallosConsecutivos for current-events \n','fallosConsecutivos-d658c2f1-37c5-413e-95a9-52ff55c41eb7','from peticionConMaquina#window.time(20000) \n','from peticionConMaquina#window.time(20000) \n select timestamp as timestamp, idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, agregacion:sumConReset(1L,status,\'Passed\') as errorsConsecutivos,1 as tamano \n group by usuario \n insert into fallosConsecutivos for current-events \n','q6',6,0,1,10),(57,NULL,'','','radius_hosts','','\0','','id,maquina,mac,cuenta ','select radius.TIMESTAMP_MILLIS as ID,radius.User_Name as maquina, radius.Calling_Station_ID as mac, count(1) as cuenta ','delete hosts for current-events  ','hosts-9fd42825-4ea8-42d0-8f98-7bcc9387b9c4','from radius[(User_Name contains \'host/\')]\njoin hosts as hosts \non radius.Calling_Station_ID == hosts.mac and hosts.ID<radius.TIMESTAMP_MILLIS','from radius[(User_Name contains \'host/\')]\njoin hosts as hosts \non radius.Calling_Station_ID == hosts.mac and hosts.ID<radius.TIMESTAMP_MILLIS select radius.TIMESTAMP_MILLIS as ID,radius.User_Name as maquina, radius.Calling_Station_ID as mac, count(1) as cuenta   delete hosts for current-events  ','q2',2,0,5,10),(58,NULL,'','180s','radius_peticionconmaquina','','','timestamp date, idHost long,ID long,usuario string, maquina string, mac string,status string, motivo string','timestamp,idhost,id,usuario,maquina,mac,status,motivo\n','select timestamp as timestamp,0L as idHost, ID as ID, usuario as usuario, \"not defined\" as maquina, mac as mac, status as status, motivo as motivo\n','insert into peticionConMaquina','peticionConMaquina-d79921b1-ffa5-437b-8bb0-019b369a440e','from peticionesUsuario[not(peticionesUsuario.mac==hosts.mac in hosts)]  ','from peticionesUsuario[not(peticionesUsuario.mac==hosts.mac in hosts)]   select timestamp as timestamp,0L as idHost, ID as ID, usuario as usuario, \"not defined\" as maquina, mac as mac, status as status, motivo as motivo\n  insert into peticionConMaquina','q5',5,0,1,10),(59,NULL,'','180s','radius_peticionesusuario\n','','','timestamp date, ID long,usuario string, mac string, status string,motivo string','timestamp,id,usuario,mac,status,motivo \n\n ','select ACS_Timestamp as timestamp, TIMESTAMP_MILLIS as ID,User_Name as usuario, Calling_Station_ID as mac, Authentication_Status as status, Failure_Reason as motivo \n\n ','insert into peticionesUsuario\n ','peticionesUsuario-5262f8e5-c8b1-4a29-a0eb-b8e5a1189fdd','from radius[not(User_Name contains \'host/\' and Access_Service==\'802.1x_SanHQ\')] ','from radius[not(User_Name contains \'host/\' and Access_Service==\'802.1x_SanHQ\')]  select ACS_Timestamp as timestamp, TIMESTAMP_MILLIS as ID,User_Name as usuario, Calling_Station_ID as mac, Authentication_Status as status, Failure_Reason as motivo \n\n   insert into peticionesUsuario\n ','q3',3,1,9,17);
+INSERT INTO `query_cep` VALUES (15,NULL,'','','radius_hosts','','\0','','id,maquina,mac,cuenta','select radius.TIMESTAMP_MILLIS as ID,radius.User_Name as maquina, radius.Calling_Station_ID as mac, count(1) as cuenta','delete hosts for current-events ','hosts-1a81a2ec-0be3-4c92-a33a-49884f12d95b','\nfrom radius[(User_Name contains \'host/\')]\njoin hosts as hosts \non radius.Calling_Station_ID == hosts.mac and hosts.ID<radius.TIMESTAMP_MILLIS','\nfrom radius[(User_Name contains \'host/\')]\njoin hosts as hosts \non radius.Calling_Station_ID == hosts.mac and hosts.ID<radius.TIMESTAMP_MILLIS select radius.TIMESTAMP_MILLIS as ID,radius.User_Name as maquina, radius.Calling_Station_ID as mac, count(1) as cuenta  delete hosts for current-events ','q2',2,0,5,11),(45,NULL,'','180s','radius_peticionconmaquina\n','','','timestamp date, idHost long,ID long,usuario string, maquina string, mac string,status string, motivo string','timestamp,idhost,id,usuario,maquina,mac,status,motivo\n','select timestamp as timestamp,0L as idHost, ID as ID, usuario as usuario, \"not defined\" as maquina, mac as mac, status as status, motivo as motivo\n','insert into peticionConMaquina\n ','peticionConMaquina-e0d37ae0-d8c4-495e-a748-7991a98a104e','from peticionesUsuario[not(peticionesUsuario.mac==hosts.mac in hosts)]  ','from peticionesUsuario[not(peticionesUsuario.mac==hosts.mac in hosts)]   select timestamp as timestamp,0L as idHost, ID as ID, usuario as usuario, \"not defined\" as maquina, mac as mac, status as status, motivo as motivo\n  insert into peticionConMaquina\n ','q5',5,0,5,11),(53,NULL,'','180s','radius_masdetresfallos','','','timestamp date, idHost long,ID long, usuario string, maquina string, mac string, status string, motivo string, errorsConsecutivos long\n','timestamp,idhost,id,usuario,maquina,mac,status,motivo,errorsconsecutivos\n','select timestamp as timestamp,idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, errorsConsecutivos as errorsConsecutivos\n','insert into masDeTresFallos for current-events \n','masDeTresFallos-2e0e3b3c-fdbe-42ec-9597-92c9898611a4','from fallosConsecutivos[errorsConsecutivos>=2]#window.time(20000) \n','from fallosConsecutivos[errorsConsecutivos>=2]#window.time(20000) \n select timestamp as timestamp,idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, errorsConsecutivos as errorsConsecutivos\n  insert into masDeTresFallos for current-events \n','q7',7,0,2,11),(73,NULL,'','180s','media_errores_mediafallos','','','timestamp  date, media long ','timestamp,media','select ACS_Timestamp as timestamp, agregacion:mediaCondIntPorcentaje(Authentication_Status,\'Failed\',10000) as media','insert into mediaFallos for all-events','mediaFallos-faaddfa1-8c5d-4530-88f6-167757ad1f28','from radius2[not(User_Name contains \'host/\')]#window.time(20000)','from radius2[not(User_Name contains \'host/\')]#window.time(20000) select ACS_Timestamp as timestamp, agregacion:mediaCondIntPorcentaje(Authentication_Status,\'Failed\',10000) as media  insert into mediaFallos for all-events','calculoMedia',1,3,5,10),(87,NULL,'','180s','radius_fallosconsecutivos','group by usuario \n','','timestamp date, idHost long,ID long, usuario string, maquina string, mac string, status string, motivo string, errorsConsecutivos long,tamano long\n','timestamp,idhost,id,usuario,maquina,mac,status,motivo,errorsconsecutivos,tamano \n','select timestamp as timestamp, idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, agregacion:sumConReset(1L,status,\'Passed\') as errorsConsecutivos,1 as tamano \n','insert into fallosConsecutivos for current-events\n','fallosConsecutivos-02808cca-aeb6-4c9a-a5b0-80fb11117249','from peticionConMaquina#window.time(20000) \n ','from peticionConMaquina#window.time(20000) \n  select timestamp as timestamp, idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, agregacion:sumConReset(1L,status,\'Passed\') as errorsConsecutivos,1 as tamano \n group by usuario \n insert into fallosConsecutivos for current-events\n','q6',6,1,8,10),(88,NULL,'','180s','radius_peticionesusuario','','','timestamp date, ID long,usuario string, mac string, status string,motivo string','timestamp,id,usuario,mac,status,motivo \n\n ','select ACS_Timestamp as timestamp, TIMESTAMP_MILLIS as ID,User_Name as usuario, Calling_Station_ID as mac, Authentication_Status as status, Failure_Reason as motivo \n\n ','insert into peticionesUsuario','peticionesUsuario-1f6e7885-013e-47d8-8d99-492545bb91ce','from radius[not(User_Name contains \'host/\') and Access_Service==\'802.1x_SanHQ\'] ','from radius[not(User_Name contains \'host/\') and Access_Service==\'802.1x_SanHQ\']  select ACS_Timestamp as timestamp, TIMESTAMP_MILLIS as ID,User_Name as usuario, Calling_Station_ID as mac, Authentication_Status as status, Failure_Reason as motivo \n\n   insert into peticionesUsuario','q3',3,1,19,10),(89,NULL,'','','radius_hosts','','\0','','id,maquina,mac,cuenta   ','select TIMESTAMP_MILLIS as ID,User_Name as maquina, Calling_Station_ID as mac, count(1) as cuenta   ','insert into hosts  ','hosts-ea85037e-5919-448d-a137-662aacecd2cf','from radius[(User_Name contains \'host/\')]','from radius[(User_Name contains \'host/\')] select TIMESTAMP_MILLIS as ID,User_Name as maquina, Calling_Station_ID as mac, count(1) as cuenta     insert into hosts  ','q1',1,1,18,10),(90,NULL,'','180s','radius_peticionconmaquina','','','timestamp date, idHost long,ID long,usuario string, maquina string, mac string,status string, motivo string\n','timestamp,idhost,id ,usuario,maquina,mac,status,motivo\n','select timestamp as timestamp, hosts.ID as idHost, peticionesUsuario.ID as ID , usuario as usuario, maquina as maquina, peticionesUsuario.mac as mac, status as status, motivo as motivo\n','insert into peticionConMaquina','peticionConMaquina-ee63fcd6-0525-448d-9c4f-4c6baa120ddc','from peticionesUsuario as peticionesUsuario unidirectional\njoin \nhosts as hosts\non hosts.mac==peticionesUsuario.mac','from peticionesUsuario as peticionesUsuario unidirectional\njoin \nhosts as hosts\non hosts.mac==peticionesUsuario.mac select timestamp as timestamp, hosts.ID as idHost, peticionesUsuario.ID as ID , usuario as usuario, maquina as maquina, peticionesUsuario.mac as mac, status as status, motivo as motivo\n  insert into peticionConMaquina','q4',4,1,12,10),(91,NULL,'','180s','radius_peticionconmaquina','','','timestamp date, idHost long,ID long,usuario string, maquina string, mac string,status string, motivo string','timestamp,idhost,id,usuario,maquina,mac,status,motivo\n','select timestamp as timestamp,0L as idHost, ID as ID, usuario as usuario, \"not defined\" as maquina, mac as mac, status as status, motivo as motivo\n','insert into peticionConMaquina','peticionConMaquina-4abd83f4-510d-4df9-ba64-e7d48b9ace4c','from peticionesUsuario[not(peticionesUsuario.mac==hosts.mac in hosts)]  ','from peticionesUsuario[not(peticionesUsuario.mac==hosts.mac in hosts)]   select timestamp as timestamp,0L as idHost, ID as ID, usuario as usuario, \"not defined\" as maquina, mac as mac, status as status, motivo as motivo\n  insert into peticionConMaquina','q5',5,1,8,10),(92,NULL,'','180s','radius_masdetresfallos','','','timestamp date, idHost long,ID long, usuario string, maquina string, mac string, status string, motivo string, errorsConsecutivos long','timestamp,idhost,id,usuario,maquina,mac,status,motivo,errorsconsecutivos','select timestamp as timestamp,idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, errorsConsecutivos as errorsConsecutivos','insert into masDeTresFallos for current-events','masDeTresFallos-4cc4d9be-8316-4b29-9d14-a875fa436863','from fallosConsecutivos[errorsConsecutivos>2]#window.time(20000)','from fallosConsecutivos[errorsConsecutivos>2]#window.time(20000) select timestamp as timestamp,idHost as idHost, ID as ID, usuario as usuario, maquina as maquina, mac as mac, status as status, motivo as motivo, errorsConsecutivos as errorsConsecutivos  insert into masDeTresFallos for current-events','q7',7,1,4,10),(93,NULL,'','','radius_hosts','','\0','','id,maquina,mac,cuenta ','select radius.TIMESTAMP_MILLIS as ID,radius.User_Name as maquina, radius.Calling_Station_ID as mac, count(1) as cuenta ','delete hosts for current-events  ','hosts-62b7bf35-a449-4acf-8ee5-2ef591f2ea0b','from radius[(User_Name contains \'host/\')]\njoin hosts as hosts\non radius.Calling_Station_ID == hosts.mac and hosts.ID<radius.TIMESTAMP_MILLIS','from radius[(User_Name contains \'host/\')]\njoin hosts as hosts\non radius.Calling_Station_ID == hosts.mac and hosts.ID<radius.TIMESTAMP_MILLIS select radius.TIMESTAMP_MILLIS as ID,radius.User_Name as maquina, radius.Calling_Station_ID as mac, count(1) as cuenta   delete hosts for current-events  ','q2',2,1,12,10);
 /*!40000 ALTER TABLE `query_cep` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,7 +310,7 @@ CREATE TABLE `stream_cep` (
   KEY `FK_ak91yefvgku4n5pwaw1h6t1x3` (`origen_estructurado`),
   CONSTRAINT `FK_ak91yefvgku4n5pwaw1h6t1x3` FOREIGN KEY (`origen_estructurado`) REFERENCES `origen_estructurado` (`id`),
   CONSTRAINT `FK_mnnnquhdfl8baxrkfs3a7jfvq` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,13 +319,10 @@ CREATE TABLE `stream_cep` (
 
 LOCK TABLES `stream_cep` WRITE;
 /*!40000 ALTER TABLE `stream_cep` DISABLE KEYS */;
-INSERT INTO `stream_cep` VALUES (1,'Query creada con éxito','radius','ACS_Timestamp string,TIMESTAMP_MILLIS long,Access_Service string, User_Name string,Calling_Station_ID string,Authentication_Status string,Failure_Reason string  \n','define stream radius (ACS_Timestamp string,TIMESTAMP_MILLIS long,Access_Service string, User_Name string,Calling_Station_ID string,Authentication_Status string,Failure_Reason string  \n);','radius',17,13,7,6);
+INSERT INTO `stream_cep` VALUES (1,'Creación correcta del Stream','radius','ACS_Timestamp string,TIMESTAMP_MILLIS long,Access_Service string, User_Name string,Calling_Station_ID string,Authentication_Status string,Failure_Reason string      \n','define stream radius (ACS_Timestamp string,TIMESTAMP_MILLIS long,Access_Service string, User_Name string,Calling_Station_ID string,Authentication_Status string,Failure_Reason string      \n);','radius',26,20,1,6),(2,'Creación correcta del Stream','radius2','Authentication_Status string, ACS_Timestamp string, User_Name string','define stream radius2   (Authentication_Status string, ACS_Timestamp string, User_Name string);','radius2',5,5,1,6);
 /*!40000 ALTER TABLE `stream_cep` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `table_cep`
---
 
 DROP TABLE IF EXISTS `table_cep`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -344,7 +340,7 @@ CREATE TABLE `table_cep` (
   PRIMARY KEY (`id`),
   KEY `FK_jc6ghhlmlnoguuly9co8d2p6m` (`estado`),
   CONSTRAINT `FK_jc6ghhlmlnoguuly9co8d2p6m` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +349,7 @@ CREATE TABLE `table_cep` (
 
 LOCK TABLES `table_cep` WRITE;
 /*!40000 ALTER TABLE `table_cep` DISABLE KEYS */;
-INSERT INTO `table_cep` VALUES (3,NULL,'ID long, maquina string, mac string, cuenta long','define table hosts (ID long, maquina string, mac string, cuenta long);',NULL,'hosts',0,2,43),(19,NULL,'ID long, maquina string, mac string, cuenta long ','define table hosts (ID long, maquina string, mac string, cuenta long );',NULL,'hosts',0,10,45);
+INSERT INTO `table_cep` VALUES (3,NULL,'ID long, maquina string, mac string, cuenta long','define table hosts (ID long, maquina string, mac string, cuenta long);',NULL,'hosts',0,2,40),(24,'Creación correcta de la Tabla','ID long, maquina string, mac string, cuenta long','define table hosts (ID long, maquina string, mac string, cuenta long);',NULL,'hosts',1,17,39);
 /*!40000 ALTER TABLE `table_cep` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -366,4 +362,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-15 12:30:27
+-- Dump completed on 2014-10-27 15:33:09

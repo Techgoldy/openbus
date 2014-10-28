@@ -1106,6 +1106,9 @@ public class ConsoleController {
 			else if (! queryDTO.getEsTTL().equalsIgnoreCase(queryBBDD.getEsTTL())){
 			    enCreacionQuery = false;			    
 			}			
+			else if (! queryDTO.getQueryId().equalsIgnoreCase(queryBBDD.getEsId())){
+			    enCreacionQuery = false;			    
+			}			
 			else if (queryBBDD.getHasCallback() && queryDTO.getRdCallback().equals("0")){
 			    enCreacionQuery = false;			    
 			}			
