@@ -68,6 +68,8 @@ poder modificarlas o marcarlas para borrar.
 
 # 4.Crear métrica batch
 
+La consola da la opción de crear métricas en modo batch, la métrica se podrá crear en el panel, guardar la metadata y lanzar a Hive para posteriormente guardar el resultado en elasticsearch y poder ser explotado con una herramienta como Kibana.
+
 Los campos marcados con asterisco indican que son obligatorios de
 rellenar.
 
@@ -155,6 +157,8 @@ indique en la caja afectará a todas las columnas de la tabla.
 ![Image](images/000012.png)
 
 # 6.Crear métrica online
+
+La consola también da la opción de crear métricas en modo online, la métrica se podrá crear en el panel, guardar la metadata y lanzarla al servidor. Las sentencias quedarán traducidas al lenguaje SiddhiQL y serán inyectadas en un motor Siddhi CEP  embebido dentro de una topología Storm para posteriormente quedar almacenado su resultado en elasticsearch y poder ser explotado con una herramienta como Kibana.
 
 Los campos marcados con asterisco indican que son obligatorios de
 rellenar.
