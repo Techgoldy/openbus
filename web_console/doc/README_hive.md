@@ -132,4 +132,76 @@ LOCATION '/user/hdfs/input/ironport/';
 -- Tabla Hive para radius
 
 ```
+CREATE EXTERNAL TABLE ob_src_radius(
+ID int 
+,Message_Text string 
+,TIMESTAMP_MILLIS LONG 
+,ACS_Timestamp timestamp 
+,ACSView_Timestamp timestamp 
+,ACS_Server string 
+,ACS_Session_ID string 
+,Access_Service string 
+,Service_Selection_Policy string 
+,Authorization_Policy string 
+,User_Name string 
+,Identity_Store string 
+,Authentication_Method string 
+,Network_Device_Name string 
+,Identity_Group string 
+,Network_Device_Groups string 
+,Calling_Station_ID string 
+,NAS_Port string 
+,Service_Type string 
+,Audit_Session_ID string 
+,CTS_Security_Group string 
+,Failure_Reason string 
+,Use_Case string 
+,Framed_IP_Address string 
+,NAS_Identifier string 
+,NAS_IP_Address string 
+,NAS_Port_Id int 
+,Cisco_AV_Pair string 
+,AD_Domain string 
+,Response_Time int 
+,Passed int 
+,Failed int 
+,Authentication_Status string 
+,Radius_Daignostic_link string 
+,Active_Session_Link string 
+,ACS_UserName string
+,NAC_Role string
+,NAC_Policy_Compliance string
+,NAC_Username string
+,NAC_Posture_Token string
+,Selected_Posture_Server string
+,Selected_Identity_Store string
+,Authentication_Identity_Store string
+,Authorization_Exception_Policy_Matched_Rule string
+,External_Policy_Server_Matched_Rule string
+,Group_Mapping_Policy_Matched_Rule string
+,Identity_Policy_Matched_Rule string
+,NAS_Port_Type string
+,Query_Identity_Stores string
+,Selected_Authorization_Profiles string
+,Selected_Exception_Authorization_Profiles string
+,Selected_Query_Identity_Stores string
+,Tunnel_Details string
+,Cisco_H323_Attributes string
+,Cisco_SSG_Attributes string
+,Other_Attributes string
+,More_Details string
+,EAP_Tunnel string
+,EAP_Authentication string
+,Eap_Tunnel string
+,Eap_Authentication string
+,RADIUS_User_Name string
+,NAS_Failure string
+,timestamp string
+,Response string
+,TOTAL_COLUMN_0 string
+,TOTAL_COLUMN_1 string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\001'
+COLLECTION ITEMS TERMINATED BY ','
+LOCATION '/user/hdfs/input/radius';
 ```
