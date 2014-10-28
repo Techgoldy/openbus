@@ -227,7 +227,7 @@ Los campos requeridos son:
 - INPUT_FILE: URL del fichero. Solamente será usado si "INPUT_ORIGIN=disco"
 
 - KAFKA_ZOOKEEPER_LIST: Lista de servidores de zookeeper para kafka <ip:port>,<ip:port>,...
-
+- KAFKA_FROM_BEGINNING: Si el valor es "true" se leerá desde el principio del tópico. En caso contrario se leerá desde donde se quedara la última vez (final del tópico si no se ha leido nunca).
 - KAFKA_TOPIC: Nombre del tópico desde el se leerán los datos
 
 - METADATA_SINCRO_SECS: Frecuencia de actualización de la metadata por parte de la topología.(en segundos)
