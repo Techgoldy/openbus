@@ -183,10 +183,10 @@ insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_
 insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('Cisco_SSG_Attributes' , 'string', 6,55);
 insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('Other_Attributes' , 'string', 6,56);
 insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('More_Details' , 'string', 6,57);
-insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('EAP_Tunnel' , 'string', 6,58);
-insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('EAP_Authentication' , 'string', 6,59);
-insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('Eap_Tunnel' , 'string', 6,60);
-insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('Eap_Authentication' , 'string', 6,61);
+insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('EAP_Tunnel1' , 'string', 6,58);
+insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('EAP_Authentication1' , 'string', 6,59);
+insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('EAP_Tunnel2' , 'string', 6,60);
+insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('EAP_Authentication2' , 'string', 6,61);
 insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('RADIUS_User_Name' , 'string', 6,62);
 insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('NAS_Failure' , 'string', 6,63);
 insert into campos_origen (nombre_campo, tipo_campo, origen_estructurado, orden_en_tabla) values ('timestamp' , 'string', 6,64);
