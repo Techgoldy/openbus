@@ -163,6 +163,7 @@ Los datos son los siguientes:
   _type:"correos_diaok" AND mes:7 | Cantidad y tamaño de los correos válidos por día/mes/año + filtro de mes=7
   _type:"correos_ok" AND ano:2014 | Resumen de cantidad y tamaño de los correos válidos por mes + filtro de año=2014
   _type:"errores_smtp" AND mes:7 | Cantidad y tamaño de los correos erroneos por tipo de error (DSN) + filtro de mes=7
+  _type:"correos_dia_hora" | Cantidad y tamaño de correos por día y hora
   
 **Paneles:**
 
@@ -177,11 +178,13 @@ Los datos son los siguientes:
   Top Emisores | Lista de los 20 emisores que más correos han enviado por cantidad y tamaño en sus correos del mes.
   Top Receptores | Lista de los 20 receptores que más correos han recibido por cantidad y tamaño en sus correos del mes.
   Errores de envío | Cantidad,tamaño y porcentaje de correos erroneos o rechazados clasificados por DSN para el mes seleccionado.
+  Cuenta de correos por día y hora | Heatmap donde se muestran la cantidad de correos por día y hora.
   
  ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/5%20-%20M%C3%A9tricas%20Postfix/1.png)
  ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/5%20-%20M%C3%A9tricas%20Postfix/2.png)
  ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/5%20-%20M%C3%A9tricas%20Postfix/3.png)
  ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/5%20-%20M%C3%A9tricas%20Postfix/4.png)
+ ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/5%20-%20M%C3%A9tricas%20Postfix/5.png)
  
   
 ##6. Proxy - Peticiones por user, Agent y response
@@ -351,7 +354,7 @@ Los datos son los siguientes:
   Peticiones | Histograma donde se muestra en distintas líneas las peticiones de usuarios de 802.1x correctas y erróneas.
   Bloqueos | Cantidad de peticiones que generan un bloqueo de cuenta de usuario.
   Estado | Cantidad de peticiones en los distintos STATUS ("Passed" o "Failed").
-  Usuarios con  bloqueo. Nº de errores consecutivos | Top 10 de los usuarios conmás bloqueos.
+  Usuarios con  bloqueo. Nº de errores consecutivos | Top 10 de los usuarios con más bloqueos.
   Usuarios con más peticiones | Top 10 de los usuarios con mayor cantidad de peticiones de acceso.
   Máquinas con más peticiones | Top 10 de las máquinas con mayor cantidad de peticiones de acceso.
   Total registros | Totalidad de las peticiones de usuario recibidas.
@@ -364,4 +367,38 @@ Los datos son los siguientes:
  ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/3.png)
  ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/4.png)
  
+   
+##11. Radius Online
+
+Dashboard para analizar las peticiones de correo Postfix en tiempo real.
+  
+Los datos son los siguientes:
+
+**index:** `ob_src_postfix`
+ 
+ 
+**query:** 
+
+  QUERY | DESCRIPCIÓN
+  :--------|:-----------
+  _type:"PostfixOnlineStatistics_todo"  | Total de registros generados para Postfix.
+  _type:"PostfixOnlineStatistics_mensajeto" | Relación de los mensajes que entran a AMAVIS y además salen, enviando los correos a los destinatarios con el DSN indicado.
+  _type:"PostfixOnlineStatistics_mensajetfrom" | Lista de los origenes de las peticionesde envío de correo
+
+**Paneles:**
+
+  PANELES | CONTENIDO
+  :--------|:----------- 
+  Correos Enviados | Histograma donde se muestra en distintas líneas las peticiones de envío y la cantidad de destinatarios a los que realmente se han enviado.
+  Relación FROM-TO | Relación de los mensajes que entran a AMAVIS y además salen, enviando los correos a los destinatarios con el DSN indicado.
+  Origen envío | Lista de los origenes de las peticionesde envío de correo
+  Total | Total de registros generados para Postfix.
+  Distr. Emisor | Top 10 de los usuarios con mayor cantidad de correos enviados.
+  Distr. Receptor | Top 10 de los usuarios con mayor cantidad de correos recibidos.
+  Force | Gráfico de nodos donde se conectan emisor-receptor para cada correo enviado.
+
+ ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/1.png)
+ ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/2.png)
+ ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/3.png)
+ ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/4.png)
   
