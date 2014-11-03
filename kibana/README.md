@@ -368,7 +368,7 @@ Los datos son los siguientes:
  ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/4.png)
  
    
-##11. Radius Online
+##11. Postfix Online
 
 Dashboard para analizar las peticiones de correo Postfix en tiempo real.
   
@@ -397,8 +397,8 @@ Los datos son los siguientes:
   Distr. Receptor | Top 10 de los usuarios con mayor cantidad de correos recibidos.
   Force | Gráfico de nodos donde se conectan emisor-receptor para cada correo enviado.
 
- ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/1.png)
- ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/2.png)
- ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/3.png)
- ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/10%20-%20Radius%20online/4.png)
+ ![1](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/11%20-%20Postfix%20online/1.png)
+ ![2](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/11%20-%20Postfix%20online/2.png)
+ ![3](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/11%20-%20Postfix%20online/3.png)
+ ![4](https://github.com/Produban/openbus/blob/kibana_dashboards/kibana/dashboards/screenshots/11%20-%20Postfix%20online/4.png)
   
