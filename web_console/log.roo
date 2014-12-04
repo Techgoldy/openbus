@@ -1,0 +1,240 @@
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-06-10 16:22:44
+project --topLevelPackage com.produban.openbus.console --java 7 --projectName configconsole
+web mvc setup
+web mvc controller --class com.produban.openbus.console.web.ConsoleController --preferredMapping console
+jpa setup --provider HIBERNATE --database MYSQL
+security setup
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-06-11 09:27:52
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-06-16 12:34:55
+entity jpa --class com.produban.openbus.console.domain.OrigenEstructurado --testAutomatically --activeRecord false --serializable 
+field string --fieldName topologyName --class com.produban.openbus.console.domain.OrigenEstructurado
+field string --fieldName kafkaTopic --class com.produban.openbus.console.domain.OrigenEstructurado
+field boolean --fieldName isKafkaOnline --class com.produban.openbus.console.domain.OrigenEstructurado
+repository jpa --interface ~.repository.OrigenEstructuradoRepository --entity ~.domain.OrigenEstructurado
+service type --interface ~.service.OrigenEstructuradoService --entity ~.domain.OrigenEstructurado 
+entity jpa --class com.produban.openbus.console.domain.CamposOrigen --testAutomatically --activeRecord false --serializable 
+field string --fieldName nombreCampo --class com.produban.openbus.console.domain.CamposOrigen
+field string --fieldName tipoCampo --class com.produban.openbus.console.domain.CamposOrigen
+repository jpa --interface ~.repository.CamposOrigenRepository --entity ~.domain.CamposOrigen
+service type --interface ~.service.CamposOrigenService --entity ~.domain.CamposOrigen 
+field set --fieldName idCampo --type ~.domain.CamposOrigen --class ~.domain.OrigenEstructurado --cardinality ONE_TO_MANY 
+quit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-06-17 19:07:36
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-01 13:01:22
+entity jpa --class com.produban.openbus.console.domain.MetricaBatch --testAutomatically --activeRecord false --serializable 
+field string --fieldName batchMetricName --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName batchMetricDesc --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName queryCode --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName createCode --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName planificacion --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName esIndex --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName esType --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName esCamposId --class com.produban.openbus.console.domain.MetricaBatch
+field date --fieldName fechaCreacion --class com.produban.openbus.console.domain.MetricaBatch --type java.util.Date --persistenceType JPA_TIMESTAMP
+field date --fieldName fechaUltModif --class com.produban.openbus.console.domain.MetricaBatch --type java.util.Date --persistenceType JPA_TIMESTAMP
+field string --fieldName usuarioCreacion --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName usuarioModificacion --class com.produban.openbus.console.domain.MetricaBatch
+field boolean --fieldName isCreated --class com.produban.openbus.console.domain.MetricaBatch
+field boolean --fieldName isUpdated --class com.produban.openbus.console.domain.MetricaBatch
+repository jpa --interface ~.repository.MetricaBatchRepository --entity ~.domain.MetricaBatch
+service type --interface ~.service.MetricaBatchService --entity ~.domain.MetricaBatch
+exit
+jpa setup --provider ECLIPSELINK --database MYSQL 
+jpa setup --provider HIBERNATE --database MYSQL 
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-21 14:20:03
+field string --fieldName queryType --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName queryType --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName typeQuery --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName selectQuery --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName FromQuery --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName WhereQuery --class com.produban.openbus.console.domain.MetricaBatch
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-07-21 14:37:13
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-21 15:22:01
+// [failed] field set --fieldName idOrigen --type ~.domain.OrigenEstructurado --class ~.domain.MetricaBatch --cardinality ONE_TO_ONE
+// [failed] field set --class ~.domain.MetricaBatch --fieldName idOrigen --type ~.domain.OrigenEstructurado --cardinality ONE_TO_ONE
+field reference --fieldName idOrigen --type ~.domain.OrigenEstructurado --class ~.domain.MetricaBatch
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-07-21 15:32:41
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-21 16:22:15
+field string --fieldName sourceId --class com.produban.openbus.console.domain.MetricaBatch
+field string --fieldName esTimestamp --class com.produban.openbus.console.domain.MetricaBatch
+field boolean --fieldName isBatch --class com.produban.openbus.console.domain.MetricaBatch
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-24 11:37:15
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-07-24 11:37:37
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-24 11:37:54
+field string --fieldName estado --class com.produban.openbus.console.domain.MetricaBatch
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-07-25 14:18:26
+field string --fieldName error --class com.produban.openbus.console.domain.MetricaBatch
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-03 16:58:27
+field string --fieldName esId --class com.produban.openbus.console.domain.MetricaBatch
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-09-03 17:08:27
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-04 11:54:45
+entity jpa --class com.produban.openbus.console.domain.StreamCep --testAutomatically --activeRecord false --serializable 
+field string --fieldName streamCepId --class com.produban.openbus.console.domain.StreamCep
+field string --fieldName streamFields --class com.produban.openbus.console.domain.StreamCep
+field string --fieldName streamFinal --class com.produban.openbus.console.domain.StreamCep
+repository jpa --interface ~.repository.StreamCepRepository --entity ~.domain.StreamCep
+service type --interface ~.service.StreamCepService --entity ~.domain.StreamCep
+entity jpa --class com.produban.openbus.console.domain.QueryCep --testAutomatically --activeRecord false --serializable 
+// [failed] field string --fieldName queryCepId --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName queryFinal --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName queryDefinition --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName outputFieldUser --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName outputFieldNames --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName outputStream --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName hasCallback --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName groupBy --class com.produban.openbus.console.domain.QueryCep
+repository jpa --interface ~.repository.QueryCepRepository --entity ~.domain.QueryCep
+service type --interface ~.service.QueryCepService --entity ~.domain.QueryCep
+entity jpa --class com.produban.openbus.console.domain.MetricaOnLine --testAutomatically --activeRecord false --serializable 
+field string --fieldName onLineMetricName --class com.produban.openbus.console.domain.MetricaOnLine
+field string --fieldName onLineMetricDesc --class com.produban.openbus.console.domain.MetricaOnLine
+field string --fieldName esIndex --class com.produban.openbus.console.domain.MetricaOnLine
+field string --fieldName esType --class com.produban.openbus.console.domain.MetricaOnLine
+field string --fieldName esCamposId --class com.produban.openbus.console.domain.MetricaOnLine
+field date --fieldName fechaCreacion --class com.produban.openbus.console.domain.MetricaOnLine --type java.util.Date --persistenceType JPA_TIMESTAMP
+field date --fieldName fechaUltModif --class com.produban.openbus.console.domain.MetricaOnLine --type java.util.Date --persistenceType JPA_TIMESTAMP
+field string --fieldName usuarioCreacion --class com.produban.openbus.console.domain.MetricaOnLine
+field string --fieldName usuarioModificacion --class com.produban.openbus.console.domain.MetricaOnLine
+field boolean --fieldName isCreated --class com.produban.openbus.console.domain.MetricaOnLine
+field boolean --fieldName isUpdated --class com.produban.openbus.console.domain.MetricaOnLine
+field set --fieldName idQuery --type ~.domain.QueryCep --class ~.domain.MetricaOnLine --cardinality ONE_TO_MANY 
+field set --fieldName idStream --type ~.domain.StreamCep --class ~.domain.MetricaOnLine --cardinality ONE_TO_MANY 
+repository jpa --interface ~.repository.MetricaOnLineRepository --entity ~.domain.MetricaOnLine
+service type --interface ~.service.MetricaOnLineService --entity ~.domain.MetricaOnLine
+field string --fieldName queryCepId --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName queryName --class com.produban.openbus.console.domain.QueryCep
+field boolean --fieldName toRemove --class com.produban.openbus.console.domain.StreamCep
+field boolean --fieldName toRemove --class com.produban.openbus.console.domain.QueryCep
+// [failed] field set --fieldName idOrigen --type ~.domain.OrigenEstructurado --class ~.domain.StreamCep --cardinality ONE_TO_ONE
+field set --fieldName idOrigen --type ~.domain.OrigenEstructurado --class ~.domain.StreamCep --cardinality MANY_TO_MANY
+// [failed] field boolean --fieldName hasCallback --class com.produban.openbus.console.domain.QueryCep
+field boolean --fieldName hasCallback --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName streamName --class com.produban.openbus.console.domain.StreamCep
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-12 10:55:18
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-09-12 10:56:15
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-12 10:57:09
+field set --fieldName idOrigen --type ~.domain.OrigenEstructurado --class ~.domain.StreamCep --cardinality ONE_TO_MANY
+// [failed] field reference --fieldName streamCep --type ~.domain.StreamCep --cardinality MANY_TO_ONE --class ~.domain.OrigenEstructurado --notNull false
+field reference --fieldName streamCep --type ~.domain.StreamCep --cardinality MANY_TO_ONE --class ~.domain.OrigenEstructurado --notNull false
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-17 12:20:02
+field set --fieldName idStream --type ~.domain.StreamCep --class ~.domain.OrigenEstructurado --cardinality ONE_TO_MANY
+field reference --fieldName streamCep --type ~.domain.StreamCep --cardinality MANY_TO_ONE --class ~.domain.OrigenEstructurado --notNull false
+entity jpa --class com.produban.openbus.console.domain.OrigenEstructurado --testAutomatically --activeRecord false --serializable
+field string --fieldName topologyName --class com.produban.openbus.console.domain.OrigenEstructurado
+field string --fieldName kafkaTopic --class com.produban.openbus.console.domain.OrigenEstructurado
+field boolean --fieldName isKafkaOnline --class com.produban.openbus.console.domain.OrigenEstructurado
+field set --fieldName hsCampo --type ~.domain.CamposOrigen --class ~.domain.OrigenEstructurado --cardinality ONE_TO_MANY
+field set --fieldName hsStream --type ~.domain.StreamCep --class ~.domain.OrigenEstructurado --cardinality ONE_TO_MANY
+repository jpa --interface ~.repository.OrigenEstructuradoRepository --entity ~.domain.OrigenEstructurado
+service type --interface ~.service.OrigenEstructuradoService --entity ~.domain.OrigenEstructurado
+entity jpa --class com.produban.openbus.console.domain.OrigenEstructurado --testAutomatically --activeRecord false --serializable
+field string --fieldName topologyName --class com.produban.openbus.console.domain.OrigenEstructurado
+field string --fieldName kafkaTopic --class com.produban.openbus.console.domain.OrigenEstructurado
+field boolean --fieldName isKafkaOnline --class com.produban.openbus.console.domain.OrigenEstructurado
+field set --fieldName hsCamposOrigen --type ~.domain.CamposOrigen --class ~.domain.OrigenEstructurado --cardinality ONE_TO_MANY
+field set --fieldName hsStreams --type ~.domain.StreamCep --class ~.domain.OrigenEstructurado --cardinality ONE_TO_MANY
+repository jpa --interface ~.repository.OrigenEstructuradoRepository --entity ~.domain.OrigenEstructurado
+service type --interface ~.service.OrigenEstructuradoService --entity ~.domain.OrigenEstructurado
+// [failed] field set --fieldName origenEstructurado --type ~.domain.OrigenEstructurado --class ~.domain.StreamCep --cardinality MANY_TO_ONE
+field reference --class ~.domain.OrigenEstructurado --fieldName streamCep --type ~.domain.StreamCep --cardinality MANY_TO_ONE
+field reference --class ~.domain.StreamCep --fieldName origenEstructurado --type ~.domain.OrigenEstructurado --cardinality MANY_TO_ONE
+field reference --class ~.domain.CamposOrigen --fieldName origenEstructurado --type ~.domain.OrigenEstructurado --cardinality MANY_TO_ONE
+field set --fieldName hsOrigen --type ~.domain.OrigenEstructurado --class ~.domain.StreamCep --cardinality MANY_TO_MANY
+field string --fieldName sourceId --class com.produban.openbus.console.domain.StreamCep
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-22 12:01:58
+// [failed] field string --fieldName estado --class com.produban.openbus.console.domain.MetricaOnLine
+field string --fieldName estado --class com.produban.openbus.console.domain.MetricaOnLine
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-09-22 12:11:24
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-23 16:56:38
+field string --fieldName esId --class com.produban.openbus.console.domain.MetricaOnLine
+field string --fieldName esId --class com.produban.openbus.console.domain.QueryCep
+field string --fieldName esCamposGeo --class com.produban.openbus.console.domain.QueryCep
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-09-24 10:31:52
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-28 19:55:12
+field string --fieldName outputFieldFormat --class com.produban.openbus.console.domain.QueryCep
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-10-01 16:43:46
+entity jpa --class com.produban.openbus.console.domain.Estado --activeRecord false --serializable 
+field string --fieldName code --class com.produban.openbus.console.domain.Estado
+field string --fieldName description --class com.produban.openbus.console.domain.Estado
+// [failed] field string --fieldName code --class com.produban.openbus.console.domain.Estado
+// [failed] field string --fieldName description --class com.produban.openbus.console.domain.Estado
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-10-01 17:10:04
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-10-01 17:18:18
+field number --fieldName versionMetadata --type java.lang.Integer --class com.produban.openbus.console.domain.MetricaOnLine
+field number --fieldName versionMetadata --type java.lang.Integer --class com.produban.openbus.console.domain.StreamCep
+field number --fieldName versionMetadata --type java.lang.Integer --class com.produban.openbus.console.domain.QueryCep
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-10-01 17:27:12
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-10-03 09:54:24
+entity jpa --class com.produban.openbus.console.domain.TableCep --activeRecord false --serializable
+field string --fieldName tableCepId --class com.produban.openbus.console.domain.TableCep
+field string --fieldName tableCepFields --class com.produban.openbus.console.domain.TableCep
+field string --fieldName tableCepFinal --class com.produban.openbus.console.domain.TableCep
+field string --fieldName tableCepName --class com.produban.openbus.console.domain.TableCep
+field string --fieldName error --class com.produban.openbus.console.domain.TableCep
+field string --fieldName error --class com.produban.openbus.console.domain.StreamCep
+field string --fieldName error --class com.produban.openbus.console.domain.QueryCep
+field number --fieldName versionMetadata --type java.lang.Integer --class com.produban.openbus.console.domain.TableCep
+field set --fieldName hsTableCep --type ~.domain.TableCep --class ~.domain.MetricaOnLine --cardinality ONE_TO_MANY
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-10-03 10:11:59
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-10-03 10:27:59
+repository jpa --interface ~.repository.EstadoRepository --entity ~.domain.Estado
+service type --interface ~.service.EstadoService --entity ~.domain.Estado
+repository jpa --interface ~.repository.TableCepRepository --entity ~.domain.TableCep
+service type --interface ~.service.TableCepService --entity ~.domain.TableCep
+finder add --finderName findEstadoByCode --class ~.domain.Estado
+// [failed] finder list
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-10-03 11:09:24
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-10-03 11:09:30
+finder add --finderName findEstadoByCode --class ~.domain.Estado
+finder add --finderName findEstadoByCode --class ~.domain.Estado  
+// [failed] finder list
+finder add --finderName findMetricaOnLineByEstado --class ~.domain.MetricaOnLine
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-10-03 11:27:49
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-10-03 11:31:36
+entity jpa --class com.produban.openbus.console.domain.Estado --activeRecord true --serializable
+field string --fieldName code --class ~.domain.Estado
+field string --fieldName description --class ~.domain.Estado
+finder add --finderName findMetricaOnLineByEstado --class ~.domain.MetricaOnLine
+repository jpa --interface ~.repository.EstadoRepository --entity ~.domain.Estado
+service type --interface ~.service.EstadoService --entity ~.domain.Estado
+finder add --finderName findEstadoByCode --class ~.domain.Estado
+entity jpa --class com.produban.openbus.console.domain.Estado
+field string --fieldName code --class ~.domain.Estado
+field string --fieldName description --class ~.domain.Estado
+finder add --finderName findEstadoByCode --class ~.domain.Estado
+repository jpa --interface ~.repository.EstadoRepository --entity ~.domain.Estado
+service type --interface ~.service.EstadoService --entity ~.domain.Estado
+finder list
+finder add --finderName findEstadoByCodeEquals --class ~.domain.Estado
+finder add --finderName findEstadoesByCodeEquals --class ~.domain.Estado
+field string --fieldName esType --class ~.domain.QueryCep
+field string --fieldName esTTL --class ~.domain.QueryCep
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-10-03 14:23:17
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-10-06 14:36:45
+entity jpa --class com.produban.openbus.console.domain.Estado --activeRecord false --serializable
+field string --fieldName code --class ~.domain.Estado
+field string --fieldName description --class ~.domain.Estado
+repository jpa --interface ~.repository.EstadoRepository --entity ~.domain.Estado
+service type --interface ~.service.EstadoService --entity ~.domain.Estado
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-10-07 11:57:16
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-10-08 10:16:35
+// [failed] field number --fieldName order --type java.lang.Integer --class com.produban.openbus.console.domain.QueryCep
+field number --fieldName queryOrder --type java.lang.Integer --class com.produban.openbus.console.domain.QueryCep
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-10-13 15:52:00
+field reference --class ~.domain.TableCep --fieldName metricaOnLine --type ~.domain.MetricaOnLine --cardinality MANY_TO_ONE
+field reference --class ~.domain.QueryCep --fieldName metricaOnLine --type ~.domain.MetricaOnLine --cardinality MANY_TO_ONE

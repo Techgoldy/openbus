@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: web_console
+Bundle-SymbolicName: web_console
+Bundle-Version: 1.0.0.qualifier
+Export-Package: .,
+ com.produban.openbus.console.domain,
+ com.produban.openbus.console.hive,
+ com.produban.openbus.console.repository,
+ com.produban.openbus.console.service,
+ com.produban.openbus.console.web
+Import-Package: com.produban.openbus.console.domain
