@@ -16,6 +16,8 @@
 
     <modules>
         <module>weblogs</module>
+        <!--module>camus</module-->
+        <module>esdump</module>
     </modules>
     <dependencies>
         <dependency>

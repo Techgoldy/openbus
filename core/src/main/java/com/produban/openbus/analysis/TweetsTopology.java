@@ -8,9 +8,11 @@ import com.lexicalscope.jewel.cli.ArgumentValidationException;
 import com.lexicalscope.jewel.cli.CliFactory;
 import com.lexicalscope.jewel.cli.Option;
 import com.produban.openbus.persistence.ElasticSearchIndexer;
+import com.produban.openbus.util.Common;
 import storm.trident.Stream;
 import storm.trident.TridentTopology;
 
+import javax.ws.rs.OPTIONS;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +26,14 @@ public class TweetsTopology {
         TridentTopology topology = new TridentTopology();
 
         BrokerSpout kafkaTweetSpout = new BrokerSpout( options.getKafkaTopic(),
-                                                       options.getZookeeper(),
+                                                       Common.join(options.getZookeeper(), ","),
                                                        options.getKafkaClientID(),
                                                        options.isForceFromStart());
+
+        ElasticSearchIndexer esIndexer = new ElasticSearchIndexer(options.getElasticSearchClusterName(),
+                                                                  options.getElasticSearchIndex(),
+                                                                  options.getElasticSearchNodes());
+
         List<String> tweetFields = new ArrayList<>();
         tweetFields.add("tweetId");
         tweetFields.add("rawDate");
@@ -50,7 +57,7 @@ public class TweetsTopology {
                 .each(new Fields("bytes"), new TweetJsonDecoder(), new Fields(tweetFields))
                 .each(new Fields("text"), new KeywordsFilter(options.getFilterKeyWords()))
                 //do something interesting here
-                .each(new Fields(tweetFields), new ElasticSearchIndexer(), new Fields("indexed"));
+                .each(new Fields(tweetFields), esIndexer, new Fields("indexed"));
 
         return topology.build();
     }
@@ -85,7 +92,16 @@ public class TweetsTopology {
         String getTopologyName();
 
         @Option
-        String getZookeeper();
+        List<String> getZookeeper();
+
+        @Option
+        List<String> getElasticSearchNodes();
+
+        @Option
+        String getElasticSearchClusterName();
+
+        @Option
+        String getElasticSearchIndex();
 
         @Option
         String getKafkaTopic();
