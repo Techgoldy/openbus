@@ -1,0 +1,29 @@
+La clase a ejectutar es SiddhiTopology. Es necesario arrancar un web server con un fichero que simule la definicion de 
+reglas en formato json.
+
+Se ha definido un spout (SimpleFileStringSpout) y un Bolt (SiddhiBolt).
+El fichero input_proxy.txt simula el fichero de entrada a procesar, por otro lado tendremos el fichero index.html que estara 
+desplegado en el web server y que contendrá el json referido anteriormente, seria algo asi:
+
+{  
+   "operation" :"insert"
+   "define" : "define stream proxystream (eventTimeStamp string, timeTaken int, clientIP string, userCode string, 
+   userGroup string, Exception string,filterResult string,category string, referer string, responseCode int, 
+   action string, method string, contentType string, protocol string, requestDomain string, requestPort int, 
+   requestPath string, requestQuery string, requestURIExtension string, userAgent string, serverIP string, 
+   scBytes int, csBytes int, virusID string, destinationIP string)"   
+   "query" : "from  proxystream[ requestDomain != 'null'] insert all-events into requestDomain  requestDomain, count(1) as cuenta group by requestDomain;"
+}
+
+Se le ha puesto un sleep de 1 segundo a la emisión de lineas del fichero de entrada para que contrarreste con el fichero 
+de defincion de streams. 
+La clase SiddhiBolt se ejectutara cada 10 segundos que es el tiempo que se ha configurado para que se traiga las reglas.
+Si llega una ticktuple a esta clase entonces se llamara a un servicio rest que se conecetara al servidor apache para 
+traerse el .json con la definicion de las reglas y se procesaran en el siddhiManager.
+
+Se ha probado:
+
+- a desplegar una topología con siddhi bolt sin ninguna regla.
+- a tirar de un fichero de texto
+- a utilizar el ticktuple para que la topología acceda a un servicio rest cada x segundos para traerse reglas
+- El siddhimanager se ha ido actualizando y gestionando correctamente con un fichero y añadiendo otro con reglas diferentes
