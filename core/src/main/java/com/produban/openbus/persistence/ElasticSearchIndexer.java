@@ -4,6 +4,8 @@ import backtype.storm.tuple.Values;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import storm.trident.operation.TridentOperationContext;
 import storm.trident.tuple.TridentTuple;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
 
@@ -23,12 +26,29 @@ import static org.elasticsearch.common.xcontent.XContentFactory.*;
 public class ElasticSearchIndexer extends BaseFunction{
 
     Client client;
+    String indexName;
+    String clusterName;
+    List<String> esNodes;
+
     private static final Logger logger = LoggerFactory.getLogger(ElasticSearchIndexer.class);
+
+    public ElasticSearchIndexer(String clusterName, String indexName, List<String> elasticSearchNodes) {
+        this.indexName = indexName;
+        this.clusterName = clusterName;
+        this.esNodes = elasticSearchNodes;
+    }
 
     @Override
     public void prepare(java.util.Map conf, TridentOperationContext context) {
-        client = new TransportClient()
-                .addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
+
+        //instantiate ES Transport Client:
+        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", clusterName).build();
+        TransportClient transportClient = new TransportClient(settings);
+        for (String esNode : esNodes) {
+            String[] hostAndPort = esNode.split(":");
+            transportClient.addTransportAddress(new InetSocketTransportAddress(hostAndPort[0], Integer.parseInt(hostAndPort[1])));
+        }
+        client = transportClient;
     }
 
     @Override
@@ -49,7 +69,7 @@ public class ElasticSearchIndexer extends BaseFunction{
         }
 
         //index
-        IndexResponse response = client.prepareIndex("twitter", "tweet", tweetId)
+        IndexResponse response = client.prepareIndex(this.indexName, "tweet", tweetId)
                 .setSource(builder)
                 .execute()
                 .actionGet();
