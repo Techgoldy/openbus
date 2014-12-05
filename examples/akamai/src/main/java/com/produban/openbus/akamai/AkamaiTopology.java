@@ -113,9 +113,6 @@ public class AkamaiTopology {
         String getKafkaClientID();
 
         @Option
-        List<String> getFilterKeyWords();
-
-        @Option
         boolean isForceFromStart();
 
         @Option(shortName = "h", helpRequest = true)
