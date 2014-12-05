@@ -1,0 +1,257 @@
+2014-04-06 23:59:0816078nullnullnullnullnullnullconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:0816078nullnullnullnullnullnulldisconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:0816153nullnullnullnullnullnullconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:0816153nullnullnullnullnullnulldisconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:1416156nullnullnullnullnullnullconnect from srvhubpvwba04.intranet.banesto.lan180.206.50.106nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:14161566CD27C5Fnullnullnullsrvhubpvwba04.intranet.banesto.lan180.206.50.106nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:14null6CD27C5F16258nullnullnullnullnullnullnull18992192.1.1396821604657.JavaMail.SVCEsPro0084@IS15000VDI02121nullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:14null6CD27C5Fnull30748nullnullnullnullnullnullnullsoftwebu@isban.es46173nullnullnullnullnullnullnullnull
+2014-04-06 23:59:1416156nullnullnullnullnullnulldisconnect from srvhubpvwba04.intranet.banesto.lan180.206.50.106nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:1414924nullnullnullnullnullnullconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:14149248B0CCC61nullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:14null8B0CCC6116258nullnullnullnullnullnullnull18992192.1.1396821604657.JavaMail.SVCEsPro0084@IS15000VDI02121nullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:14null8B0CCC61null30748nullnullnullnullnullnullnullsoftwebu@isban.es50273nullnullnullnullnullnullnullnull
+2014-04-06 23:59:1414924nullnullnullnullnullnulldisconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:14null6CD27C5Fnullnull16331nullnullnullnullnullnullnullnullnulltbuttier@isban.es127.0.0.1127.0.0.1100240.162.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 8B0CCC61)
+2014-04-06 23:59:14null6CD27C5Fnullnull16331nullnullnullnullnullnullnullnullnulljffernan@servexternos.isban.es127.0.0.1127.0.0.1100240.162.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 8B0CCC61)
+2014-04-06 23:59:14null6CD27C5Fnullnull16331nullnullnullnullnullnullnullnullnullnrescign@servexternos.isban.es127.0.0.1127.0.0.1100240.162.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 8B0CCC61)
+2014-04-06 23:59:1416078nullnullnullnullnullnullconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:1416078nullnullnullnullnullnulldisconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:14null8B0CCC61nullnull14936nullnullnullnullnullnullnullnullnulltbuttier@isban.essmtp01.scisb.isban.corp172.31.201.13250.252.6.0sent(250 2.6.0 <18992192.1.1396821604657.JavaMail.SVCEsPro0084@IS15000VDI02121> Queued mail for delivery)
+2014-04-06 23:59:14null8B0CCC61nullnull14936nullnullnullnullnullnullnullnullnulljffernan@servexternos.isban.essmtp01.scisb.isban.corp172.31.201.13250.252.6.0sent(250 2.6.0 <18992192.1.1396821604657.JavaMail.SVCEsPro0084@IS15000VDI02121> Queued mail for delivery)
+2014-04-06 23:59:14null8B0CCC61nullnull14936nullnullnullnullnullnullnullnullnullnrescign@servexternos.isban.essmtp01.scisb.isban.corp172.31.201.13250.252.6.0sent(250 2.6.0 <18992192.1.1396821604657.JavaMail.SVCEsPro0084@IS15000VDI02121> Queued mail for delivery)
+2014-04-06 23:59:1616153nullnullnullnullnullnullconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:1616153nullnullnullnullnullnulldisconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:1616156nullnullnullnullnullnullconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:1616156nullnullnullnullnullnulldisconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2016078nullnullnullnullnullnullconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2016078nullnullnullnullnullnulldisconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2416153nullnullnullnullnullnullconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2416153nullnullnullnullnullnulldisconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2416156nullnullnullnullnullnullconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2416156nullnullnullnullnullnulldisconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2516153nullnullnullnullnullnullconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2516153nullnullnullnullnullnulldisconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2715374nullnullnullnullnullnulldisconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2816078nullnullnullnullnullnullconnect from unknown172.21.129.146nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:281607852073C5Fnullnullnullunknown172.21.129.146nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:28null52073C5F16510nullnullnullnullnullnullnull5c53a56b-f03f-4974-b704-b9d8aeb7ca2c@BOSNEXEDGEP02.san.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:28null52073C5Fnull30748nullnullnullnullnullnullnull87803nullnullnullnullnullnullnullnull
+2014-04-06 23:59:2816078nullnullnullnullnullnulldisconnect from unknown172.21.129.146nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2815055nullnullnullnullnullnullconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:281505574E4AC61nullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:28null74E4AC6116510nullnullnullnullnullnullnull5c53a56b-f03f-4974-b704-b9d8aeb7ca2c@BOSNEXEDGEP02.san.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:2815055nullnullnullnullnullnulldisconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:28null74E4AC61null30748nullnullnullnullnullnullnull92073nullnullnullnullnullnullnullnull
+2014-04-06 23:59:28null52073C5Fnullnull16441nullnullnullnullnullnullnullnullnullAPINELVA@ISBAN.ES127.0.0.1127.0.0.1100240.192.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 74E4AC61)
+2014-04-06 23:59:28null52073C5Fnullnull16441nullnullnullnullnullnullnullnullnullADIAZBRE@SERVEXTERNOS.ISBAN.ES127.0.0.1127.0.0.1100240.192.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 74E4AC61)
+2014-04-06 23:59:28null52073C5Fnullnull16441nullnullnullnullnullnullnullnullnullAGORDONN@SERVEXTERNOS.ISBAN.ES127.0.0.1127.0.0.1100240.192.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 74E4AC61)
+2014-04-06 23:59:28null74E4AC61nullnull16449nullnullnullnullnullnullnullnullnullAPINELVA@ISBAN.ESsmtp01.scisb.isban.corp172.31.201.13250.262.6.0sent(250 2.6.0 <5c53a56b-f03f-4974-b704-b9d8aeb7ca2c@BOSNEXEDGEP02.san.corp> Queued mail for delivery)
+2014-04-06 23:59:28null74E4AC61nullnull16449nullnullnullnullnullnullnullnullnullADIAZBRE@SERVEXTERNOS.ISBAN.ESsmtp01.scisb.isban.corp172.31.201.13250.262.6.0sent(250 2.6.0 <5c53a56b-f03f-4974-b704-b9d8aeb7ca2c@BOSNEXEDGEP02.san.corp> Queued mail for delivery)
+2014-04-06 23:59:28null74E4AC61nullnull16449nullnullnullnullnullnullnullnullnullAGORDONN@SERVEXTERNOS.ISBAN.ESsmtp01.scisb.isban.corp172.31.201.13250.262.6.0sent(250 2.6.0 <5c53a56b-f03f-4974-b704-b9d8aeb7ca2c@BOSNEXEDGEP02.san.corp> Queued mail for delivery)
+2014-04-06 23:59:3216156nullnullnullnullnullnullconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:3216156nullnullnullnullnullnulldisconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:3216153nullnullnullnullnullnullconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:3216153nullnullnullnullnullnulldisconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:3416156nullnullnullnullnullnullconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:3416156nullnullnullnullnullnulldisconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:3916153nullnullnullnullnullnullconnect from unknown180.205.134.11nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:3916153nullnullnullnullnullnulldisconnect from unknown180.205.134.11nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:3916156nullnullnullnullnullnullconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:3916156nullnullnullnullnullnulldisconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4016153nullnullnullnullnullnullconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4016153nullnullnullnullnullnulldisconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4016156nullnullnullnullnullnullconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4016156nullnullnullnullnullnulldisconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4313518nullnullnullnullnullnulldisconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4416153nullnullnullnullnullnullconnect from smtp-fireeye.gsnet.corp180.205.138.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:44161530E4E5B8Dnullnullnullsmtp-fireeye.gsnet.corp180.205.138.33nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:44null0E4E5B8D16510nullnullnullnullnullnullnull12300751.20140406215934.5341ce46a93be8.20459942@mail44.us4.mandrillapp.comnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4416153nullnullnullnullnullnulldisconnect from smtp-fireeye.gsnet.corp180.205.138.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4414924nullnullnullnullnullnullconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:441492428CA3C0Bnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:44null28CA3C0B16510nullnullnullnullnullnullnull12300751.20140406215934.5341ce46a93be8.20459942@mail44.us4.mandrillapp.comnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:44null0E4E5B8Dnullnull16052nullnullnullnullnullnullnullnullnullfrancis.brooks@santander.us127.0.0.1127.0.0.1100240.122.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 28CA3C0B)
+2014-04-06 23:59:4416156nullnullnullnullnullnullconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4416156nullnullnullnullnullnulldisconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:45null28CA3C0Bnullnull16450nullnullnullnullnullnullnullnullnullfrancis.brooks@santander.ussovsmtp.cloud.corp180.88.65.16250.982.6.0sent(250 2.6.0 <12300751.20140406215934.5341ce46a93be8.20459942@mail44.us4.mandrillapp.com> [InternalId=21299245] Queued mail for delivery)
+2014-04-06 23:59:4816153nullnullnullnullnullnullconnect from vmescl100xchp04.cloud.corp180.205.32.104nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:48161533BE65B8Dnullnullnullvmescl100xchp04.cloud.corp180.205.32.104nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:48null3BE65B8D16510nullnullnullnullnullnullnull1AFB8E568DB0B846BACC6547EC50F473070B74@VMESCL100XCMP12.cloud.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:48null3BE65B8Dnull30748nullnullnullnullnullnullnulljoseamartinez@produban.com281052nullnullnullnullnullnullnullnull
+2014-04-06 23:59:4816153nullnullnullnullnullnulldisconnect from vmescl100xchp04.cloud.corp180.205.32.104nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:481492461AE9C0Bnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:48null61AE9C0B16510nullnullnullnullnullnullnull1AFB8E568DB0B846BACC6547EC50F473070B74@VMESCL100XCMP12.cloud.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:48null61AE9C0Bnull30748nullnullnullnullnullnullnulljoseamartinez@produban.com285152nullnullnullnullnullnullnullnull
+2014-04-06 23:59:48null3BE65B8Dnullnull16441nullnullnullnullnullnullnullnullnulljosefrancisco.galindo@servexternos.isban.es127.0.0.1127.0.0.1100240.182.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 61AE9C0B)
+2014-04-06 23:59:48null3BE65B8Dnullnull16441nullnullnullnullnullnullnullnullnullpedroluis.suarez@servexternos.isban.es127.0.0.1127.0.0.1100240.182.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 61AE9C0B)
+2014-04-06 23:59:4816156nullnullnullnullnullnullconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4816156nullnullnullnullnullnulldisconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4816153nullnullnullnullnullnullconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:4816153nullnullnullnullnullnulldisconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:48null61AE9C0Bnullnull15067nullnullnullnullnullnullnullnullnulljosefrancisco.galindo@servexternos.isban.essmtp01.scisb.isban.corp172.31.201.13250.242.6.0sent(250 2.6.0 <1AFB8E568DB0B846BACC6547EC50F473070B74@VMESCL100XCMP12.cloud.corp> Queued mail for delivery)
+2014-04-06 23:59:48null61AE9C0Bnullnull15067nullnullnullnullnullnullnullnullnullpedroluis.suarez@servexternos.isban.essmtp01.scisb.isban.corp172.31.201.13250.242.6.0sent(250 2.6.0 <1AFB8E568DB0B846BACC6547EC50F473070B74@VMESCL100XCMP12.cloud.corp> Queued mail for delivery)
+2014-04-06 23:59:5016156nullnullnullnullnullnullconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:5016156nullnullnullnullnullnulldisconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:5416153nullnullnullnullnullnullconnect from mximspro42.mx.corp180.176.31.19nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:5416153A6890B8Dnullnullnullmximspro42.mx.corp180.176.31.19nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:55nullA6890B8D16510nullnullnullnullnullnullnullfZfjHIfe2000095ec@EVSPROD05.gfsscorp.mx.bschnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:55nullA6890B8Dnull30748nullnullnullnullnullnullnull72301nullnullnullnullnullnullnullnull
+2014-04-06 23:59:5516153nullnullnullnullnullnulldisconnect from mximspro42.mx.corp180.176.31.19nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:5515374nullnullnullnullnullnullconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:55153742C65BC0Bnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:55null2C65BC0B16510nullnullnullnullnullnullnullfZfjHIfe2000095ec@EVSPROD05.gfsscorp.mx.bschnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:5515374nullnullnullnullnullnulldisconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:55null2C65BC0Bnull30748nullnullnullnullnullnullnull77021nullnullnullnullnullnullnullnull
+2014-04-06 23:59:55nullA6890B8Dnullnull16331nullnullnullnullnullnullnullnullnullxymon@sovereignbank.com127.0.0.1127.0.0.1100240.522.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 2C65BC0B)
+2014-04-06 23:59:5616156nullnullnullnullnullnullconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:5616156nullnullnullnullnullnulldisconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:5616153nullnullnullnullnullnullconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:5616153nullnullnullnullnullnulldisconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:56null2C65BC0Bnullnull16448nullnullnullnullnullnullnullnullnullxymon@sovereignbank.comsovsmtp.cloud.corp180.88.65.16251.52.6.0sent(250 2.6.0 <fZfjHIfe2000095ec@EVSPROD05.gfsscorp.mx.bsch> [InternalId=21299271] Queued mail for delivery)
+2014-04-06 23:59:5816156nullnullnullnullnullnullconnect from VMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:58161567461FB8DnullnullnullVMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null7461FB8D16510nullnullnullnullnullnullnull1333660.3701396821593774.JavaMail.VMNGLEPOCONP01$@VMNGLEPOCONP01nullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null7461FB8Dnull30748nullnullnullnullnullnullnullePoAlertProdubanNegociosGlobales@produban.com490711nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58nullCB7BCF1Enull30748nullnullnullnullnullnullnull142261nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null0DA10E54null30748nullnullnullnullnullnullnull40781nullnullnullnullnullnullnullnull
+2014-04-06 23:59:5816156nullnullnullnullnullnulldisconnect from VMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null9D0C411F2null30748nullnullnullnullnullnullnull41861nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58nullF2CA6BD9null30748nullnullnullnullnullnullnull40091nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null57B8BFDCnull30748nullnullnullnullnullnullnull44181nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null517D9FC6null30748nullnullnullnullnullnullnull142331nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null87439F35null30748nullnullnullnullnullnullnull41791nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null8CC4A113Fnull30748nullnullnullnullnullnullnull144201nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58nullE937A10D1null30748nullnullnullnullnullnullnull47231nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58nullE839D10F7null30748nullnullnullnullnullnullnull103881nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null20855F24null30748nullnullnullnullnullnullnull191871nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null2E5CAF93null30748nullnullnullnullnullnullnull44351nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58nullB6766F39null30748nullnullnullnullnullnullnull46261nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58nullB4107F89null30748nullnullnullnullnullnullnull44271nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null41438FC8null30748nullnullnullnullnullnullnull142331nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null633EF103Dnull30748nullnullnullnullnullnullnull199351nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58149249CE8BA3Fnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null9CE8BA3F16510nullnullnullnullnullnullnull1333660.3701396821593774.JavaMail.VMNGLEPOCONP01$@VMNGLEPOCONP01nullnullnullnullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null9CE8BA3Fnull30748nullnullnullnullnullnullnullePoAlertProdubanNegociosGlobales@produban.com495651nullnullnullnullnullnullnullnull
+2014-04-06 23:59:58null7461FB8Dnullnull16441nullnullnullnullnullnullnullnullnullsoporteantivirusnngg@produban.com127.0.0.1127.0.0.1100240.22.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 9CE8BA3F)
+2014-04-06 23:59:59null9CE8BA3Fnullnull15816nullnullnullnullnullnullnullnullnullsoporteantivirusnngg@produban.comsmtp01.cloud.corp180.205.16.32250.62.6.0sent(250 2.6.0 <1333660.3701396821593774.JavaMail.VMNGLEPOCONP01$@VMNGLEPOCONP01> [InternalId=3278452] Queued mail for delivery)
+2014-04-07 00:00:0016153nullnullnullnullnullnullconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0016153nullnullnullnullnullnulldisconnect from gtmbe.gsnet.corp180.205.5.6nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0116156nullnullnullnullnullnullconnect from VMNGLHUBCASP02.ngl.corp180.18.20.34nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:011615695EC1A3FnullnullnullVMNGLHUBCASP02.ngl.corp180.18.20.34nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01null95EC1A3F16510nullnullnullnullnullnullnull1593360468.176801396821601417.JavaMail.awamonet@bengsapexp01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01null95EC1A3Fnull30748nullnullnullnullnullnullnullsic@gruposantander.com11021nullnullnullnullnullnullnullnull
+2014-04-07 00:00:0116156nullnullnullnullnullnulldisconnect from VMNGLHUBCASP02.ngl.corp180.18.20.34nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0116153nullnullnullnullnullnullconnect from GBLSMTPC01.geoban.corp180.185.190.60nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0115055nullnullnullnullnullnullconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0115055B270DC1Bnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01nullB270DC1B16510nullnullnullnullnullnullnull1593360468.176801396821601417.JavaMail.awamonet@bengsapexp01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01nullB270DC1Bnull30748nullnullnullnullnullnullnullsic@gruposantander.com15961nullnullnullnullnullnullnullnull
+2014-04-07 00:00:0116153B44D7C47nullnullnullGBLSMTPC01.geoban.corp180.185.190.60nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01nullB44D7C4716510nullnullnullnullnullnullnull20140406220001.986FC40B59@ISXFEDOP01.test.geoban.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01nullB44D7C47null30748nullnullnullnullnullnullnullroot@ISXFEDOP01.test.geoban.corp9401nullnullnullnullnullnullnullnull
+2014-04-07 00:00:0116153nullnullnullnullnullnulldisconnect from GBLSMTPC01.geoban.corp180.185.190.60nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01null95EC1A3Fnullnull16052nullnullnullnullnullnullnullnullnullfoclientservice@gruposantander.com127.0.0.1127.0.0.1100240.172.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as B270DC1B)
+2014-04-07 00:00:0113518nullnullnullnullnullnullconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0113518C9BC0A3Fnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01nullC9BC0A3F16510nullnullnullnullnullnullnull20140406220001.986FC40B59@ISXFEDOP01.test.geoban.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01nullC9BC0A3Fnull30748nullnullnullnullnullnullnullroot@ISXFEDOP01.test.geoban.corp14101nullnullnullnullnullnullnullnull
+2014-04-07 00:00:01nullB44D7C47nullnull16441nullnullnullnullnullnullnullnullnulladmin@test.geoban.corp127.0.0.1127.0.0.1100240.152.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as C9BC0A3F)
+2014-04-07 00:00:01nullB270DC1Bnullnull16449nullnullnullnullnullnullnullnullnullfoclientservice@gruposantander.comconectorsan.santander.corp172.21.128.12250.212.6.0sent(250 2.6.0 <1593360468.176801396821601417.JavaMail.awamonet@bengsapexp01.nngg.corp> Queued mail for delivery)
+2014-04-07 00:00:01nullC9BC0A3Fnullnull16450nullnullnullnullnullnullnullnullnulladmin@test.geoban.corp180.185.190.105180.185.190.105250.125.7.1bounced(host 180.185.190.105[180.185.190.105] said: 554 5.7.1 <admin@test.geoban.corp>: Recipient address rejected: Relay access denied (in reply to RCPT TO command))
+2014-04-07 00:00:01nullEA13CC4716572nullnullnullnullnullnullnull20140406220001.EA13CC47@mailx.gsnet.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:01nullEA13CC47null30748nullnullnullnullnullnullnull35231nullnullnullnullnullnullnullnull
+2014-04-07 00:00:0216156nullnullnullnullnullnullconnect from unknown172.19.193.140nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0216153nullnullnullnullnullnullconnect from VMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02161537EED7A3FnullnullnullVMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null7EED7A3F16510nullnullnullnullnullnullnull201404062200.s36M02T59634412@bongaorgep01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null7EED7A3Fnull30748nullnullnullnullnullnullnullexpsiges@gruposantander.com16641nullnullnullnullnullnullnullnull
+2014-04-07 00:00:021615385C17C1BnullnullnullVMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null85C17C1B16572nullnullnullnullnullnullnull201404062200.s36M02LD24904398@bongaorgep01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null85C17C1Bnull30748nullnullnullnullnullnullnullexpsiges@gruposantander.com17551nullnullnullnullnullnullnullnull
+2014-04-07 00:00:02161538AB28C1FnullnullnullVMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null8AB28C1F16510nullnullnullnullnullnullnull201404062200.s36M02oe25559900@bongaorgep01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null8AB28C1Fnull30748nullnullnullnullnullnullnullexpsiges@gruposantander.com17471nullnullnullnullnullnullnullnull
+2014-04-07 00:00:02161538F8CFC47nullnullnullVMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null8F8CFC4716572nullnullnullnullnullnullnull201404062200.s36M02FB60752110@bongaorgep01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null8F8CFC47null30748nullnullnullnullnullnullnullexpsiges@gruposantander.com17411nullnullnullnullnullnullnullnull
+2014-04-07 00:00:0216153nullnullnullnullnullnulldisconnect from VMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02149249A3A8C6Anullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null9A3A8C6A16510nullnullnullnullnullnullnull201404062200.s36M02T59634412@bongaorgep01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null9A3A8C6Anull30748nullnullnullnullnullnullnullexpsiges@gruposantander.com21241nullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null7EED7A3Fnullnull16331nullnullnullnullnullnullnullnullnulljantogar@isban.es127.0.0.1127.0.0.1100240.152.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 9A3A8C6A)
+2014-04-07 00:00:0215374nullnullnullnullnullnullconnect from vmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0215055A9A4BA3Fnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullA9A4BA3F16572nullnullnullnullnullnullnull201404062200.s36M02oe25559900@bongaorgep01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0215374ABDD3C5Fnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullA9A4BA3Fnull30748nullnullnullnullnullnullnullexpsiges@gruposantander.com22631nullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullABDD3C5F16510nullnullnullnullnullnullnull201404062200.s36M02LD24904398@bongaorgep01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullABDD3C5Fnull30748nullnullnullnullnullnullnullexpsiges@gruposantander.com22751nullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null8AB28C1Fnullnull16441nullnullnullnullnullnullnullnullnullmarealprieto@servexternos.gruposantander.com127.0.0.1127.0.0.1100240.152.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as A9A4BA3F)
+2014-04-07 00:00:02null85C17C1Bnullnull16052nullnullnullnullnullnullnullnullnulljaviefernandez@servexternos.gruposantander.com127.0.0.1127.0.0.1100240.182.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as ABDD3C5F)
+2014-04-07 00:00:0216156B4FFEC1Bnullnullnullunknown172.19.193.140nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0213518BD7A7C1Fnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullBD7A7C1F16510nullnullnullnullnullnullnull201404062200.s36M02FB60752110@bongaorgep01.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null9A3A8C6Anullnull14939nullnullnullnullnullnullnullnullnulljantogar@isban.essmtp01.scisb.isban.corp172.31.201.13250.172.6.0sent(250 2.6.0 <201404062200.s36M02T59634412@bongaorgep01.nngg.corp> Queued mail for delivery)
+2014-04-07 00:00:02nullBD7A7C1Fnull30748nullnullnullnullnullnullnullexpsiges@gruposantander.com22531nullnullnullnullnullnullnullnull
+2014-04-07 00:00:02null8F8CFC47nullnull16331nullnullnullnullnullnullnullnullnullantaneiros@servexternos.gruposantander.com127.0.0.1127.0.0.1100240.222.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as BD7A7C1F)
+2014-04-07 00:00:02nullB4FFEC1B16572nullnullnullnullnullnullnull201404062200.s36M012W004666@gbmikux103.ants.ad.anplc.co.uknullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullB4FFEC1Bnull30748nullnullnullnullnullnullnulljjuhasz.ansi@santandergbm.com13611nullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullA9A4BA3Fnullnull16448nullnullnullnullnullnullnullnullnullmarealprieto@servexternos.gruposantander.comconectorsan.santander.corp172.21.128.12250.162.6.0sent(250 2.6.0 <201404062200.s36M02oe25559900@bongaorgep01.nngg.corp> Queued mail for delivery)
+2014-04-07 00:00:02nullBD7A7C1Fnullnull15067nullnullnullnullnullnullnullnullnullantaneiros@servexternos.gruposantander.comconectorsan.santander.corp172.21.128.12250.082.6.0sent(250 2.6.0 <201404062200.s36M02FB60752110@bongaorgep01.nngg.corp> Queued mail for delivery)
+2014-04-07 00:00:0216156nullnullnullnullnullnulldisconnect from unknown172.19.193.140nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullABDD3C5Fnullnull14936nullnullnullnullnullnullnullnullnulljaviefernandez@servexternos.gruposantander.comconectorsan.santander.corp172.21.128.12250.222.6.0sent(250 2.6.0 <201404062200.s36M02LD24904398@bongaorgep01.nngg.corp> Queued mail for delivery)
+2014-04-07 00:00:0214924DFF40A3Fnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullDFF40A3F16510nullnullnullnullnullnullnull201404062200.s36M012W004666@gbmikux103.ants.ad.anplc.co.uknullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullDFF40A3Fnull30748nullnullnullnullnullnullnulljjuhasz.ansi@santandergbm.com19411nullnullnullnullnullnullnullnull
+2014-04-07 00:00:02nullB4FFEC1Bnullnull16585nullnullnullnullnullnullnullnullnulljjuhasz@produban.us127.0.0.1127.0.0.1100240.212.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as DFF40A3F)
+2014-04-07 00:00:0316153nullnullnullnullnullnullconnect from VMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0316153B0534C1BnullnullnullVMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:03nullB0534C1B16572nullnullnullnullnullnullnull990cbdf4-08f4-4c1d-8902-a03824cc7ef5@VMNGLHUBCASP01.NGL.CORPnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:03nullB0534C1Bnull30748nullnullnullnullnullnullnullplssmmngl@produban.com20751nullnullnullnullnullnullnullnull
+2014-04-07 00:00:0316153nullnullnullnullnullnulldisconnect from VMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0315374C8911C1Fnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:03nullC8911C1F16510nullnullnullnullnullnullnull990cbdf4-08f4-4c1d-8902-a03824cc7ef5@VMNGLHUBCASP01.NGL.CORPnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:03nullC8911C1Fnull30748nullnullnullnullnullnullnullplssmmngl@produban.com25571nullnullnullnullnullnullnullnull
+2014-04-07 00:00:03nullB0534C1Bnullnull16441nullnullnullnullnullnullnullnullnullccomconci@gruposantander.com127.0.0.1127.0.0.1100240.122.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as C8911C1F)
+2014-04-07 00:00:04nullC8911C1Fnullnull16449nullnullnullnullnullnullnullnullnullccomconci@gruposantander.comconectorsan.santander.corp172.21.128.12250.22.6.0sent(250 2.6.0 <990cbdf4-08f4-4c1d-8902-a03824cc7ef5@VMNGLHUBCASP01.NGL.CORP> Queued mail for delivery)
+2014-04-07 00:00:0416156nullnullnullnullnullnullconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0416156nullnullnullnullnullnulldisconnect from unknown180.205.134.2nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0416153nullnullnullnullnullnullconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0416153nullnullnullnullnullnulldisconnect from unknown180.205.134.3nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0516156nullnullnullnullnullnullconnect from VMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:05161562A92BC1BnullnullnullVMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:05null2A92BC1B16572nullnullnullnullnullnullnull1797116697.167071396821604908.JavaMail.awamonet@bongsapexp02.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:05null2A92BC1Bnull30748nullnullnullnullnullnullnullsic@gruposantander.com10991nullnullnullnullnullnullnullnull
+2014-04-07 00:00:0516156nullnullnullnullnullnulldisconnect from VMNGLHUBCASP01.ngl.corp180.18.20.33nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:051492441AF4C1Fnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:05null41AF4C1F16510nullnullnullnullnullnullnull1797116697.167071396821604908.JavaMail.awamonet@bongsapexp02.nngg.corpnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:05null41AF4C1Fnull30748nullnullnullnullnullnullnullsic@gruposantander.com15831nullnullnullnullnullnullnullnull
+2014-04-07 00:00:05null2A92BC1Bnullnull16585nullnullnullnullnullnullnullnullnullfoclearing@gruposantander.com127.0.0.1127.0.0.1100240.122.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 41AF4C1F)
+2014-04-07 00:00:05null41AF4C1Fnullnull14936nullnullnullnullnullnullnullnullnullfoclearing@gruposantander.comconectorsan.santander.corp172.21.128.12250.212.6.0sent(250 2.6.0 <1797116697.167071396821604908.JavaMail.awamonet@bongsapexp02.nngg.corp> Queued mail for delivery)
+2014-04-07 00:00:05nullDFF40A3Fnullnull15816nullnullnullnullnullnullnullnullnulljjuhasz@produban.ussmtp01.cloud.corp180.205.16.32252.62.6.0sent(250 2.6.0 <201404062200.s36M012W004666@gbmikux103.ants.ad.anplc.co.uk> [InternalId=26418828] Queued mail for delivery)
+2014-04-07 00:00:0616153nullnullnullnullnullnullconnect from besnexedgep01.san.corp172.21.129.143nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:061615317371A3Fnullnullnullbesnexedgep01.san.corp172.21.129.143nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:06null17371A3F16572nullnullnullnullnullnullnull663024.90234375-sendEmail@bongdtneei01nullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:06null17371A3Fnull30748nullnullnullnullnullnullnullMotorPRE@iris.com23514nullnullnullnullnullnullnullnull
+2014-04-07 00:00:0616153nullnullnullnullnullnulldisconnect from besnexedgep01.san.corp172.21.129.143nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:06135183223EC1Bnullnullnullvmnxbmailxp01.gsnet.corp127.0.0.1nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:06null3223EC1B16510nullnullnullnullnullnullnull663024.90234375-sendEmail@bongdtneei01nullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:06null3223EC1Bnull30748nullnullnullnullnullnullnullMotorPRE@iris.com27614nullnullnullnullnullnullnullnull
+2014-04-07 00:00:06null17371A3Fnullnull16331nullnullnullnullnullnullnullnullnulljespinca@isban.es127.0.0.1127.0.0.1100240.132.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 3223EC1B)
+2014-04-07 00:00:06null17371A3Fnullnull16331nullnullnullnullnullnullnullnullnulljnietoce@isban.es127.0.0.1127.0.0.1100240.132.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 3223EC1B)
+2014-04-07 00:00:06null17371A3Fnullnull16331nullnullnullnullnullnullnullnullnullguillermo.morenogonzalez@servexternos.isban.es127.0.0.1127.0.0.1100240.132.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 3223EC1B)
+2014-04-07 00:00:06null17371A3Fnullnull16331nullnullnullnullnullnullnullnullnulloscar.gonzalez@servexternos.isban.es127.0.0.1127.0.0.1100240.132.0.0sent(250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 3223EC1B)
+2014-04-07 00:00:06null3223EC1Bnullnull15067nullnullnullnullnullnullnullnullnulljespinca@isban.essmtp01.scisb.isban.corp172.31.201.13250.262.6.0sent(250 2.6.0 <663024.90234375-sendEmail@bongdtneei01> Queued mail for delivery)
+2014-04-07 00:00:06null3223EC1Bnullnull15067nullnullnullnullnullnullnullnullnulljnietoce@isban.essmtp01.scisb.isban.corp172.31.201.13250.262.6.0sent(250 2.6.0 <663024.90234375-sendEmail@bongdtneei01> Queued mail for delivery)
+2014-04-07 00:00:06null3223EC1Bnullnull15067nullnullnullnullnullnullnullnullnullguillermo.morenogonzalez@servexternos.isban.essmtp01.scisb.isban.corp172.31.201.13250.262.6.0sent(250 2.6.0 <663024.90234375-sendEmail@bongdtneei01> Queued mail for delivery)
+2014-04-07 00:00:06null3223EC1Bnullnull15067nullnullnullnullnullnullnullnullnulloscar.gonzalez@servexternos.isban.essmtp01.scisb.isban.corp172.31.201.13250.262.6.0sent(250 2.6.0 <663024.90234375-sendEmail@bongdtneei01> Queued mail for delivery)
+2014-04-07 00:00:0716156nullnullnullnullnullnullconnect from mailsmtp3.sov.corp180.189.1.51nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0716156980D1A3Fnullnullnullmailsmtp3.sov.corp180.189.1.51nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0716153nullnullnullnullnullnullconnect from VMNGLHUBCASP02.ngl.corp180.18.20.34nullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:0716153C56A1C1BnullnullnullVMNGLHUBCASP02.ngl.corp180.18.20.34nullnullnullnullnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:07nullC56A1C1B16510nullnullnullnullnullnullnull9db3b8dd-7b79-4db4-9d26-5d65ed9122ec@VMNGLHUBCASP02.NGL.CORPnullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:07nullC56A1C1Bnull30748nullnullnullnullnullnullnulledgeuser@santanderpb.it10481nullnullnullnullnullnullnullnull
+2014-04-07 00:00:07null980D1A3F16572nullnullnullnullnullnullnull30999500.1396821606845.JavaMail.SYSTEM@Statesewrop1nullnullnullnullnullnullnullnullnullnullnull
+2014-04-07 00:00:07null980D1A3Fnull30748nullnullnullnullnullnullnullIPTSupport@santander.us10451nullnullnullnullnullnullnullnull
+2014-04-07 00:00:0716153nullnullnullnullnullnulldisconnect from VMNGLHUBCASP02.ngl.corp180.18.20.34nullnullnullnullnullnullnullnullnullnullnullnull
