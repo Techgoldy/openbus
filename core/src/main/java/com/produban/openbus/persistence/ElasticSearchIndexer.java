@@ -27,13 +27,15 @@ public class ElasticSearchIndexer extends BaseFunction{
 
     Client client;
     String indexName;
+    String docType;
     String clusterName;
     List<String> esNodes;
 
     private static final Logger logger = LoggerFactory.getLogger(ElasticSearchIndexer.class);
 
-    public ElasticSearchIndexer(String clusterName, String indexName, List<String> elasticSearchNodes) {
+    public ElasticSearchIndexer(String clusterName, String indexName, String docType, List<String> elasticSearchNodes) {
         this.indexName = indexName;
+        this.docType = docType;
         this.clusterName = clusterName;
         this.esNodes = elasticSearchNodes;
     }
@@ -52,13 +54,13 @@ public class ElasticSearchIndexer extends BaseFunction{
     }
 
     @Override
-    public void execute(TridentTuple objects, TridentCollector tridentCollector) {
+    public void execute(TridentTuple tuple, TridentCollector tridentCollector) {
 
         //first field of the tuple is the ID
-        String tweetId = objects.getString(0);
+        //String tweetId = objects.getString(0);
 
         //build json
-        XContentBuilder builder = null;
+        /*XContentBuilder builder = null;
         try {
 
             builder = buildJson(objects);
@@ -66,13 +68,17 @@ public class ElasticSearchIndexer extends BaseFunction{
         } catch (IOException ex) {
             logger.error(ex.toString());
             logger.error("Error creating JSON object for indexing into elasticsearch");
-        }
+        }*/
+
+        XContentBuilder builder = (XContentBuilder) tuple.get(0);
+        String docId = tuple.getString(1);
 
         //index
-        IndexResponse response = client.prepareIndex(this.indexName, "tweet", tweetId)
+        IndexResponse response = client.prepareIndex(this.indexName, this.docType, docId)
                 .setSource(builder)
                 .execute()
                 .actionGet();
+
 
 
         tridentCollector.emit(new Values(true));
@@ -83,7 +89,27 @@ public class ElasticSearchIndexer extends BaseFunction{
         client.close();
     }
 
-    private XContentBuilder buildJson(TridentTuple tridentTuple) throws IOException {
+    /**
+     *
+     * @param tridentTuple Trident-Storm tuple containing fields from a Trident topology
+     * @param fieldNames
+     * @return
+     * @throws IOException
+     */
+    /*private XContentBuilder buildJson(TridentTuple tridentTuple, List<String> fieldNames) throws IOException {
+        XContentBuilder builder = jsonBuilder()
+                .startObject();
+
+        for (int i = 0; i < fieldNames.size(); i ++) {
+            builder.field(fieldNames.get(i), tridentTuple.get(i));
+        }
+
+        builder.endObject();
+
+        return builder;
+    }*/
+
+    /*private XContentBuilder buildJson(TridentTuple tridentTuple) throws IOException {
 
         String tweetId = tridentTuple.getString(0);
         String rawDate = tridentTuple.getString(1);
@@ -128,5 +154,5 @@ public class ElasticSearchIndexer extends BaseFunction{
                 .endObject();
 
         return builder;
-    }
+    }*/
 }

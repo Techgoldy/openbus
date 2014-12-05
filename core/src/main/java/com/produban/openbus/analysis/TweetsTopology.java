@@ -32,6 +32,7 @@ public class TweetsTopology {
 
         ElasticSearchIndexer esIndexer = new ElasticSearchIndexer(options.getElasticSearchClusterName(),
                                                                   options.getElasticSearchIndex(),
+                                                                  "tweet",
                                                                   options.getElasticSearchNodes());
 
         List<String> tweetFields = new ArrayList<>();

@@ -18,6 +18,7 @@
         <module>weblogs</module>
         <!--module>camus</module-->
         <module>esdump</module>
+        <module>akamai</module>
     </modules>
     <dependencies>
         <dependency>
